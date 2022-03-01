@@ -40,16 +40,14 @@ namespace Computer_Graphics_1
             this.lab5TabPage = new System.Windows.Forms.TabPage();
             this.imagesTabControl = new System.Windows.Forms.TabControl();
             this.comparisontViewTabPage = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.ogImgLabel = new System.Windows.Forms.Label();
             this.comparisonTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.ogImgLabel = new System.Windows.Forms.Label();
             this.newImgLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.comparisonTableLayout.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,7 +113,7 @@ namespace Computer_Graphics_1
             this.lab2TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab2TabPage.Name = "lab2TabPage";
             this.lab2TabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.lab2TabPage.Size = new System.Drawing.Size(226, 385);
+            this.lab2TabPage.Size = new System.Drawing.Size(226, 387);
             this.lab2TabPage.TabIndex = 1;
             this.lab2TabPage.Text = "L2";
             this.lab2TabPage.UseVisualStyleBackColor = true;
@@ -124,7 +122,7 @@ namespace Computer_Graphics_1
             // 
             this.lab3TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab3TabPage.Name = "lab3TabPage";
-            this.lab3TabPage.Size = new System.Drawing.Size(226, 385);
+            this.lab3TabPage.Size = new System.Drawing.Size(226, 387);
             this.lab3TabPage.TabIndex = 2;
             this.lab3TabPage.Text = "L3";
             this.lab3TabPage.UseVisualStyleBackColor = true;
@@ -133,7 +131,7 @@ namespace Computer_Graphics_1
             // 
             this.lab4TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab4TabPage.Name = "lab4TabPage";
-            this.lab4TabPage.Size = new System.Drawing.Size(226, 385);
+            this.lab4TabPage.Size = new System.Drawing.Size(226, 387);
             this.lab4TabPage.TabIndex = 3;
             this.lab4TabPage.Text = "L4";
             this.lab4TabPage.UseVisualStyleBackColor = true;
@@ -142,7 +140,7 @@ namespace Computer_Graphics_1
             // 
             this.lab5TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab5TabPage.Name = "lab5TabPage";
-            this.lab5TabPage.Size = new System.Drawing.Size(226, 385);
+            this.lab5TabPage.Size = new System.Drawing.Size(226, 387);
             this.lab5TabPage.TabIndex = 4;
             this.lab5TabPage.Text = "L5";
             this.lab5TabPage.UseVisualStyleBackColor = true;
@@ -168,13 +166,26 @@ namespace Computer_Graphics_1
             this.comparisontViewTabPage.Text = "Comparison View";
             this.comparisontViewTabPage.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // comparisonTableLayout
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(4, 23);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.comparisonTableLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.comparisonTableLayout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.comparisonTableLayout.ColumnCount = 2;
+            this.comparisonTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.comparisonTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 0F));
+            this.comparisonTableLayout.Controls.Add(this.newImgLabel, 0, 2);
+            this.comparisonTableLayout.Controls.Add(this.ogImgLabel, 0, 0);
+            this.comparisonTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comparisonTableLayout.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.comparisonTableLayout.Location = new System.Drawing.Point(3, 3);
+            this.comparisonTableLayout.Name = "comparisonTableLayout";
+            this.comparisonTableLayout.RowCount = 4;
+            this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
+            this.comparisonTableLayout.Size = new System.Drawing.Size(540, 381);
+            this.comparisonTableLayout.TabIndex = 0;
             // 
             // ogImgLabel
             // 
@@ -184,30 +195,10 @@ namespace Computer_Graphics_1
             this.ogImgLabel.ForeColor = System.Drawing.Color.RoyalBlue;
             this.ogImgLabel.Location = new System.Drawing.Point(4, 1);
             this.ogImgLabel.Name = "ogImgLabel";
-            this.ogImgLabel.Size = new System.Drawing.Size(262, 18);
+            this.ogImgLabel.Size = new System.Drawing.Size(531, 18);
             this.ogImgLabel.TabIndex = 1;
             this.ogImgLabel.Text = "Original Image:";
             this.ogImgLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // comparisonTableLayout
-            // 
-            this.comparisonTableLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.comparisonTableLayout.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.comparisonTableLayout.ColumnCount = 2;
-            this.comparisonTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.comparisonTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.comparisonTableLayout.Controls.Add(this.ogImgLabel, 0, 0);
-            this.comparisonTableLayout.Controls.Add(this.newImgLabel, 1, 0);
-            this.comparisonTableLayout.Controls.Add(this.pictureBox1, 0, 1);
-            this.comparisonTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comparisonTableLayout.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.comparisonTableLayout.Location = new System.Drawing.Point(3, 3);
-            this.comparisonTableLayout.Name = "comparisonTableLayout";
-            this.comparisonTableLayout.RowCount = 2;
-            this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95F));
-            this.comparisonTableLayout.Size = new System.Drawing.Size(540, 381);
-            this.comparisonTableLayout.TabIndex = 0;
             // 
             // newImgLabel
             // 
@@ -215,10 +206,10 @@ namespace Computer_Graphics_1
             this.newImgLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.newImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newImgLabel.ForeColor = System.Drawing.Color.LawnGreen;
-            this.newImgLabel.Location = new System.Drawing.Point(273, 1);
+            this.newImgLabel.Location = new System.Drawing.Point(4, 190);
             this.newImgLabel.Name = "newImgLabel";
-            this.newImgLabel.Size = new System.Drawing.Size(263, 18);
-            this.newImgLabel.TabIndex = 2;
+            this.newImgLabel.Size = new System.Drawing.Size(531, 18);
+            this.newImgLabel.TabIndex = 3;
             this.newImgLabel.Text = "After Processing:";
             this.newImgLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -240,7 +231,6 @@ namespace Computer_Graphics_1
             this.labsTabControl.ResumeLayout(false);
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.comparisonTableLayout.ResumeLayout(false);
             this.comparisonTableLayout.PerformLayout();
             this.ResumeLayout(false);
@@ -263,7 +253,6 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.TabPage comparisontViewTabPage;
         private System.Windows.Forms.TableLayoutPanel comparisonTableLayout;
         private System.Windows.Forms.Label ogImgLabel;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label newImgLabel;
     }
 }
