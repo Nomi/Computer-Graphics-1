@@ -43,12 +43,16 @@ namespace Computer_Graphics_1
             this.comparisonTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.ogImgLabel = new System.Windows.Forms.Label();
             this.newImgLabel = new System.Windows.Forms.Label();
+            this.ogPictureBox = new System.Windows.Forms.PictureBox();
+            this.newPictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -60,7 +64,7 @@ namespace Computer_Graphics_1
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -83,12 +87,12 @@ namespace Computer_Graphics_1
             this.mainTableLayoutPanel.Controls.Add(this.imagesTabControl, 0, 0);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTableLayoutPanel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 30);
+            this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 28);
             this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
             this.mainTableLayoutPanel.RowCount = 2;
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0F));
-            this.mainTableLayoutPanel.Size = new System.Drawing.Size(800, 420);
+            this.mainTableLayoutPanel.Size = new System.Drawing.Size(800, 422);
             this.mainTableLayoutPanel.TabIndex = 1;
             // 
             // labsTabControl
@@ -102,7 +106,7 @@ namespace Computer_Graphics_1
             this.labsTabControl.Location = new System.Drawing.Point(562, 6);
             this.labsTabControl.Name = "labsTabControl";
             this.labsTabControl.SelectedIndex = 0;
-            this.labsTabControl.Size = new System.Drawing.Size(232, 405);
+            this.labsTabControl.Size = new System.Drawing.Size(232, 407);
             this.labsTabControl.TabIndex = 0;
             // 
             // lab1TabPage
@@ -111,7 +115,7 @@ namespace Computer_Graphics_1
             this.lab1TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab1TabPage.Name = "lab1TabPage";
             this.lab1TabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.lab1TabPage.Size = new System.Drawing.Size(224, 376);
+            this.lab1TabPage.Size = new System.Drawing.Size(224, 378);
             this.lab1TabPage.TabIndex = 0;
             this.lab1TabPage.Text = "L1";
             // 
@@ -159,7 +163,7 @@ namespace Computer_Graphics_1
             this.imagesTabControl.Location = new System.Drawing.Point(6, 6);
             this.imagesTabControl.Name = "imagesTabControl";
             this.imagesTabControl.SelectedIndex = 0;
-            this.imagesTabControl.Size = new System.Drawing.Size(547, 405);
+            this.imagesTabControl.Size = new System.Drawing.Size(547, 407);
             this.imagesTabControl.TabIndex = 1;
             // 
             // comparisontViewTabPage
@@ -168,7 +172,7 @@ namespace Computer_Graphics_1
             this.comparisontViewTabPage.Location = new System.Drawing.Point(4, 25);
             this.comparisontViewTabPage.Name = "comparisontViewTabPage";
             this.comparisontViewTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.comparisontViewTabPage.Size = new System.Drawing.Size(539, 376);
+            this.comparisontViewTabPage.Size = new System.Drawing.Size(539, 378);
             this.comparisontViewTabPage.TabIndex = 0;
             this.comparisontViewTabPage.Text = "Comparison View";
             this.comparisontViewTabPage.UseVisualStyleBackColor = true;
@@ -181,6 +185,8 @@ namespace Computer_Graphics_1
             this.comparisonTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 0F));
             this.comparisonTableLayout.Controls.Add(this.newImgLabel, 0, 2);
             this.comparisonTableLayout.Controls.Add(this.ogImgLabel, 0, 0);
+            this.comparisonTableLayout.Controls.Add(this.ogPictureBox, 0, 1);
+            this.comparisonTableLayout.Controls.Add(this.newPictureBox, 0, 3);
             this.comparisonTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comparisonTableLayout.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comparisonTableLayout.Location = new System.Drawing.Point(3, 3);
@@ -190,7 +196,7 @@ namespace Computer_Graphics_1
             this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.comparisonTableLayout.Size = new System.Drawing.Size(533, 370);
+            this.comparisonTableLayout.Size = new System.Drawing.Size(533, 372);
             this.comparisonTableLayout.TabIndex = 0;
             // 
             // ogImgLabel
@@ -212,12 +218,30 @@ namespace Computer_Graphics_1
             this.newImgLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.newImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newImgLabel.ForeColor = System.Drawing.Color.LawnGreen;
-            this.newImgLabel.Location = new System.Drawing.Point(3, 184);
+            this.newImgLabel.Location = new System.Drawing.Point(3, 185);
             this.newImgLabel.Name = "newImgLabel";
             this.newImgLabel.Size = new System.Drawing.Size(527, 18);
             this.newImgLabel.TabIndex = 3;
             this.newImgLabel.Text = "After Processing:";
             this.newImgLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // ogPictureBox
+            // 
+            this.ogPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ogPictureBox.Location = new System.Drawing.Point(3, 21);
+            this.ogPictureBox.Name = "ogPictureBox";
+            this.ogPictureBox.Size = new System.Drawing.Size(527, 161);
+            this.ogPictureBox.TabIndex = 4;
+            this.ogPictureBox.TabStop = false;
+            // 
+            // newPictureBox
+            // 
+            this.newPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newPictureBox.Location = new System.Drawing.Point(3, 206);
+            this.newPictureBox.Name = "newPictureBox";
+            this.newPictureBox.Size = new System.Drawing.Size(527, 163);
+            this.newPictureBox.TabIndex = 5;
+            this.newPictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -239,6 +263,8 @@ namespace Computer_Graphics_1
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
             this.comparisonTableLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -260,6 +286,8 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.TableLayoutPanel comparisonTableLayout;
         private System.Windows.Forms.Label ogImgLabel;
         private System.Windows.Forms.Label newImgLabel;
+        private System.Windows.Forms.PictureBox ogPictureBox;
+        private System.Windows.Forms.PictureBox newPictureBox;
     }
 }
 
