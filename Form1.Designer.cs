@@ -203,7 +203,7 @@ namespace Computer_Graphics_1
             // 
             this.ogImgLabel.AutoSize = true;
             this.ogImgLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ogImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ogImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ogImgLabel.ForeColor = System.Drawing.Color.RoyalBlue;
             this.ogImgLabel.Location = new System.Drawing.Point(3, 0);
             this.ogImgLabel.Name = "ogImgLabel";
@@ -216,8 +216,8 @@ namespace Computer_Graphics_1
             // 
             this.newImgLabel.AutoSize = true;
             this.newImgLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newImgLabel.ForeColor = System.Drawing.Color.LawnGreen;
+            this.newImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newImgLabel.ForeColor = System.Drawing.Color.DarkCyan;
             this.newImgLabel.Location = new System.Drawing.Point(3, 185);
             this.newImgLabel.Name = "newImgLabel";
             this.newImgLabel.Size = new System.Drawing.Size(527, 18);
