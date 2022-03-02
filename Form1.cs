@@ -71,10 +71,10 @@ namespace Computer_Graphics_1
             //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
             Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
             newPictureBox.Image = ImageUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
-            if (invertFilterButton.ForeColor == SystemColors.ActiveCaptionText)
+            if (invertFilterButton.ForeColor == SystemColors.ActiveCaptionText|| invertFilterButton.ForeColor==Color.Black)
                 invertFilterButton.ForeColor = Color.Green;
             else
-                ForeColor = Color.Black;
+                invertFilterButton.ForeColor = Color.Black;
         }
 
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
