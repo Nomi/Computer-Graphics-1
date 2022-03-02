@@ -31,9 +31,13 @@ namespace Computer_Graphics_1
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labsTabControl = new System.Windows.Forms.TabControl();
             this.lab1TabPage = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.funcFilGroupBox = new System.Windows.Forms.GroupBox();
+            this.invertFilterButton = new System.Windows.Forms.Button();
             this.lab2TabPage = new System.Windows.Forms.TabPage();
             this.lab3TabPage = new System.Windows.Forms.TabPage();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
@@ -41,13 +45,16 @@ namespace Computer_Graphics_1
             this.imagesTabControl = new System.Windows.Forms.TabControl();
             this.comparisontViewTabPage = new System.Windows.Forms.TabPage();
             this.comparisonTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.ogImgLabel = new System.Windows.Forms.Label();
             this.newImgLabel = new System.Windows.Forms.Label();
+            this.ogImgLabel = new System.Windows.Forms.Label();
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.newPictureBox = new System.Windows.Forms.PictureBox();
+            this.undoAllProcessingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
+            this.lab1TabPage.SuspendLayout();
+            this.funcFilGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
@@ -64,17 +71,28 @@ namespace Computer_Graphics_1
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 31);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openImageToolStripMenuItem,
+            this.undoAllProcessingMenuItem});
+            this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.LightSeaGreen;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(52, 27);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openImageToolStripMenuItem
+            // 
+            this.openImageToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
+            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.openImageToolStripMenuItem.Text = "Open Image";
+            this.openImageToolStripMenuItem.Click += new System.EventHandler(this.openImageToolStripMenuItem_Click);
             // 
             // mainTableLayoutPanel
             // 
@@ -87,12 +105,12 @@ namespace Computer_Graphics_1
             this.mainTableLayoutPanel.Controls.Add(this.imagesTabControl, 0, 0);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTableLayoutPanel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 28);
+            this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 31);
             this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
             this.mainTableLayoutPanel.RowCount = 2;
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 0F));
-            this.mainTableLayoutPanel.Size = new System.Drawing.Size(800, 422);
+            this.mainTableLayoutPanel.Size = new System.Drawing.Size(800, 419);
             this.mainTableLayoutPanel.TabIndex = 1;
             // 
             // labsTabControl
@@ -103,28 +121,68 @@ namespace Computer_Graphics_1
             this.labsTabControl.Controls.Add(this.lab4TabPage);
             this.labsTabControl.Controls.Add(this.lab5TabPage);
             this.labsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labsTabControl.Enabled = false;
             this.labsTabControl.Location = new System.Drawing.Point(562, 6);
             this.labsTabControl.Name = "labsTabControl";
             this.labsTabControl.SelectedIndex = 0;
-            this.labsTabControl.Size = new System.Drawing.Size(232, 407);
+            this.labsTabControl.Size = new System.Drawing.Size(232, 404);
             this.labsTabControl.TabIndex = 0;
             // 
             // lab1TabPage
             // 
             this.lab1TabPage.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.lab1TabPage.Controls.Add(this.groupBox2);
+            this.lab1TabPage.Controls.Add(this.funcFilGroupBox);
             this.lab1TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab1TabPage.Name = "lab1TabPage";
             this.lab1TabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.lab1TabPage.Size = new System.Drawing.Size(224, 378);
+            this.lab1TabPage.Size = new System.Drawing.Size(224, 375);
             this.lab1TabPage.TabIndex = 0;
             this.lab1TabPage.Text = "L1";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(3, 103);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(218, 100);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "groupBox2";
+            // 
+            // funcFilGroupBox
+            // 
+            this.funcFilGroupBox.Controls.Add(this.invertFilterButton);
+            this.funcFilGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.funcFilGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funcFilGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.funcFilGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.funcFilGroupBox.Name = "funcFilGroupBox";
+            this.funcFilGroupBox.Size = new System.Drawing.Size(218, 100);
+            this.funcFilGroupBox.TabIndex = 2;
+            this.funcFilGroupBox.TabStop = false;
+            this.funcFilGroupBox.Text = "Functional Filters";
+            // 
+            // invertFilterButton
+            // 
+            this.invertFilterButton.AutoSize = true;
+            this.invertFilterButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.invertFilterButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.invertFilterButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.invertFilterButton.Location = new System.Drawing.Point(3, 18);
+            this.invertFilterButton.Name = "invertFilterButton";
+            this.invertFilterButton.Size = new System.Drawing.Size(212, 33);
+            this.invertFilterButton.TabIndex = 0;
+            this.invertFilterButton.Text = "Inversion";
+            this.invertFilterButton.UseVisualStyleBackColor = true;
+            this.invertFilterButton.Click += new System.EventHandler(this.invertFilter_Click);
             // 
             // lab2TabPage
             // 
             this.lab2TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab2TabPage.Name = "lab2TabPage";
             this.lab2TabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.lab2TabPage.Size = new System.Drawing.Size(226, 387);
+            this.lab2TabPage.Size = new System.Drawing.Size(224, 375);
             this.lab2TabPage.TabIndex = 1;
             this.lab2TabPage.Text = "L2";
             this.lab2TabPage.UseVisualStyleBackColor = true;
@@ -133,7 +191,7 @@ namespace Computer_Graphics_1
             // 
             this.lab3TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab3TabPage.Name = "lab3TabPage";
-            this.lab3TabPage.Size = new System.Drawing.Size(226, 387);
+            this.lab3TabPage.Size = new System.Drawing.Size(224, 375);
             this.lab3TabPage.TabIndex = 2;
             this.lab3TabPage.Text = "L3";
             this.lab3TabPage.UseVisualStyleBackColor = true;
@@ -142,7 +200,7 @@ namespace Computer_Graphics_1
             // 
             this.lab4TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab4TabPage.Name = "lab4TabPage";
-            this.lab4TabPage.Size = new System.Drawing.Size(226, 387);
+            this.lab4TabPage.Size = new System.Drawing.Size(224, 375);
             this.lab4TabPage.TabIndex = 3;
             this.lab4TabPage.Text = "L4";
             this.lab4TabPage.UseVisualStyleBackColor = true;
@@ -151,7 +209,7 @@ namespace Computer_Graphics_1
             // 
             this.lab5TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab5TabPage.Name = "lab5TabPage";
-            this.lab5TabPage.Size = new System.Drawing.Size(226, 387);
+            this.lab5TabPage.Size = new System.Drawing.Size(224, 375);
             this.lab5TabPage.TabIndex = 4;
             this.lab5TabPage.Text = "L5";
             this.lab5TabPage.UseVisualStyleBackColor = true;
@@ -163,7 +221,7 @@ namespace Computer_Graphics_1
             this.imagesTabControl.Location = new System.Drawing.Point(6, 6);
             this.imagesTabControl.Name = "imagesTabControl";
             this.imagesTabControl.SelectedIndex = 0;
-            this.imagesTabControl.Size = new System.Drawing.Size(547, 407);
+            this.imagesTabControl.Size = new System.Drawing.Size(547, 404);
             this.imagesTabControl.TabIndex = 1;
             // 
             // comparisontViewTabPage
@@ -172,7 +230,7 @@ namespace Computer_Graphics_1
             this.comparisontViewTabPage.Location = new System.Drawing.Point(4, 25);
             this.comparisontViewTabPage.Name = "comparisontViewTabPage";
             this.comparisontViewTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.comparisontViewTabPage.Size = new System.Drawing.Size(539, 378);
+            this.comparisontViewTabPage.Size = new System.Drawing.Size(539, 375);
             this.comparisontViewTabPage.TabIndex = 0;
             this.comparisontViewTabPage.Text = "Comparison View";
             this.comparisontViewTabPage.UseVisualStyleBackColor = true;
@@ -196,8 +254,21 @@ namespace Computer_Graphics_1
             this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.comparisonTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.comparisonTableLayout.Size = new System.Drawing.Size(533, 372);
+            this.comparisonTableLayout.Size = new System.Drawing.Size(533, 369);
             this.comparisonTableLayout.TabIndex = 0;
+            // 
+            // newImgLabel
+            // 
+            this.newImgLabel.AutoSize = true;
+            this.newImgLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.newImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newImgLabel.ForeColor = System.Drawing.Color.DarkCyan;
+            this.newImgLabel.Location = new System.Drawing.Point(3, 184);
+            this.newImgLabel.Name = "newImgLabel";
+            this.newImgLabel.Size = new System.Drawing.Size(527, 18);
+            this.newImgLabel.TabIndex = 3;
+            this.newImgLabel.Text = "After Processing:";
+            this.newImgLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ogImgLabel
             // 
@@ -212,36 +283,35 @@ namespace Computer_Graphics_1
             this.ogImgLabel.Text = "Original Image:";
             this.ogImgLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // newImgLabel
-            // 
-            this.newImgLabel.AutoSize = true;
-            this.newImgLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newImgLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newImgLabel.ForeColor = System.Drawing.Color.DarkCyan;
-            this.newImgLabel.Location = new System.Drawing.Point(3, 185);
-            this.newImgLabel.Name = "newImgLabel";
-            this.newImgLabel.Size = new System.Drawing.Size(527, 18);
-            this.newImgLabel.TabIndex = 3;
-            this.newImgLabel.Text = "After Processing:";
-            this.newImgLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // ogPictureBox
             // 
             this.ogPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ogPictureBox.Location = new System.Drawing.Point(3, 21);
             this.ogPictureBox.Name = "ogPictureBox";
-            this.ogPictureBox.Size = new System.Drawing.Size(527, 161);
+            this.ogPictureBox.Size = new System.Drawing.Size(527, 160);
+            this.ogPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ogPictureBox.TabIndex = 4;
             this.ogPictureBox.TabStop = false;
+            this.ogPictureBox.DoubleClick += new System.EventHandler(this.ogPictureBox_DoubleClick);
             // 
             // newPictureBox
             // 
             this.newPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.newPictureBox.Location = new System.Drawing.Point(3, 206);
+            this.newPictureBox.Location = new System.Drawing.Point(3, 205);
             this.newPictureBox.Name = "newPictureBox";
-            this.newPictureBox.Size = new System.Drawing.Size(527, 163);
+            this.newPictureBox.Size = new System.Drawing.Size(527, 161);
+            this.newPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.newPictureBox.TabIndex = 5;
             this.newPictureBox.TabStop = false;
+            // 
+            // undoAllProcessingMenuItem
+            // 
+            this.undoAllProcessingMenuItem.Enabled = false;
+            this.undoAllProcessingMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.undoAllProcessingMenuItem.Name = "undoAllProcessingMenuItem";
+            this.undoAllProcessingMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.undoAllProcessingMenuItem.Text = "Undo ALL Processing";
+            this.undoAllProcessingMenuItem.Click += new System.EventHandler(this.undoAllProcessingMenuItem_Click);
             // 
             // MainForm
             // 
@@ -259,6 +329,9 @@ namespace Computer_Graphics_1
             this.menuStrip1.PerformLayout();
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.labsTabControl.ResumeLayout(false);
+            this.lab1TabPage.ResumeLayout(false);
+            this.funcFilGroupBox.ResumeLayout(false);
+            this.funcFilGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
@@ -288,6 +361,11 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Label newImgLabel;
         private System.Windows.Forms.PictureBox ogPictureBox;
         private System.Windows.Forms.PictureBox newPictureBox;
+        private System.Windows.Forms.ToolStripMenuItem openImageToolStripMenuItem;
+        private System.Windows.Forms.GroupBox funcFilGroupBox;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button invertFilterButton;
+        private System.Windows.Forms.ToolStripMenuItem undoAllProcessingMenuItem;
     }
 }
 
