@@ -51,6 +51,8 @@ namespace Computer_Graphics_1
             this.newPictureBox = new System.Windows.Forms.PictureBox();
             this.undoAllProcessingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.brightnessCorrection = new System.Windows.Forms.Button();
+            this.contrastEnhanceButton = new System.Windows.Forms.Button();
+            this.gammaCorrectionButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -144,7 +146,7 @@ namespace Computer_Graphics_1
             // groupBox2
             // 
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(3, 103);
+            this.groupBox2.Location = new System.Drawing.Point(3, 156);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(218, 100);
             this.groupBox2.TabIndex = 4;
@@ -153,6 +155,10 @@ namespace Computer_Graphics_1
             // 
             // funcFilGroupBox
             // 
+            this.funcFilGroupBox.AutoSize = true;
+            this.funcFilGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.funcFilGroupBox.Controls.Add(this.gammaCorrectionButton);
+            this.funcFilGroupBox.Controls.Add(this.contrastEnhanceButton);
             this.funcFilGroupBox.Controls.Add(this.brightnessCorrection);
             this.funcFilGroupBox.Controls.Add(this.invertFilterButton);
             this.funcFilGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
@@ -160,7 +166,7 @@ namespace Computer_Graphics_1
             this.funcFilGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.funcFilGroupBox.Location = new System.Drawing.Point(3, 3);
             this.funcFilGroupBox.Name = "funcFilGroupBox";
-            this.funcFilGroupBox.Size = new System.Drawing.Size(218, 100);
+            this.funcFilGroupBox.Size = new System.Drawing.Size(218, 153);
             this.funcFilGroupBox.TabIndex = 2;
             this.funcFilGroupBox.TabStop = false;
             this.funcFilGroupBox.Text = "Functional Filters";
@@ -329,6 +335,34 @@ namespace Computer_Graphics_1
             this.brightnessCorrection.UseVisualStyleBackColor = true;
             this.brightnessCorrection.Click += new System.EventHandler(this.brightnessCorrection_Click);
             // 
+            // contrastEnhanceButton
+            // 
+            this.contrastEnhanceButton.AutoSize = true;
+            this.contrastEnhanceButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.contrastEnhanceButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contrastEnhanceButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.contrastEnhanceButton.Location = new System.Drawing.Point(3, 84);
+            this.contrastEnhanceButton.Name = "contrastEnhanceButton";
+            this.contrastEnhanceButton.Size = new System.Drawing.Size(212, 33);
+            this.contrastEnhanceButton.TabIndex = 2;
+            this.contrastEnhanceButton.Text = "Contrast Enhancement";
+            this.contrastEnhanceButton.UseVisualStyleBackColor = true;
+            this.contrastEnhanceButton.Click += new System.EventHandler(this.contrastEnhanceButton_Click);
+            // 
+            // gammaCorrectionButton
+            // 
+            this.gammaCorrectionButton.AutoSize = true;
+            this.gammaCorrectionButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gammaCorrectionButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gammaCorrectionButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.gammaCorrectionButton.Location = new System.Drawing.Point(3, 117);
+            this.gammaCorrectionButton.Name = "gammaCorrectionButton";
+            this.gammaCorrectionButton.Size = new System.Drawing.Size(212, 33);
+            this.gammaCorrectionButton.TabIndex = 3;
+            this.gammaCorrectionButton.Text = "Gamma Correction";
+            this.gammaCorrectionButton.UseVisualStyleBackColor = true;
+            this.gammaCorrectionButton.Click += new System.EventHandler(this.gammaCorrectionButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -346,6 +380,7 @@ namespace Computer_Graphics_1
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.labsTabControl.ResumeLayout(false);
             this.lab1TabPage.ResumeLayout(false);
+            this.lab1TabPage.PerformLayout();
             this.funcFilGroupBox.ResumeLayout(false);
             this.funcFilGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
@@ -383,6 +418,8 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Button invertFilterButton;
         private System.Windows.Forms.ToolStripMenuItem undoAllProcessingMenuItem;
         private System.Windows.Forms.Button brightnessCorrection;
+        private System.Windows.Forms.Button contrastEnhanceButton;
+        private System.Windows.Forms.Button gammaCorrectionButton;
     }
 }
 

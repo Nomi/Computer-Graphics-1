@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace Computer_Graphics_1.HelperClasses
 {
-    public static class ImageUtil
+    public static class ImgUtil
     {
         public static WriteableBitmap GetWritableBitmapFromBitmap(Bitmap bmp) //used to instead have argument string absoluteFilePath
         {

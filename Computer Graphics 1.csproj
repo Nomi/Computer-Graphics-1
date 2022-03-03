@@ -57,7 +57,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperClasses\WriteableBitmapExJOJO.cs" />
-    <Compile Include="HelperClasses\ImageUtil.cs" />
+    <Compile Include="HelperClasses\ImgUtil.cs" />
     <Compile Include="Lab1\FunctionalFilters.cs" />
     <Compile Include="HelperClasses\pixel.cs" />
     <Compile Include="Program.cs" />

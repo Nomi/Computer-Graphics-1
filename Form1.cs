@@ -50,9 +50,9 @@ namespace Computer_Graphics_1
                 {
                     ogBitmap = new Bitmap(openFileDialog.FileName);
                     ogPictureBox.Image = ogBitmap;
-                    wBmpToEdit = ImageUtil.GetWritableBitmapFromBitmap(ogBitmap);
+                    wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
                     //wBmpToEdit = ImageUtil.GetWriteableBitmapFromAbsURI(openFileDialog.FileName);
-                    newPictureBox.Image = ImageUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+                    newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
                     //foreach (Control cntrl in lab1TabPage.Controls)
                     //{
                     //    cntrl.Enabled = true;
@@ -72,7 +72,7 @@ namespace Computer_Graphics_1
             ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
             //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
             Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
-            newPictureBox.Image = ImageUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
             if (invertFilterButton.ForeColor == SystemColors.ActiveCaptionText|| invertFilterButton.ForeColor==Color.Black)
                 invertFilterButton.ForeColor = Color.Green;
             else
@@ -81,14 +81,26 @@ namespace Computer_Graphics_1
 
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
         {
-            wBmpToEdit = ImageUtil.GetWritableBitmapFromBitmap(ogBitmap);
-            newPictureBox.Image = ImageUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+            wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
 
         private void brightnessCorrection_Click(object sender, EventArgs e)
         {
             FunctionalFilters.BrightnessCorrectionWbmp(wBmpToEdit, 20);
-            newPictureBox.Image = ImageUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void contrastEnhanceButton_Click(object sender, EventArgs e)
+        {
+            FunctionalFilters.ContrastEnhancementWbmp(wBmpToEdit, 1.25);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void gammaCorrectionButton_Click(object sender, EventArgs e)
+        {
+            FunctionalFilters.GammaCorrection(wBmpToEdit, 1.666);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
     }
 }
