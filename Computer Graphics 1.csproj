@@ -56,8 +56,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageUtil.cs" />
+    <Compile Include="HelperClasses\WriteableBitmapExJOJO.cs" />
+    <Compile Include="HelperClasses\ImageUtil.cs" />
     <Compile Include="Lab1\FunctionalFilters.cs" />
+    <Compile Include="HelperClasses\pixel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

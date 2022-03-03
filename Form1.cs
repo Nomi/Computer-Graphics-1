@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using Computer_Graphics_1.HelperClasses;
 
 namespace Computer_Graphics_1
 {
