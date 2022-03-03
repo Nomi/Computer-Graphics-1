@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Computer_Graphics_1.HelperClasses;
+using Computer_Graphics_1.Lab1;
 
 namespace Computer_Graphics_1
 {
@@ -81,6 +82,12 @@ namespace Computer_Graphics_1
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
         {
             wBmpToEdit = ImageUtil.GetWritableBitmapFromBitmap(ogBitmap);
+            newPictureBox.Image = ImageUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void brightnessCorrection_Click(object sender, EventArgs e)
+        {
+            FunctionalFilters.BrightnessCorrectionWbmp(wBmpToEdit, 20);
             newPictureBox.Image = ImageUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
     }

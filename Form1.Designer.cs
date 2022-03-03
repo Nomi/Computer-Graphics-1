@@ -50,6 +50,7 @@ namespace Computer_Graphics_1
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.newPictureBox = new System.Windows.Forms.PictureBox();
             this.undoAllProcessingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.brightnessCorrection = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -152,6 +153,7 @@ namespace Computer_Graphics_1
             // 
             // funcFilGroupBox
             // 
+            this.funcFilGroupBox.Controls.Add(this.brightnessCorrection);
             this.funcFilGroupBox.Controls.Add(this.invertFilterButton);
             this.funcFilGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.funcFilGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -313,6 +315,20 @@ namespace Computer_Graphics_1
             this.undoAllProcessingMenuItem.Text = "Undo ALL Processing";
             this.undoAllProcessingMenuItem.Click += new System.EventHandler(this.undoAllProcessingMenuItem_Click);
             // 
+            // brightnessCorrection
+            // 
+            this.brightnessCorrection.AutoSize = true;
+            this.brightnessCorrection.Dock = System.Windows.Forms.DockStyle.Top;
+            this.brightnessCorrection.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.brightnessCorrection.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.brightnessCorrection.Location = new System.Drawing.Point(3, 51);
+            this.brightnessCorrection.Name = "brightnessCorrection";
+            this.brightnessCorrection.Size = new System.Drawing.Size(212, 33);
+            this.brightnessCorrection.TabIndex = 1;
+            this.brightnessCorrection.Text = "Brightness Correction";
+            this.brightnessCorrection.UseVisualStyleBackColor = true;
+            this.brightnessCorrection.Click += new System.EventHandler(this.brightnessCorrection_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -366,6 +382,7 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button invertFilterButton;
         private System.Windows.Forms.ToolStripMenuItem undoAllProcessingMenuItem;
+        private System.Windows.Forms.Button brightnessCorrection;
     }
 }
 
