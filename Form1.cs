@@ -102,5 +102,19 @@ namespace Computer_Graphics_1
             FunctionalFilters.GammaCorrection(wBmpToEdit, 1.666);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int[,] blurConvMat3x3 = new int[3, 3];
+            for(int i=0;i<3;i++)
+            {
+               for(int j=0; j<3; j++)
+                {
+                    blurConvMat3x3[i,j] = 1;
+                }
+            }
+            ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit,ref newPictureBox);
+            newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
     }
 }

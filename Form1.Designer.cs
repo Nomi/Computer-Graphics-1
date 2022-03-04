@@ -53,10 +53,12 @@ namespace Computer_Graphics_1
             this.brightnessCorrection = new System.Windows.Forms.Button();
             this.contrastEnhanceButton = new System.Windows.Forms.Button();
             this.gammaCorrectionButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
             this.lab1TabPage.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.funcFilGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
@@ -145,6 +147,7 @@ namespace Computer_Graphics_1
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(3, 156);
             this.groupBox2.Name = "groupBox2";
@@ -363,6 +366,16 @@ namespace Computer_Graphics_1
             this.gammaCorrectionButton.UseVisualStyleBackColor = true;
             this.gammaCorrectionButton.Click += new System.EventHandler(this.gammaCorrectionButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(58, 33);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -381,6 +394,7 @@ namespace Computer_Graphics_1
             this.labsTabControl.ResumeLayout(false);
             this.lab1TabPage.ResumeLayout(false);
             this.lab1TabPage.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.funcFilGroupBox.ResumeLayout(false);
             this.funcFilGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
@@ -420,6 +434,7 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Button brightnessCorrection;
         private System.Windows.Forms.Button contrastEnhanceButton;
         private System.Windows.Forms.Button gammaCorrectionButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 
