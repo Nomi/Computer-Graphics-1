@@ -176,6 +176,8 @@ namespace Computer_Graphics_1.Lab1
                     }
                 }
 
+
+                //Next, change the following copy-paste from upper-left handler to do lower-right
                 for (int row = rowCount - (_mSz - 1) / 2; row < rowCount; row++) //Handles lower and right edges
                 {
                     //lower-right corner square here to replace upper-left in previous code and so on.
