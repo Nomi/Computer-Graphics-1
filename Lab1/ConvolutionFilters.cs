@@ -20,9 +20,8 @@ namespace Computer_Graphics_1.Lab1
             {
                 /// IMPLEMENT FULLY WITH TRY https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.imaging.writeablebitmap?view=windowsdesktop-6.0#:~:text=Properties%20%20%20Back%20Buffer%20%20%20Gets,this%20DispatcherObjec%20...%20%2013%20more%20rows%20
                 //Program supports only images with 8-bit BGR(A) Pixel formats for now. Because of GetPixelIntPtrAt extension containing the line "int pixelNumChannels = wbmp.Format.BitsPerPixel / 8;". It was in turn added to have compatibility of both BGRA and BGR channel configs.
-                
-                //missing loops for the pixels not covered in the following loop.
-                for(int row =0; row < (_mSz - 1) / 2; row++)
+
+                for(int row =0; row < (_mSz - 1) / 2; row++) //Handles upper and left edges
                 {
                     for(int col=0; col<(_mSz-1)/2;col++)
                     {
@@ -75,15 +74,12 @@ namespace Computer_Graphics_1.Lab1
                         {
                             for (int mC = missingCols,subMC=0; mC < _mSz; mC++,subMC++) //might only work for bgr (not bgra) pixels because of +=3;
                             {
- 
                                 int subArrIndex = subMR * _mSz + subMC * 3;
                                 int arrIndex = mR * _mSz + mC * 3;
                                 pixDat[arrIndex + 0] = subPixDat[subArrIndex + 0];
                                 pixDat[arrIndex + 1] = subPixDat[subArrIndex + 1];
                                 pixDat[arrIndex + 2] = subPixDat[subArrIndex + 2];
-                                //subMC+=3?
                             }
-                            //subMR++??
                         }
                         int sumCM = 0;
                         foreach (int c in sqrCnvMat)
@@ -91,54 +87,6 @@ namespace Computer_Graphics_1.Lab1
                             sumCM += c;
                         }
 
-                        /*
-                        for (int mR = 0, i = 0; mR < _mSz; mR++)   
-                        {
-                            for (int mC = 0; mC < _mSz; mC++, i += 3) //might only work for bgr (not bgra) pixels because of +=3;
-                            {
-                                //int baseIndex;
-                                //int newMR = mR - missingRows;
-                                //if (newMR < 0)
-                                //    newMR = missingRows;
-                                //else
-                                //    newMR = mR;
-                                //int newMC = mC - missingCols;
-                                //if (newMC < 0)
-                                //    newMC = missingCols;
-                                //else
-                                //    newMC = mR;
-                                //////baseIndex = i; //the above might work by itself;
-                                ////if (mR + 1 > missingRows && mC + 1 > missingCols)
-                                ////{
-                                ////    baseIndex = (mR - missingRows) * _mSz + (mC - missingCols) * 3;
-                                ////}
-                                ////else if (mR + 1 <= missingRows && mC + 1 <= missingCols)
-                                ////{
-                                ////    baseIndex = (missingRows - mR) * _mSz + (missingCols - mC) * 3;
-                                ////}
-                                ////else if (mR+1<= missingRows && mC+1>missingCols)
-                                ////{
-                                ////    baseIndex= (missingRows - mR) * _mSz + (mC - missingCols) * 3;
-                                ////}
-                                ////else if (mR+1> missingRows && mC+1<=missingCols)
-                                ////{
-                                ////    baseIndex = (mR - missingRows) * _mSz + (missingCols - mC) * 3;
-                                ////}
-                                ////else
-                                ////{
-                                ////    //should never get here.
-                                ////    throw new Exception("This else should never be reached.");
-                                ////}
-                                //baseIndex= newMR * _mSz + newMC * 3;
-                                blue += sqrCnvMat[mR, mC] * pixDat[baseIndex + 0]; ///clamp values to 255 and 0
-                                green += sqrCnvMat[mR, mC] * pixDat[baseIndex + 1];
-                                red += sqrCnvMat[mR, mC] * pixDat[baseIndex + 2];
-                            }
-                        }
-                        //int midPt = ((_mSz * _mSz - 1) / 2 + 1) - ((missingCols*rowCount)*(missingRows*columnCount)+missingRows)*numBytesPerPix;
-                        int midPt = ((rWidth * rHeight - 1) / 2) + 1;
-                        midPt--; //array indexing starts at 0.
-                        */
                         int red = 0; int green = 0; int blue = 0;
                         for (int mR = 0, i = 0; mR < _mSz; mR++)   //might only work for bgr pixels.
                         {
@@ -166,7 +114,8 @@ namespace Computer_Graphics_1.Lab1
                         wbmp.Unlock();
                     }
                 }
-                for (int row = (_mSz-1)/2; row < rowCount - (_mSz - 1) / 2; row++)
+
+                for (int row = (_mSz-1)/2; row < rowCount - (_mSz - 1) / 2; row++) //Handles Non-Edge part
                 {
                     for (int col = (_mSz-1)/2; col < columnCount-(_mSz - 1) / 2; col++)
                     {
@@ -225,10 +174,12 @@ namespace Computer_Graphics_1.Lab1
                         //}
                     }
                 }
+
+                //need to handle lower-right edges here
+
                 wbmp.Lock();
                 wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
                 wbmp.Unlock();
-
             }
         }
     }
