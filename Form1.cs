@@ -113,7 +113,7 @@ namespace Computer_Graphics_1
                     blurConvMat3x3[i,j] = 1;
                 }
             }
-            ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit,ref newPictureBox);
+            ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
             newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
     }
