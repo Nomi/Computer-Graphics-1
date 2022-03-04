@@ -22,7 +22,11 @@ namespace Computer_Graphics_1.Lab1
                 //Program supports only images with 8-bit BGR(A) Pixel formats for now. Because of GetPixelIntPtrAt extension containing the line "int pixelNumChannels = wbmp.Format.BitsPerPixel / 8;". It was in turn added to have compatibility of both BGRA and BGR channel configs.
 
 
-                //missing corner part might be wrong as it doesn't take into account the position of the current pixel and so on.
+                //Update, it should work. IDK why I thought it wouldn't. Weariness maybe?//missing corner part might be wrong as it doesn't take into account the position of the current pixel and so on.
+                //BUT: I also don't really set the pixels calculated inside the deeper for loops anywhere
+                //for right side and lower side, need to calculate new missingCOl and missingRow
+
+                //or maybe I could remove the corner parts from here and do that at the end because the image would only be missing the diagonal squares
                 //Handles upper and left edges:
                 for (int row =0; row < (_mSz - 1) / 2; row++) 
                 {
@@ -52,6 +56,9 @@ namespace Computer_Graphics_1.Lab1
                                 pixDat[tempInd + 2] = subPixDat[tempSubInd+2];
                             }
                         }
+                        //Should I calculate missingRowsRight here to help duplicate upper right corner?
+                        //or maybe I could remove the corner parts from here and do that at the end because the image would only be missing the diagonal squares
+
                         for (int mC=0; mC< missingCols; mC++) //handles the left edge of missing content
                         {
                             for (int i = 0; i < rHeight; i++)
