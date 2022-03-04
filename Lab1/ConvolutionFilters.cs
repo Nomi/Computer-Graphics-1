@@ -21,6 +21,8 @@ namespace Computer_Graphics_1.Lab1
                 /// IMPLEMENT FULLY WITH TRY https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.imaging.writeablebitmap?view=windowsdesktop-6.0#:~:text=Properties%20%20%20Back%20Buffer%20%20%20Gets,this%20DispatcherObjec%20...%20%2013%20more%20rows%20
                 //Program supports only images with 8-bit BGR(A) Pixel formats for now. Because of GetPixelIntPtrAt extension containing the line "int pixelNumChannels = wbmp.Format.BitsPerPixel / 8;". It was in turn added to have compatibility of both BGRA and BGR channel configs.
 
+
+                //missing corner part might be wrong as it doesn't take into account the position of the current pixel and so on.
                 //Handles upper and left edges:
                 for (int row =0; row < (_mSz - 1) / 2; row++) 
                 {
