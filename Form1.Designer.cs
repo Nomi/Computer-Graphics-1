@@ -32,12 +32,13 @@ namespace Computer_Graphics_1
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoAllProcessingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labsTabControl = new System.Windows.Forms.TabControl();
             this.lab1TabPage = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.convultionFiltersGroupBox = new System.Windows.Forms.GroupBox();
+            this.blur9x9ConvFiltButton = new System.Windows.Forms.Button();
             this.funcFilGroupBox = new System.Windows.Forms.GroupBox();
-            this.invertFilterButton = new System.Windows.Forms.Button();
             this.lab2TabPage = new System.Windows.Forms.TabPage();
             this.lab3TabPage = new System.Windows.Forms.TabPage();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
@@ -49,16 +50,15 @@ namespace Computer_Graphics_1
             this.ogImgLabel = new System.Windows.Forms.Label();
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.newPictureBox = new System.Windows.Forms.PictureBox();
-            this.undoAllProcessingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inversionCheckBox = new System.Windows.Forms.CheckBox();
             this.brightnessCorrection = new System.Windows.Forms.Button();
             this.contrastEnhanceButton = new System.Windows.Forms.Button();
             this.gammaCorrectionButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
             this.lab1TabPage.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.convultionFiltersGroupBox.SuspendLayout();
             this.funcFilGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
@@ -99,6 +99,15 @@ namespace Computer_Graphics_1
             this.openImageToolStripMenuItem.Text = "Open Image";
             this.openImageToolStripMenuItem.Click += new System.EventHandler(this.openImageToolStripMenuItem_Click);
             // 
+            // undoAllProcessingMenuItem
+            // 
+            this.undoAllProcessingMenuItem.Enabled = false;
+            this.undoAllProcessingMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.undoAllProcessingMenuItem.Name = "undoAllProcessingMenuItem";
+            this.undoAllProcessingMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.undoAllProcessingMenuItem.Text = "Undo ALL Processing";
+            this.undoAllProcessingMenuItem.Click += new System.EventHandler(this.undoAllProcessingMenuItem_Click);
+            // 
             // mainTableLayoutPanel
             // 
             this.mainTableLayoutPanel.BackColor = System.Drawing.Color.Black;
@@ -136,7 +145,7 @@ namespace Computer_Graphics_1
             // lab1TabPage
             // 
             this.lab1TabPage.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.lab1TabPage.Controls.Add(this.groupBox2);
+            this.lab1TabPage.Controls.Add(this.convultionFiltersGroupBox);
             this.lab1TabPage.Controls.Add(this.funcFilGroupBox);
             this.lab1TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab1TabPage.Name = "lab1TabPage";
@@ -145,16 +154,30 @@ namespace Computer_Graphics_1
             this.lab1TabPage.TabIndex = 0;
             this.lab1TabPage.Text = "L1";
             // 
-            // groupBox2
+            // convultionFiltersGroupBox
             // 
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(3, 156);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(218, 100);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.convultionFiltersGroupBox.Controls.Add(this.blur9x9ConvFiltButton);
+            this.convultionFiltersGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.convultionFiltersGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.convultionFiltersGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.convultionFiltersGroupBox.Location = new System.Drawing.Point(3, 149);
+            this.convultionFiltersGroupBox.Name = "convultionFiltersGroupBox";
+            this.convultionFiltersGroupBox.Size = new System.Drawing.Size(218, 100);
+            this.convultionFiltersGroupBox.TabIndex = 4;
+            this.convultionFiltersGroupBox.TabStop = false;
+            this.convultionFiltersGroupBox.Text = "Convultion Filters";
+            // 
+            // blur9x9ConvFiltButton
+            // 
+            this.blur9x9ConvFiltButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.blur9x9ConvFiltButton.ForeColor = System.Drawing.Color.Black;
+            this.blur9x9ConvFiltButton.Location = new System.Drawing.Point(3, 20);
+            this.blur9x9ConvFiltButton.Name = "blur9x9ConvFiltButton";
+            this.blur9x9ConvFiltButton.Size = new System.Drawing.Size(212, 23);
+            this.blur9x9ConvFiltButton.TabIndex = 0;
+            this.blur9x9ConvFiltButton.Text = "Blur (9x9 Conv Mat)";
+            this.blur9x9ConvFiltButton.UseVisualStyleBackColor = true;
+            this.blur9x9ConvFiltButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // funcFilGroupBox
             // 
@@ -163,30 +186,16 @@ namespace Computer_Graphics_1
             this.funcFilGroupBox.Controls.Add(this.gammaCorrectionButton);
             this.funcFilGroupBox.Controls.Add(this.contrastEnhanceButton);
             this.funcFilGroupBox.Controls.Add(this.brightnessCorrection);
-            this.funcFilGroupBox.Controls.Add(this.invertFilterButton);
+            this.funcFilGroupBox.Controls.Add(this.inversionCheckBox);
             this.funcFilGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.funcFilGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.funcFilGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.funcFilGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.funcFilGroupBox.Location = new System.Drawing.Point(3, 3);
             this.funcFilGroupBox.Name = "funcFilGroupBox";
-            this.funcFilGroupBox.Size = new System.Drawing.Size(218, 153);
+            this.funcFilGroupBox.Size = new System.Drawing.Size(218, 146);
             this.funcFilGroupBox.TabIndex = 2;
             this.funcFilGroupBox.TabStop = false;
             this.funcFilGroupBox.Text = "Functional Filters";
-            // 
-            // invertFilterButton
-            // 
-            this.invertFilterButton.AutoSize = true;
-            this.invertFilterButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.invertFilterButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invertFilterButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.invertFilterButton.Location = new System.Drawing.Point(3, 18);
-            this.invertFilterButton.Name = "invertFilterButton";
-            this.invertFilterButton.Size = new System.Drawing.Size(212, 33);
-            this.invertFilterButton.TabIndex = 0;
-            this.invertFilterButton.Text = "Inversion";
-            this.invertFilterButton.UseVisualStyleBackColor = true;
-            this.invertFilterButton.Click += new System.EventHandler(this.invertFilter_Click);
             // 
             // lab2TabPage
             // 
@@ -315,14 +324,18 @@ namespace Computer_Graphics_1
             this.newPictureBox.TabIndex = 5;
             this.newPictureBox.TabStop = false;
             // 
-            // undoAllProcessingMenuItem
+            // inversionCheckBox
             // 
-            this.undoAllProcessingMenuItem.Enabled = false;
-            this.undoAllProcessingMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.undoAllProcessingMenuItem.Name = "undoAllProcessingMenuItem";
-            this.undoAllProcessingMenuItem.Size = new System.Drawing.Size(236, 26);
-            this.undoAllProcessingMenuItem.Text = "Undo ALL Processing";
-            this.undoAllProcessingMenuItem.Click += new System.EventHandler(this.undoAllProcessingMenuItem_Click);
+            this.inversionCheckBox.AutoSize = true;
+            this.inversionCheckBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.inversionCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inversionCheckBox.Location = new System.Drawing.Point(3, 20);
+            this.inversionCheckBox.Name = "inversionCheckBox";
+            this.inversionCheckBox.Size = new System.Drawing.Size(212, 24);
+            this.inversionCheckBox.TabIndex = 4;
+            this.inversionCheckBox.Text = "Invert Colors";
+            this.inversionCheckBox.UseVisualStyleBackColor = true;
+            this.inversionCheckBox.CheckedChanged += new System.EventHandler(this.inversionCheckBox_CheckedChanged);
             // 
             // brightnessCorrection
             // 
@@ -330,13 +343,12 @@ namespace Computer_Graphics_1
             this.brightnessCorrection.Dock = System.Windows.Forms.DockStyle.Top;
             this.brightnessCorrection.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.brightnessCorrection.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.brightnessCorrection.Location = new System.Drawing.Point(3, 51);
+            this.brightnessCorrection.Location = new System.Drawing.Point(3, 44);
             this.brightnessCorrection.Name = "brightnessCorrection";
             this.brightnessCorrection.Size = new System.Drawing.Size(212, 33);
-            this.brightnessCorrection.TabIndex = 1;
+            this.brightnessCorrection.TabIndex = 5;
             this.brightnessCorrection.Text = "Brightness Correction";
             this.brightnessCorrection.UseVisualStyleBackColor = true;
-            this.brightnessCorrection.Click += new System.EventHandler(this.brightnessCorrection_Click);
             // 
             // contrastEnhanceButton
             // 
@@ -344,13 +356,12 @@ namespace Computer_Graphics_1
             this.contrastEnhanceButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.contrastEnhanceButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.contrastEnhanceButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.contrastEnhanceButton.Location = new System.Drawing.Point(3, 84);
+            this.contrastEnhanceButton.Location = new System.Drawing.Point(3, 77);
             this.contrastEnhanceButton.Name = "contrastEnhanceButton";
             this.contrastEnhanceButton.Size = new System.Drawing.Size(212, 33);
-            this.contrastEnhanceButton.TabIndex = 2;
+            this.contrastEnhanceButton.TabIndex = 6;
             this.contrastEnhanceButton.Text = "Contrast Enhancement";
             this.contrastEnhanceButton.UseVisualStyleBackColor = true;
-            this.contrastEnhanceButton.Click += new System.EventHandler(this.contrastEnhanceButton_Click);
             // 
             // gammaCorrectionButton
             // 
@@ -358,23 +369,12 @@ namespace Computer_Graphics_1
             this.gammaCorrectionButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.gammaCorrectionButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gammaCorrectionButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.gammaCorrectionButton.Location = new System.Drawing.Point(3, 117);
+            this.gammaCorrectionButton.Location = new System.Drawing.Point(3, 110);
             this.gammaCorrectionButton.Name = "gammaCorrectionButton";
             this.gammaCorrectionButton.Size = new System.Drawing.Size(212, 33);
-            this.gammaCorrectionButton.TabIndex = 3;
+            this.gammaCorrectionButton.TabIndex = 7;
             this.gammaCorrectionButton.Text = "Gamma Correction";
             this.gammaCorrectionButton.UseVisualStyleBackColor = true;
-            this.gammaCorrectionButton.Click += new System.EventHandler(this.gammaCorrectionButton_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(58, 33);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
@@ -394,7 +394,7 @@ namespace Computer_Graphics_1
             this.labsTabControl.ResumeLayout(false);
             this.lab1TabPage.ResumeLayout(false);
             this.lab1TabPage.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.convultionFiltersGroupBox.ResumeLayout(false);
             this.funcFilGroupBox.ResumeLayout(false);
             this.funcFilGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
@@ -428,13 +428,13 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.PictureBox newPictureBox;
         private System.Windows.Forms.ToolStripMenuItem openImageToolStripMenuItem;
         private System.Windows.Forms.GroupBox funcFilGroupBox;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button invertFilterButton;
+        private System.Windows.Forms.GroupBox convultionFiltersGroupBox;
         private System.Windows.Forms.ToolStripMenuItem undoAllProcessingMenuItem;
-        private System.Windows.Forms.Button brightnessCorrection;
-        private System.Windows.Forms.Button contrastEnhanceButton;
+        private System.Windows.Forms.Button blur9x9ConvFiltButton;
+        private System.Windows.Forms.CheckBox inversionCheckBox;
         private System.Windows.Forms.Button gammaCorrectionButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button contrastEnhanceButton;
+        private System.Windows.Forms.Button brightnessCorrection;
     }
 }
 

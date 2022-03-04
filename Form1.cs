@@ -67,17 +67,17 @@ namespace Computer_Graphics_1
             }
         }
 
-        private void invertFilter_Click(object sender, EventArgs e)
-        {
-            ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
-            //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
-            Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
-            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
-            if (invertFilterButton.ForeColor == SystemColors.ActiveCaptionText|| invertFilterButton.ForeColor==Color.Black)
-                invertFilterButton.ForeColor = Color.Green;
-            else
-                invertFilterButton.ForeColor = Color.Black;
-        }
+        //private void invertFilter_Click(object sender, EventArgs e)
+        //{
+        //    ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
+        //    //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
+        //    Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
+        //    newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
+        //    if (invertFilterButton.ForeColor == SystemColors.ActiveCaptionText|| invertFilterButton.ForeColor==Color.Black)
+        //        invertFilterButton.ForeColor = Color.Green;
+        //    else
+        //        invertFilterButton.ForeColor = Color.Black;
+        //}
 
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
         {
@@ -110,11 +110,24 @@ namespace Computer_Graphics_1
             {
                for(int j=0; j<3; j++)
                 {
-                    blurConvMat3x3[i,j] = 1;
+                    blurConvMat3x3[i, j] = 1;//0;//1;
                 }
             }
             ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
             newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void inversionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
+            //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
+            Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
+        }
+
+        private void invertFilter_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
