@@ -11,5 +11,12 @@ namespace Computer_Graphics_1.HelperClasses
         public byte blue;
         public byte green;
         public byte red;
+        //public byte alpha; //not really neccessary for lab 1 //haven't tested
+    }
+
+    public struct _coords
+    {
+        public int r;
+        public int c;
     }
 }

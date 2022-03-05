@@ -123,5 +123,10 @@ namespace Computer_Graphics_1.HelperClasses
 
             throw new NotSupportedException("Convertion not supported with " + pixelFormat.ToString());
         }
+
+        public static int Clamp(int value, int min, int max)
+        {
+            return (value < min) ? min : (value > max) ? max : value;
+        }
     }
 }

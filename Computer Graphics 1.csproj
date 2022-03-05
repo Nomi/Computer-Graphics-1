@@ -56,8 +56,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\ByteArrayEx.cs" />
     <Compile Include="HelperClasses\WriteableBitmapExJOJO.cs" />
     <Compile Include="HelperClasses\ImgUtil.cs" />
+    <Compile Include="Lab1\ConvolutionFilters.cs" />
     <Compile Include="Lab1\FunctionalFilters.cs" />
     <Compile Include="HelperClasses\pixel.cs" />
     <Compile Include="Program.cs" />

@@ -67,17 +67,17 @@ namespace Computer_Graphics_1
             }
         }
 
-        private void invertFilter_Click(object sender, EventArgs e)
-        {
-            ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
-            //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
-            Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
-            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
-            if (invertFilterButton.ForeColor == SystemColors.ActiveCaptionText|| invertFilterButton.ForeColor==Color.Black)
-                invertFilterButton.ForeColor = Color.Green;
-            else
-                invertFilterButton.ForeColor = Color.Black;
-        }
+        //private void invertFilter_Click(object sender, EventArgs e)
+        //{
+        //    ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
+        //    //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
+        //    Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
+        //    newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
+        //    if (invertFilterButton.ForeColor == SystemColors.ActiveCaptionText|| invertFilterButton.ForeColor==Color.Black)
+        //        invertFilterButton.ForeColor = Color.Green;
+        //    else
+        //        invertFilterButton.ForeColor = Color.Black;
+        //}
 
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
         {
@@ -101,6 +101,35 @@ namespace Computer_Graphics_1
         {
             FunctionalFilters.GammaCorrection(wBmpToEdit, 1.666);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int[,] blurConvMat3x3 = new int[7, 7];//[9, 9];
+            for(int i=0;i<7;i++)//i<9
+            {
+               for(int j=0; j<7; j++)//j<9
+                {
+                    blurConvMat3x3[i, j] = 1;//0;//1;
+                }
+            }
+            //ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
+            _coords Coords; Coords.r = 5; Coords.c = 6; //7x7:5,6
+            ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
+            newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void inversionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
+            //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
+            Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
+        }
+
+        private void invertFilter_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
