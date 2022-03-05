@@ -349,6 +349,7 @@ namespace Computer_Graphics_1
             this.brightnessCorrection.TabIndex = 5;
             this.brightnessCorrection.Text = "Brightness Correction";
             this.brightnessCorrection.UseVisualStyleBackColor = true;
+            this.brightnessCorrection.Click += new System.EventHandler(this.brightnessCorrection_Click);
             // 
             // contrastEnhanceButton
             // 
@@ -362,6 +363,7 @@ namespace Computer_Graphics_1
             this.contrastEnhanceButton.TabIndex = 6;
             this.contrastEnhanceButton.Text = "Contrast Enhancement";
             this.contrastEnhanceButton.UseVisualStyleBackColor = true;
+            this.contrastEnhanceButton.Click += new System.EventHandler(this.contrastEnhanceButton_Click);
             // 
             // gammaCorrectionButton
             // 
@@ -375,6 +377,7 @@ namespace Computer_Graphics_1
             this.gammaCorrectionButton.TabIndex = 7;
             this.gammaCorrectionButton.Text = "Gamma Correction";
             this.gammaCorrectionButton.UseVisualStyleBackColor = true;
+            this.gammaCorrectionButton.Click += new System.EventHandler(this.gammaCorrectionButton_Click);
             // 
             // MainForm
             // 

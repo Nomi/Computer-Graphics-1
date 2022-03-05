@@ -62,6 +62,9 @@ namespace Computer_Graphics_1.Lab1
                         pxl->blue = (byte) newBlue;
                         pxl->red = (byte) newRed;
                         pxl->green = (byte) newGreen;
+                        //pxl->blue = 0;
+                        //pxl->green = 0;
+                        //pxl->red = 0;
                     }
                 }
                 writtenImg.AddDirtyRect(new System.Windows.Int32Rect(0, 0, writtenImg.PixelWidth, writtenImg.PixelHeight));

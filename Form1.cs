@@ -114,7 +114,7 @@ namespace Computer_Graphics_1
                 }
             }
             //ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
-            _coords Coords; Coords.r = 5; Coords.c = 6;
+            _coords Coords; Coords.r = 5; Coords.c = 6; //7x7:5,6
             ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
             newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
