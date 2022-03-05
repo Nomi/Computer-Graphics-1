@@ -105,15 +105,17 @@ namespace Computer_Graphics_1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int[,] blurConvMat3x3 = new int[3, 3];
-            for(int i=0;i<3;i++)
+            int[,] blurConvMat3x3 = new int[7, 7];//[9, 9];
+            for(int i=0;i<7;i++)//i<9
             {
-               for(int j=0; j<3; j++)
+               for(int j=0; j<7; j++)//j<9
                 {
                     blurConvMat3x3[i, j] = 1;//0;//1;
                 }
             }
-            ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
+            //ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
+            _coords Coords; Coords.r = 5; Coords.c = 6;
+            ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
             newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
 
