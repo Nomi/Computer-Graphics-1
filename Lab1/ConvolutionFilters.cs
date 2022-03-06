@@ -27,7 +27,12 @@ namespace Computer_Graphics_1.Lab1
             if (divisor == -99999)
             {
                 divisor = sumCM;
+                if(divisor==0)
+                {
+                    divisor = 1;
+                }
             }
+            
 
             int mid = (cnvMatSiz - 1) / 2 + 1;
             if (anchorKernel.c == -1)

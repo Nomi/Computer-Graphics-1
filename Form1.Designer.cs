@@ -32,12 +32,22 @@ namespace Computer_Graphics_1
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsResultpngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.undoAllProcessingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labsTabControl = new System.Windows.Forms.TabControl();
             this.lab1TabPage = new System.Windows.Forms.TabPage();
             this.convultionFiltersGroupBox = new System.Windows.Forms.GroupBox();
-            this.blur9x9ConvFiltButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ApplyConvFiltButton = new System.Windows.Forms.Button();
+            this.customizeConvFilterButton = new System.Windows.Forms.Button();
+            this.embossRadioButton = new System.Windows.Forms.RadioButton();
+            this.edgeDetRadioButton = new System.Windows.Forms.RadioButton();
+            this.meanRemSharpRadioButton = new System.Windows.Forms.RadioButton();
+            this.sharpenRadioButton = new System.Windows.Forms.RadioButton();
+            this.gaussSmoothRadioButton = new System.Windows.Forms.RadioButton();
+            this.blurRadioButton = new System.Windows.Forms.RadioButton();
             this.funcFilGroupBox = new System.Windows.Forms.GroupBox();
             this.gammaCorrectionButton = new System.Windows.Forms.Button();
             this.contrastEnhanceButton = new System.Windows.Forms.Button();
@@ -59,6 +69,7 @@ namespace Computer_Graphics_1
             this.labsTabControl.SuspendLayout();
             this.lab1TabPage.SuspendLayout();
             this.convultionFiltersGroupBox.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.funcFilGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
@@ -73,7 +84,8 @@ namespace Computer_Graphics_1
             this.menuStrip1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 31);
@@ -84,7 +96,7 @@ namespace Computer_Graphics_1
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openImageToolStripMenuItem,
-            this.undoAllProcessingMenuItem});
+            this.saveAsResultpngToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.LightSeaGreen;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -95,17 +107,34 @@ namespace Computer_Graphics_1
             // 
             this.openImageToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
-            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(211, 26);
             this.openImageToolStripMenuItem.Text = "Open Image";
             this.openImageToolStripMenuItem.Click += new System.EventHandler(this.openImageToolStripMenuItem_Click);
             // 
+            // saveAsResultpngToolStripMenuItem
+            // 
+            this.saveAsResultpngToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveAsResultpngToolStripMenuItem.Name = "saveAsResultpngToolStripMenuItem";
+            this.saveAsResultpngToolStripMenuItem.Size = new System.Drawing.Size(211, 26);
+            this.saveAsResultpngToolStripMenuItem.Text = "Save as result.png";
+            this.saveAsResultpngToolStripMenuItem.Click += new System.EventHandler(this.saveAsResultpngToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoAllProcessingMenuItem});
+            this.toolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 10.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.LightSeaGreen;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(56, 27);
+            this.toolStripMenuItem1.Text = "Edit";
+            // 
             // undoAllProcessingMenuItem
             // 
-            this.undoAllProcessingMenuItem.Enabled = false;
-            this.undoAllProcessingMenuItem.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.undoAllProcessingMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.undoAllProcessingMenuItem.Name = "undoAllProcessingMenuItem";
-            this.undoAllProcessingMenuItem.Size = new System.Drawing.Size(236, 26);
-            this.undoAllProcessingMenuItem.Text = "Undo ALL Processing";
+            this.undoAllProcessingMenuItem.Size = new System.Drawing.Size(232, 26);
+            this.undoAllProcessingMenuItem.Text = "Undo ALL processing";
             this.undoAllProcessingMenuItem.Click += new System.EventHandler(this.undoAllProcessingMenuItem_Click);
             // 
             // mainTableLayoutPanel
@@ -156,28 +185,146 @@ namespace Computer_Graphics_1
             // 
             // convultionFiltersGroupBox
             // 
-            this.convultionFiltersGroupBox.Controls.Add(this.blur9x9ConvFiltButton);
+            this.convultionFiltersGroupBox.AutoSize = true;
+            this.convultionFiltersGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.convultionFiltersGroupBox.Controls.Add(this.tableLayoutPanel1);
+            this.convultionFiltersGroupBox.Controls.Add(this.embossRadioButton);
+            this.convultionFiltersGroupBox.Controls.Add(this.edgeDetRadioButton);
+            this.convultionFiltersGroupBox.Controls.Add(this.meanRemSharpRadioButton);
+            this.convultionFiltersGroupBox.Controls.Add(this.sharpenRadioButton);
+            this.convultionFiltersGroupBox.Controls.Add(this.gaussSmoothRadioButton);
+            this.convultionFiltersGroupBox.Controls.Add(this.blurRadioButton);
             this.convultionFiltersGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.convultionFiltersGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.convultionFiltersGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.convultionFiltersGroupBox.Location = new System.Drawing.Point(3, 149);
             this.convultionFiltersGroupBox.Name = "convultionFiltersGroupBox";
-            this.convultionFiltersGroupBox.Size = new System.Drawing.Size(218, 100);
+            this.convultionFiltersGroupBox.Size = new System.Drawing.Size(218, 189);
             this.convultionFiltersGroupBox.TabIndex = 4;
             this.convultionFiltersGroupBox.TabStop = false;
             this.convultionFiltersGroupBox.Text = "Convultion Filters";
             // 
-            // blur9x9ConvFiltButton
+            // tableLayoutPanel1
             // 
-            this.blur9x9ConvFiltButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.blur9x9ConvFiltButton.ForeColor = System.Drawing.Color.Black;
-            this.blur9x9ConvFiltButton.Location = new System.Drawing.Point(3, 20);
-            this.blur9x9ConvFiltButton.Name = "blur9x9ConvFiltButton";
-            this.blur9x9ConvFiltButton.Size = new System.Drawing.Size(212, 23);
-            this.blur9x9ConvFiltButton.TabIndex = 0;
-            this.blur9x9ConvFiltButton.Text = "Blur (9x9 Conv Mat)";
-            this.blur9x9ConvFiltButton.UseVisualStyleBackColor = true;
-            this.blur9x9ConvFiltButton.Click += new System.EventHandler(this.button1_Click);
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.ApplyConvFiltButton, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.customizeConvFilterButton, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 152);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(212, 34);
+            this.tableLayoutPanel1.TabIndex = 25;
+            // 
+            // ApplyConvFiltButton
+            // 
+            this.ApplyConvFiltButton.AutoSize = true;
+            this.ApplyConvFiltButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ApplyConvFiltButton.ForeColor = System.Drawing.Color.Black;
+            this.ApplyConvFiltButton.Location = new System.Drawing.Point(109, 3);
+            this.ApplyConvFiltButton.Name = "ApplyConvFiltButton";
+            this.ApplyConvFiltButton.Size = new System.Drawing.Size(100, 28);
+            this.ApplyConvFiltButton.TabIndex = 26;
+            this.ApplyConvFiltButton.Text = "Apply";
+            this.ApplyConvFiltButton.UseVisualStyleBackColor = true;
+            this.ApplyConvFiltButton.Click += new System.EventHandler(this.applyConvFiltButton_Click);
+            // 
+            // customizeConvFilterButton
+            // 
+            this.customizeConvFilterButton.AutoSize = true;
+            this.customizeConvFilterButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.customizeConvFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customizeConvFilterButton.ForeColor = System.Drawing.Color.Black;
+            this.customizeConvFilterButton.Location = new System.Drawing.Point(3, 3);
+            this.customizeConvFilterButton.Name = "customizeConvFilterButton";
+            this.customizeConvFilterButton.Size = new System.Drawing.Size(100, 28);
+            this.customizeConvFilterButton.TabIndex = 25;
+            this.customizeConvFilterButton.Text = "Customize Filter";
+            this.customizeConvFilterButton.UseVisualStyleBackColor = true;
+            // 
+            // embossRadioButton
+            // 
+            this.embossRadioButton.AutoSize = true;
+            this.embossRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.embossRadioButton.Location = new System.Drawing.Point(3, 130);
+            this.embossRadioButton.Name = "embossRadioButton";
+            this.embossRadioButton.Size = new System.Drawing.Size(212, 22);
+            this.embossRadioButton.TabIndex = 5;
+            this.embossRadioButton.TabStop = true;
+            this.embossRadioButton.Text = "Emboss (East)";
+            this.embossRadioButton.UseVisualStyleBackColor = true;
+            this.embossRadioButton.CheckedChanged += new System.EventHandler(this.embossRadioButton_CheckedChanged);
+            // 
+            // edgeDetRadioButton
+            // 
+            this.edgeDetRadioButton.AutoSize = true;
+            this.edgeDetRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.edgeDetRadioButton.Location = new System.Drawing.Point(3, 108);
+            this.edgeDetRadioButton.Name = "edgeDetRadioButton";
+            this.edgeDetRadioButton.Size = new System.Drawing.Size(212, 22);
+            this.edgeDetRadioButton.TabIndex = 4;
+            this.edgeDetRadioButton.TabStop = true;
+            this.edgeDetRadioButton.Text = "Edge Detect (L->R)";
+            this.edgeDetRadioButton.UseVisualStyleBackColor = true;
+            this.edgeDetRadioButton.CheckedChanged += new System.EventHandler(this.edgeDetRadioButton_SelectIndexChanged);
+            // 
+            // meanRemSharpRadioButton
+            // 
+            this.meanRemSharpRadioButton.AutoSize = true;
+            this.meanRemSharpRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.meanRemSharpRadioButton.Location = new System.Drawing.Point(3, 86);
+            this.meanRemSharpRadioButton.Name = "meanRemSharpRadioButton";
+            this.meanRemSharpRadioButton.Size = new System.Drawing.Size(212, 22);
+            this.meanRemSharpRadioButton.TabIndex = 3;
+            this.meanRemSharpRadioButton.TabStop = true;
+            this.meanRemSharpRadioButton.Text = "Mean Removal Sharpen";
+            this.meanRemSharpRadioButton.UseVisualStyleBackColor = true;
+            this.meanRemSharpRadioButton.CheckedChanged += new System.EventHandler(this.meanRemSharpRadioButton_CheckedChanged);
+            // 
+            // sharpenRadioButton
+            // 
+            this.sharpenRadioButton.AutoSize = true;
+            this.sharpenRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.sharpenRadioButton.Location = new System.Drawing.Point(3, 64);
+            this.sharpenRadioButton.Name = "sharpenRadioButton";
+            this.sharpenRadioButton.Size = new System.Drawing.Size(212, 22);
+            this.sharpenRadioButton.TabIndex = 2;
+            this.sharpenRadioButton.TabStop = true;
+            this.sharpenRadioButton.Text = "Sharpen";
+            this.sharpenRadioButton.UseVisualStyleBackColor = true;
+            this.sharpenRadioButton.CheckedChanged += new System.EventHandler(this.sharpenRadioButton_CheckedChanged);
+            // 
+            // gaussSmoothRadioButton
+            // 
+            this.gaussSmoothRadioButton.AutoSize = true;
+            this.gaussSmoothRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gaussSmoothRadioButton.Location = new System.Drawing.Point(3, 42);
+            this.gaussSmoothRadioButton.Name = "gaussSmoothRadioButton";
+            this.gaussSmoothRadioButton.Size = new System.Drawing.Size(212, 22);
+            this.gaussSmoothRadioButton.TabIndex = 1;
+            this.gaussSmoothRadioButton.TabStop = true;
+            this.gaussSmoothRadioButton.Text = "Gaussian Smoothening";
+            this.gaussSmoothRadioButton.UseVisualStyleBackColor = true;
+            this.gaussSmoothRadioButton.CheckedChanged += new System.EventHandler(this.gaussSmoothRadioButton_CheckedChanged);
+            // 
+            // blurRadioButton
+            // 
+            this.blurRadioButton.AutoSize = true;
+            this.blurRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.blurRadioButton.Location = new System.Drawing.Point(3, 20);
+            this.blurRadioButton.Name = "blurRadioButton";
+            this.blurRadioButton.Size = new System.Drawing.Size(212, 22);
+            this.blurRadioButton.TabIndex = 0;
+            this.blurRadioButton.TabStop = true;
+            this.blurRadioButton.Text = "Blur";
+            this.blurRadioButton.UseVisualStyleBackColor = true;
+            this.blurRadioButton.CheckedChanged += new System.EventHandler(this.blurRadioButton_CheckedChanged);
             // 
             // funcFilGroupBox
             // 
@@ -398,6 +545,9 @@ namespace Computer_Graphics_1
             this.lab1TabPage.ResumeLayout(false);
             this.lab1TabPage.PerformLayout();
             this.convultionFiltersGroupBox.ResumeLayout(false);
+            this.convultionFiltersGroupBox.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.funcFilGroupBox.ResumeLayout(false);
             this.funcFilGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
@@ -432,12 +582,22 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.ToolStripMenuItem openImageToolStripMenuItem;
         private System.Windows.Forms.GroupBox funcFilGroupBox;
         private System.Windows.Forms.GroupBox convultionFiltersGroupBox;
-        private System.Windows.Forms.ToolStripMenuItem undoAllProcessingMenuItem;
-        private System.Windows.Forms.Button blur9x9ConvFiltButton;
         private System.Windows.Forms.CheckBox inversionCheckBox;
         private System.Windows.Forms.Button gammaCorrectionButton;
         private System.Windows.Forms.Button contrastEnhanceButton;
         private System.Windows.Forms.Button brightnessCorrection;
+        private System.Windows.Forms.ToolStripMenuItem saveAsResultpngToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem undoAllProcessingMenuItem;
+        private System.Windows.Forms.RadioButton embossRadioButton;
+        private System.Windows.Forms.RadioButton edgeDetRadioButton;
+        private System.Windows.Forms.RadioButton meanRemSharpRadioButton;
+        private System.Windows.Forms.RadioButton sharpenRadioButton;
+        private System.Windows.Forms.RadioButton gaussSmoothRadioButton;
+        private System.Windows.Forms.RadioButton blurRadioButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button ApplyConvFiltButton;
+        private System.Windows.Forms.Button customizeConvFilterButton;
     }
 }
 

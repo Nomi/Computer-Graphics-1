@@ -19,6 +19,14 @@ namespace Computer_Graphics_1
     {
         private Bitmap ogBitmap = null;
         private WriteableBitmap wBmpToEdit = null;
+        public static class cnvFilt
+        {
+            public static int[,] Mat = null;
+            public static double divisor = -99999;
+            public static _coords anchorCoords; //indexed from 1
+        }
+
+        
         public MainForm()
         {
             InitializeComponent();
@@ -104,21 +112,46 @@ namespace Computer_Graphics_1
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void applyConvFiltButton_Click(object sender, EventArgs e)
         {
-            int[,] blurConvMat3x3 = new int[9, 9];//[9, 9];
-            for(int i=0;i<9;i++)//i<9
+            if(cnvFilt.Mat!=null)
             {
-               for(int j=0; j<9; j++)//j<9
+                int[,] blurConvMat3x3 = new int[3, 3];//[9, 9];
+                for (int i = 0; i < 3; i++)//i<9
                 {
-                    blurConvMat3x3[i, j] = 1;//0;//1;
+                    for (int j = 0; j < 3; j++)//j<9
+                    {
+                        blurConvMat3x3[i, j] = 1;//0;//1;
+                    }
                 }
+                /////the above sets for blur and it works
+                /////Gaussian Smoothening/blur: (should work)
+                ////blurConvMat3x3[0, 0] = 0; blurConvMat3x3[0, 1] = 1; blurConvMat3x3[0, 2] = 0;
+                ////blurConvMat3x3[1, 0] = 1; blurConvMat3x3[1, 1] = 4; blurConvMat3x3[1, 2] = 1;
+                ////blurConvMat3x3[2, 0] = 0; blurConvMat3x3[2, 1] = 1; blurConvMat3x3[2, 2] = 0;
+                /////Sharpen: (works)
+                ////blurConvMat3x3[0, 0] = 0; blurConvMat3x3[0, 1] = -1; blurConvMat3x3[0, 2] = 0;
+                ////blurConvMat3x3[1, 0] = -1; blurConvMat3x3[1, 1] = 5; blurConvMat3x3[1, 2] = -1;
+                ////blurConvMat3x3[2, 0] = 0; blurConvMat3x3[2, 1] = -1; blurConvMat3x3[2, 2] = 0;
+                /////Mean removal sharpen?: (probably works as it should)
+                ////blurConvMat3x3[0, 0] = -1; blurConvMat3x3[0, 1] = -1; blurConvMat3x3[0, 2] = -1;
+                ////blurConvMat3x3[1, 0] = -1; blurConvMat3x3[1, 1] = 9; blurConvMat3x3[1, 2] = -1;
+                ////blurConvMat3x3[2, 0] = -1; blurConvMat3x3[2, 1] = -1; blurConvMat3x3[2, 2] = -1;
+                /////Edge detection: (Works! (USE 0.1 divisor THO)
+                blurConvMat3x3[0, 0] = 0; blurConvMat3x3[0, 1] = -1; blurConvMat3x3[0, 2] = 0;
+                blurConvMat3x3[1, 0] = 0; blurConvMat3x3[1, 1] = 1; blurConvMat3x3[1, 2] = 0;
+                blurConvMat3x3[2, 0] = 0; blurConvMat3x3[2, 1] = 0; blurConvMat3x3[2, 2] = 0;
+                /////Emboss: (works)
+                ////blurConvMat3x3[0, 0] = -1; blurConvMat3x3[0, 1] = 0; blurConvMat3x3[0, 2] = 1;
+                ////blurConvMat3x3[1, 0] = -1; blurConvMat3x3[1, 1] = 1; blurConvMat3x3[1, 2] = 1;
+                ////blurConvMat3x3[2, 0] = -1; blurConvMat3x3[2, 1] = 0; blurConvMat3x3[2, 2] = 1;
+
+                ////ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
+                _coords Coords; Coords.r = 2; Coords.c = 2; //7x7:5,6 //6,5 //indexed from 1
+                //ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit, 0.1);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
+                ConvolutionFilters.Apply(cnvFilt.Mat, cnvFilt.anchorCoords, wBmpToEdit, cnvFilt.divisor);
+                newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
             }
-            //ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
-            _coords Coords; Coords.r = 6; Coords.c = 5; //7x7:5,6
-            ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit,0);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
-            newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
-            wBmpToEdit.SaveAsPNG("w0w.png");
         }
 
         private void inversionCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -135,5 +168,101 @@ namespace Computer_Graphics_1
 
         }
 
+        private void saveAsResultpngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            wBmpToEdit.SaveAsPNG("result.png");
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void edgeDetRadioButton_SelectIndexChanged(object sender, EventArgs e)
+        {
+            if(edgeDetRadioButton.Checked)
+            {
+                cnvFilt.Mat = new int[3, 3];
+                cnvFilt.divisor = 0.1;
+                cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
+                ///Edge detection: (Works! (USE 0.1 divisor THO)
+                cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = 0; cnvFilt.Mat[0, 2] = 0;
+                cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 1; cnvFilt.Mat[1, 2] = 0;
+                cnvFilt.Mat[2, 0] = 0; cnvFilt.Mat[2, 1] = 0; cnvFilt.Mat[2, 2] = 0;
+            }
+        }
+
+        private void blurRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(blurRadioButton.Checked)
+            {
+                cnvFilt.Mat = new int[3, 3];
+                cnvFilt.divisor = -99999;
+                cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
+                for (int i = 0; i < 3; i++)//i<9
+                {
+                    for (int j = 0; j < 3; j++)//j<9
+                    {
+                        cnvFilt.Mat[i, j] = 1;//0;//1;
+                    }
+                }
+            }
+        }
+
+        private void gaussSmoothRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(gaussSmoothRadioButton.Checked)
+            {
+                cnvFilt.Mat = new int[3, 3];
+                cnvFilt.divisor = -99999;
+                cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
+                ///Gaussian Smoothening/blur: (should work)
+                cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = 1; cnvFilt.Mat[0, 2] = 0;
+                cnvFilt.Mat[1, 0] = 1; cnvFilt.Mat[1, 1] = 4; cnvFilt.Mat[1, 2] = 1;
+                cnvFilt.Mat[2, 0] = 0; cnvFilt.Mat[2, 1] = 1; cnvFilt.Mat[2, 2] = 0;
+            }
+        }
+
+        private void sharpenRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(sharpenRadioButton.Checked)
+            {
+                cnvFilt.Mat = new int[3, 3];
+                cnvFilt.divisor = -99999;
+                cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
+                ///Sharpen: (works)
+                cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = -1; cnvFilt.Mat[0, 2] = 0;
+                cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 5; cnvFilt.Mat[1, 2] = -1;
+                cnvFilt.Mat[2, 0] = 0; cnvFilt.Mat[2, 1] = -1; cnvFilt.Mat[2, 2] = 0;
+            }
+        }
+
+        private void meanRemSharpRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(meanRemSharpRadioButton.Checked)
+            {
+                cnvFilt.Mat = new int[3, 3];
+                cnvFilt.divisor = -99999;
+                cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
+                ///Mean removal sharpen?: (probably works as it should)
+                cnvFilt.Mat[0, 0] = -1; cnvFilt.Mat[0, 1] = -1; cnvFilt.Mat[0, 2] = -1;
+                cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 9; cnvFilt.Mat[1, 2] = -1;
+                cnvFilt.Mat[2, 0] = -1; cnvFilt.Mat[2, 1] = -1; cnvFilt.Mat[2, 2] = -1;
+            }
+        }
+
+        private void embossRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(embossRadioButton.Checked)
+            {
+                cnvFilt.Mat = new int[3, 3];
+                cnvFilt.divisor = -99999;
+                cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
+                ///Emboss: (works)
+                cnvFilt.Mat[0, 0] = -1; cnvFilt.Mat[0, 1] = 0; cnvFilt.Mat[0, 2] = 1;
+                cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 1; cnvFilt.Mat[1, 2] = 1;
+                cnvFilt.Mat[2, 0] = -1; cnvFilt.Mat[2, 1] = 0; cnvFilt.Mat[2, 2] = 1;
+            }
+        }
     }
 }
