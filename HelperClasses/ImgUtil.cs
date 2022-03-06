@@ -128,5 +128,6 @@ namespace Computer_Graphics_1.HelperClasses
         {
             return (value < min) ? min : (value > max) ? max : value;
         }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,20 @@ namespace Computer_Graphics_1.HelperClasses.Extensions
         {
             int pixelNumChannels = writtenImg.Format.BitsPerPixel;
             return pixelNumChannels;
+        }
+
+        // Save the WriteableBitmap into a PNG file.
+        public static void SaveAsPNG(this WriteableBitmap wbitmap,
+            string filename)
+        {
+            // Save the bitmap into a file.
+            using (FileStream stream =
+                new FileStream(filename, FileMode.Create))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(wbitmap));
+                encoder.Save(stream);
+            }
         }
     }
 }

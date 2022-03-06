@@ -39,6 +39,10 @@ namespace Computer_Graphics_1
             this.convultionFiltersGroupBox = new System.Windows.Forms.GroupBox();
             this.blur9x9ConvFiltButton = new System.Windows.Forms.Button();
             this.funcFilGroupBox = new System.Windows.Forms.GroupBox();
+            this.gammaCorrectionButton = new System.Windows.Forms.Button();
+            this.contrastEnhanceButton = new System.Windows.Forms.Button();
+            this.brightnessCorrection = new System.Windows.Forms.Button();
+            this.inversionCheckBox = new System.Windows.Forms.CheckBox();
             this.lab2TabPage = new System.Windows.Forms.TabPage();
             this.lab3TabPage = new System.Windows.Forms.TabPage();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
@@ -50,10 +54,6 @@ namespace Computer_Graphics_1
             this.ogImgLabel = new System.Windows.Forms.Label();
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.newPictureBox = new System.Windows.Forms.PictureBox();
-            this.inversionCheckBox = new System.Windows.Forms.CheckBox();
-            this.brightnessCorrection = new System.Windows.Forms.Button();
-            this.contrastEnhanceButton = new System.Windows.Forms.Button();
-            this.gammaCorrectionButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -197,6 +197,61 @@ namespace Computer_Graphics_1
             this.funcFilGroupBox.TabStop = false;
             this.funcFilGroupBox.Text = "Functional Filters";
             // 
+            // gammaCorrectionButton
+            // 
+            this.gammaCorrectionButton.AutoSize = true;
+            this.gammaCorrectionButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gammaCorrectionButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gammaCorrectionButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.gammaCorrectionButton.Location = new System.Drawing.Point(3, 110);
+            this.gammaCorrectionButton.Name = "gammaCorrectionButton";
+            this.gammaCorrectionButton.Size = new System.Drawing.Size(212, 33);
+            this.gammaCorrectionButton.TabIndex = 7;
+            this.gammaCorrectionButton.Text = "Gamma Correction";
+            this.gammaCorrectionButton.UseVisualStyleBackColor = true;
+            this.gammaCorrectionButton.Click += new System.EventHandler(this.gammaCorrectionButton_Click);
+            // 
+            // contrastEnhanceButton
+            // 
+            this.contrastEnhanceButton.AutoSize = true;
+            this.contrastEnhanceButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.contrastEnhanceButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contrastEnhanceButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.contrastEnhanceButton.Location = new System.Drawing.Point(3, 77);
+            this.contrastEnhanceButton.Name = "contrastEnhanceButton";
+            this.contrastEnhanceButton.Size = new System.Drawing.Size(212, 33);
+            this.contrastEnhanceButton.TabIndex = 6;
+            this.contrastEnhanceButton.Text = "Contrast Enhancement";
+            this.contrastEnhanceButton.UseVisualStyleBackColor = true;
+            this.contrastEnhanceButton.Click += new System.EventHandler(this.contrastEnhanceButton_Click);
+            // 
+            // brightnessCorrection
+            // 
+            this.brightnessCorrection.AutoSize = true;
+            this.brightnessCorrection.Dock = System.Windows.Forms.DockStyle.Top;
+            this.brightnessCorrection.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.brightnessCorrection.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.brightnessCorrection.Location = new System.Drawing.Point(3, 44);
+            this.brightnessCorrection.Name = "brightnessCorrection";
+            this.brightnessCorrection.Size = new System.Drawing.Size(212, 33);
+            this.brightnessCorrection.TabIndex = 5;
+            this.brightnessCorrection.Text = "Brightness Correction";
+            this.brightnessCorrection.UseVisualStyleBackColor = true;
+            this.brightnessCorrection.Click += new System.EventHandler(this.brightnessCorrection_Click);
+            // 
+            // inversionCheckBox
+            // 
+            this.inversionCheckBox.AutoSize = true;
+            this.inversionCheckBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.inversionCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inversionCheckBox.Location = new System.Drawing.Point(3, 20);
+            this.inversionCheckBox.Name = "inversionCheckBox";
+            this.inversionCheckBox.Size = new System.Drawing.Size(212, 24);
+            this.inversionCheckBox.TabIndex = 4;
+            this.inversionCheckBox.Text = "Invert Colors";
+            this.inversionCheckBox.UseVisualStyleBackColor = true;
+            this.inversionCheckBox.CheckedChanged += new System.EventHandler(this.inversionCheckBox_CheckedChanged);
+            // 
             // lab2TabPage
             // 
             this.lab2TabPage.Location = new System.Drawing.Point(4, 25);
@@ -323,61 +378,6 @@ namespace Computer_Graphics_1
             this.newPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.newPictureBox.TabIndex = 5;
             this.newPictureBox.TabStop = false;
-            // 
-            // inversionCheckBox
-            // 
-            this.inversionCheckBox.AutoSize = true;
-            this.inversionCheckBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.inversionCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inversionCheckBox.Location = new System.Drawing.Point(3, 20);
-            this.inversionCheckBox.Name = "inversionCheckBox";
-            this.inversionCheckBox.Size = new System.Drawing.Size(212, 24);
-            this.inversionCheckBox.TabIndex = 4;
-            this.inversionCheckBox.Text = "Invert Colors";
-            this.inversionCheckBox.UseVisualStyleBackColor = true;
-            this.inversionCheckBox.CheckedChanged += new System.EventHandler(this.inversionCheckBox_CheckedChanged);
-            // 
-            // brightnessCorrection
-            // 
-            this.brightnessCorrection.AutoSize = true;
-            this.brightnessCorrection.Dock = System.Windows.Forms.DockStyle.Top;
-            this.brightnessCorrection.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.brightnessCorrection.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.brightnessCorrection.Location = new System.Drawing.Point(3, 44);
-            this.brightnessCorrection.Name = "brightnessCorrection";
-            this.brightnessCorrection.Size = new System.Drawing.Size(212, 33);
-            this.brightnessCorrection.TabIndex = 5;
-            this.brightnessCorrection.Text = "Brightness Correction";
-            this.brightnessCorrection.UseVisualStyleBackColor = true;
-            this.brightnessCorrection.Click += new System.EventHandler(this.brightnessCorrection_Click);
-            // 
-            // contrastEnhanceButton
-            // 
-            this.contrastEnhanceButton.AutoSize = true;
-            this.contrastEnhanceButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.contrastEnhanceButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contrastEnhanceButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.contrastEnhanceButton.Location = new System.Drawing.Point(3, 77);
-            this.contrastEnhanceButton.Name = "contrastEnhanceButton";
-            this.contrastEnhanceButton.Size = new System.Drawing.Size(212, 33);
-            this.contrastEnhanceButton.TabIndex = 6;
-            this.contrastEnhanceButton.Text = "Contrast Enhancement";
-            this.contrastEnhanceButton.UseVisualStyleBackColor = true;
-            this.contrastEnhanceButton.Click += new System.EventHandler(this.contrastEnhanceButton_Click);
-            // 
-            // gammaCorrectionButton
-            // 
-            this.gammaCorrectionButton.AutoSize = true;
-            this.gammaCorrectionButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gammaCorrectionButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gammaCorrectionButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.gammaCorrectionButton.Location = new System.Drawing.Point(3, 110);
-            this.gammaCorrectionButton.Name = "gammaCorrectionButton";
-            this.gammaCorrectionButton.Size = new System.Drawing.Size(212, 33);
-            this.gammaCorrectionButton.TabIndex = 7;
-            this.gammaCorrectionButton.Text = "Gamma Correction";
-            this.gammaCorrectionButton.UseVisualStyleBackColor = true;
-            this.gammaCorrectionButton.Click += new System.EventHandler(this.gammaCorrectionButton_Click);
             // 
             // MainForm
             // 

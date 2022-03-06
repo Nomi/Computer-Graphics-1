@@ -13,6 +13,7 @@ namespace Computer_Graphics_1.Lab1
     {
         public static void Apply(int[,] sqrCnvMat, _coords anchorKernel, WriteableBitmap wbmp, double divisor = -99999)
         {
+            WriteableBitmap cloneWbmp = wbmp.Clone();
             int cnvMatSiz = (int)Math.Sqrt(sqrCnvMat.Length); //square matrix nxn length = n^2
             int wbmpRowCount = wbmp.PixelHeight;
             int wbmpColCount = wbmp.PixelWidth;
@@ -43,6 +44,7 @@ namespace Computer_Graphics_1.Lab1
 
             unsafe // do: upper row, left col, right col, lower row, all the corner squares, and the middle part that isn't missing pixels
             {
+                wbmp.Lock();
                 int TotalMissingRowsTop = anchorKernel.r - 1;
                 int TotalMissingColsLeft = anchorKernel.c - 1; //for the full row
                 int TotalMissingColsRight = (cnvMatSiz - anchorKernel.c); //for the full row
@@ -63,7 +65,7 @@ namespace Computer_Graphics_1.Lab1
                         int rHeight = cnvMatSiz - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
@@ -87,14 +89,12 @@ namespace Computer_Graphics_1.Lab1
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
 
-                        wbmp.Lock();
+
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
                     }
                 }
                 //For img pixels missing both upper rows and right columns (diagonal square/rectangle)
@@ -115,7 +115,7 @@ namespace Computer_Graphics_1.Lab1
                         int rHeight = cnvMatSiz - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
@@ -139,14 +139,12 @@ namespace Computer_Graphics_1.Lab1
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
 
-                        wbmp.Lock();
+
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
                     }
                 }
                 //For img pixels missing both lower rows and left columns (diagonal square/rectangle)
@@ -167,7 +165,7 @@ namespace Computer_Graphics_1.Lab1
                         int rHeight = cnvMatSiz - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
@@ -191,13 +189,12 @@ namespace Computer_Graphics_1.Lab1
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
 
-                        wbmp.Lock();
+
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
+
                     }
                 }
                 //For img pixels missing both lower rows and right columns (diagonal square/rectangle)
@@ -221,7 +218,7 @@ namespace Computer_Graphics_1.Lab1
                         int rHeight = cnvMatSiz - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
@@ -245,13 +242,13 @@ namespace Computer_Graphics_1.Lab1
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
 
-                        wbmp.Lock();
+
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
+
+
                     }
                 }
                 //For img pixels that are missing upper rows:
@@ -268,7 +265,7 @@ namespace Computer_Graphics_1.Lab1
                         int rWidth = cnvMatSiz;
                         int rHeight = cnvMatSiz-currMissingRows;
                         int arrStride = (cnvMatSiz) * numBytesPerPix; //numcolumns*numBYtesPerPixel
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
                         //So far,
                         //We have gotten the non-missing pixels in subPixDat array.
                         //After this we try to use the first non-missing row for all the missing rows
@@ -293,14 +290,14 @@ namespace Computer_Graphics_1.Lab1
                         blue= ImgUtil.Clamp(blue, 0, 255);
                         green= ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
-                        wbmp.Lock();
+
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
+
+
                     }
                 }
                 //For img pixels that are missing left columns:
@@ -316,7 +313,7 @@ namespace Computer_Graphics_1.Lab1
                         int rWidth = cnvMatSiz-currMissingCols;
                         int rHeight = cnvMatSiz;
                         int arrStride = (cnvMatSiz-currMissingCols) * numBytesPerPix;
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
 
@@ -339,14 +336,14 @@ namespace Computer_Graphics_1.Lab1
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
-                        wbmp.Lock();
+
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
+
+
                     }
                 }
                 //The part that isn't missing any edges:
@@ -360,7 +357,7 @@ namespace Computer_Graphics_1.Lab1
                         int rWidth = cnvMatSiz;
                         int rHeight = cnvMatSiz;
                         int arrStride = cnvMatSiz * numBytesPerPix;
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), pixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), pixDat, arrStride, 0);
 
                         int red = 0, green = 0, blue = 0;
                         for (int mR = 0, i = 0; mR < cnvMatSiz; mR++)   //might only work for bgr pixels.
@@ -380,14 +377,14 @@ namespace Computer_Graphics_1.Lab1
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
-                        wbmp.Lock();
+
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
+
+
                     }
                 }
                 //For img pixels that are missing lower rows:
@@ -406,7 +403,7 @@ namespace Computer_Graphics_1.Lab1
                         int rWidth = cnvMatSiz;
                         int rHeight = cnvMatSiz - currMissingRows;
                         int arrStride = (cnvMatSiz) * numBytesPerPix; //numcolumns*numBYtesPerPixel
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
                         //So far,
                         //We have gotten the non-missing pixels in subPixDat array.
                         //After this we try to use the first non-missing row for all the missing rows
@@ -431,14 +428,14 @@ namespace Computer_Graphics_1.Lab1
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
-                        wbmp.Lock();
+
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
+
+
                     }
                 }
                 //For img pixels that are missing right columns:
@@ -456,7 +453,7 @@ namespace Computer_Graphics_1.Lab1
                         int rWidth = cnvMatSiz - currMissingCols;
                         int rHeight = cnvMatSiz;
                         int arrStride = (cnvMatSiz - currMissingCols) * numBytesPerPix;
-                        wbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
+                        cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
 
@@ -479,16 +476,18 @@ namespace Computer_Graphics_1.Lab1
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
-                        wbmp.Lock();
+
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
                         pxl->blue = (byte)blue;
                         pxl->green = (byte)green;
                         pxl->red = (byte)red;
-                        wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
-                        wbmp.Unlock();
+                        
+
                     }
                 }
+                wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
+                wbmp.Unlock();
             }
         }
         public static void ConvolutionFilterOld(int[,] sqrCnvMat, WriteableBitmap wbmp)//, ref System.Windows.Forms.PictureBox pb) //remember sqrCnvMat can have odd dimensions according to specification.
@@ -596,12 +595,12 @@ namespace Computer_Graphics_1.Lab1
                         pixDat[3 * midPt + 1] = (byte)(green / (double)sumCM);
                         pixDat[3 * midPt + 2] = (byte)(red / (double)sumCM);
 
-                        wbmp.Lock();
+
                         _pixel_bgr24_bgra32* pxPtr = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(row, col);
                         pxPtr->blue = pixDat[3 * midPt];
                         pxPtr->green = pixDat[3 * midPt + 1];
                         pxPtr->red = pixDat[3 * midPt + 2];
-                        wbmp.Unlock();
+
                     }
                 }
                 //Handles Non-Edge parts
@@ -648,9 +647,9 @@ namespace Computer_Graphics_1.Lab1
                         pixDat[3 * midPt] = (byte)(blue / (double)sumCM); //sum can be 0 as well??
                         pixDat[3 * midPt + 1] = (byte)(green / (double)sumCM);
                         pixDat[3 * midPt + 2] = (byte)(red / (double)sumCM);
-                        wbmp.Lock();
+
                         wbmp.WritePixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), pixDat, arrStride, 0);
-                        wbmp.Unlock();
+
                         //row = row + rHeight - 1;
                         //col = col + rWidth - 1;
                         //wbmp.WritePixels(new System.Windows.Int32Rect(col - (_mSz - 1) / 2, row - (_mSz - 1) / 2, col + (_mSz - 1) / 2, row + (_mSz - 1) / 2), pixDat, _mSz * numBytesPerPix, 0);
@@ -763,16 +762,16 @@ namespace Computer_Graphics_1.Lab1
                         pixDat[3 * midPt + 1] = (byte)(green / (double)sumCM);
                         pixDat[3 * midPt + 2] = (byte)(red / (double)sumCM);
 
-                        wbmp.Lock();
+
                         _pixel_bgr24_bgra32* pxPtr = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(row, col);
                         pxPtr->blue = pixDat[3 * midPt];
                         pxPtr->green = pixDat[3 * midPt + 1];
                         pxPtr->red = pixDat[3 * midPt + 2];
-                        wbmp.Unlock();
+
                     }
                 }
                 //here, need to also handle upper-right,  and lower-left corner squares.
-                wbmp.Lock();
+
                 wbmp.AddDirtyRect(new System.Windows.Int32Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight));
                 wbmp.Unlock();
             }

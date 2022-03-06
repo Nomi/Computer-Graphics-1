@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Computer_Graphics_1.HelperClasses;
+using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab1;
 
 namespace Computer_Graphics_1
@@ -105,18 +106,19 @@ namespace Computer_Graphics_1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int[,] blurConvMat3x3 = new int[7, 7];//[9, 9];
-            for(int i=0;i<7;i++)//i<9
+            int[,] blurConvMat3x3 = new int[9, 9];//[9, 9];
+            for(int i=0;i<9;i++)//i<9
             {
-               for(int j=0; j<7; j++)//j<9
+               for(int j=0; j<9; j++)//j<9
                 {
                     blurConvMat3x3[i, j] = 1;//0;//1;
                 }
             }
             //ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
-            _coords Coords; Coords.r = 5; Coords.c = 6; //7x7:5,6
-            ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
+            _coords Coords; Coords.r = 6; Coords.c = 5; //7x7:5,6
+            ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit,0);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
             newPictureBox.Image= ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+            wBmpToEdit.SaveAsPNG("w0w.png");
         }
 
         private void inversionCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -124,12 +126,14 @@ namespace Computer_Graphics_1
             ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
             //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
             Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
-            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg
+
         }
 
         private void invertFilter_Click(object sender, EventArgs e)
         {
 
         }
+
     }
 }
