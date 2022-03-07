@@ -11,7 +11,7 @@ namespace Computer_Graphics_1.Lab1
 {
     public static class ConvolutionFilters //pretty universal, huh?
     {
-        public static void Apply(int[,] sqrCnvMat, _coords anchorKernel, WriteableBitmap wbmp, double divisor = -99999)
+        public static void Apply(int[,] sqrCnvMat, _coords anchorKernel, WriteableBitmap wbmp, double divisor = -99999, int offset=0)
         {
             WriteableBitmap cloneWbmp = wbmp.Clone();
             int cnvMatSiz = (int)Math.Sqrt(sqrCnvMat.Length); //square matrix nxn length = n^2
@@ -190,6 +190,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);

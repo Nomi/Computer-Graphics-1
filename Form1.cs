@@ -24,6 +24,7 @@ namespace Computer_Graphics_1
             public static int[,] Mat = null;
             public static double divisor = -99999;
             public static _coords anchorCoords; //indexed from 1
+            public static int offset = 0;
         }
 
         
