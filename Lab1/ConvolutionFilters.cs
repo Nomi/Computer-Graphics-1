@@ -54,6 +54,7 @@ namespace Computer_Graphics_1.Lab1
                 int TotalMissingColsLeft = anchorKernel.c - 1; //for the full row
                 int TotalMissingColsRight = (cnvMatSiz - anchorKernel.c); //for the full row
                 int TotalMissingRowsBottom = (cnvMatSiz - anchorKernel.r);
+                //For math min/max functions i might need to us imgRow and/or imgCo with + or minus.
                 //For img pixels missing both upper rows and left columns (diagonal square/rectangle)
                 for (int imgRow = 0; imgRow < TotalMissingRowsTop; imgRow++)
                 {
