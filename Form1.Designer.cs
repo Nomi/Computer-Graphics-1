@@ -511,7 +511,6 @@ namespace Computer_Graphics_1
             this.ogPictureBox.Location = new System.Drawing.Point(3, 21);
             this.ogPictureBox.Name = "ogPictureBox";
             this.ogPictureBox.Size = new System.Drawing.Size(527, 160);
-            this.ogPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ogPictureBox.TabIndex = 4;
             this.ogPictureBox.TabStop = false;
             this.ogPictureBox.DoubleClick += new System.EventHandler(this.ogPictureBox_DoubleClick);
@@ -522,7 +521,6 @@ namespace Computer_Graphics_1
             this.newPictureBox.Location = new System.Drawing.Point(3, 205);
             this.newPictureBox.Name = "newPictureBox";
             this.newPictureBox.Size = new System.Drawing.Size(527, 161);
-            this.newPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.newPictureBox.TabIndex = 5;
             this.newPictureBox.TabStop = false;
             // 
