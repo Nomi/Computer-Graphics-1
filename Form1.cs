@@ -308,5 +308,37 @@ namespace Computer_Graphics_1
                 }
             }
         }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            openImageToolStripMenuItem_Click(sender, e);
+        }
+
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ogPictureBox.SizeMode = PictureBoxSizeMode.Normal;
+            newPictureBox.SizeMode = PictureBoxSizeMode.Normal;
+            normalToolStripMenuItem.Checked = true;
+            stretchToolStripMenuItem.Checked = false;
+            zoomToolStripMenuItem.Checked = false;
+        }
+
+        private void stretchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ogPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            newPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            normalToolStripMenuItem.Checked = false;
+            stretchToolStripMenuItem.Checked = true;
+            zoomToolStripMenuItem.Checked = false;
+        }
+
+        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ogPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            newPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            normalToolStripMenuItem.Checked = false;
+            stretchToolStripMenuItem.Checked = false;
+            zoomToolStripMenuItem.Checked = true;
+        }
     }
 }

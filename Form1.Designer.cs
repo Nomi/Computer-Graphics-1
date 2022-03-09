@@ -29,6 +29,7 @@ namespace Computer_Graphics_1
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +65,12 @@ namespace Computer_Graphics_1
             this.ogImgLabel = new System.Windows.Forms.Label();
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.newPictureBox = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stretchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -76,6 +83,7 @@ namespace Computer_Graphics_1
             this.comparisonTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.newPictureBox)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -508,6 +516,7 @@ namespace Computer_Graphics_1
             // 
             // ogPictureBox
             // 
+            this.ogPictureBox.ContextMenuStrip = this.contextMenuStrip1;
             this.ogPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ogPictureBox.Location = new System.Drawing.Point(3, 21);
             this.ogPictureBox.Name = "ogPictureBox";
@@ -518,12 +527,62 @@ namespace Computer_Graphics_1
             // 
             // newPictureBox
             // 
+            this.newPictureBox.ContextMenuStrip = this.contextMenuStrip1;
             this.newPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.newPictureBox.Location = new System.Drawing.Point(3, 205);
             this.newPictureBox.Name = "newPictureBox";
             this.newPictureBox.Size = new System.Drawing.Size(527, 161);
             this.newPictureBox.TabIndex = 5;
             this.newPictureBox.TabStop = false;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.viewToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(211, 80);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(210, 24);
+            this.toolStripMenuItem2.Text = "Open Image";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.normalToolStripMenuItem,
+            this.stretchToolStripMenuItem,
+            this.zoomToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // normalToolStripMenuItem
+            // 
+            this.normalToolStripMenuItem.Checked = true;
+            this.normalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.normalToolStripMenuItem.Text = "Normal";
+            this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
+            // 
+            // stretchToolStripMenuItem
+            // 
+            this.stretchToolStripMenuItem.Name = "stretchToolStripMenuItem";
+            this.stretchToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.stretchToolStripMenuItem.Text = "Stretch";
+            this.stretchToolStripMenuItem.Click += new System.EventHandler(this.stretchToolStripMenuItem_Click);
+            // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.zoomToolStripMenuItem.Text = "Zoom";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -555,6 +614,7 @@ namespace Computer_Graphics_1
             this.comparisonTableLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.newPictureBox)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -597,6 +657,12 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button ApplyConvFiltButton;
         private System.Windows.Forms.Button customizeConvFilterButton;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stretchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
     }
 }
 
