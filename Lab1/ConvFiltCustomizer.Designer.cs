@@ -157,6 +157,7 @@ namespace Computer_Graphics_1
             this.kernelDimCol.Size = new System.Drawing.Size(61, 22);
             this.kernelDimCol.TabIndex = 9;
             this.kernelDimCol.ValidatingType = typeof(int);
+            this.kernelDimCol.TextChanged += new System.EventHandler(this.kernelDimCol_TextChanged);
             // 
             // kernelDimRow
             // 

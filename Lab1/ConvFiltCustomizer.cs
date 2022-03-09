@@ -167,5 +167,38 @@ namespace Computer_Graphics_1
             //int test = sqrCnvMat.Length;
 
         }
+
+        private void kernelDimCol_TextChanged(object sender, EventArgs e)
+        {
+            if (kernelDimCol.Text.Length <= 0)
+                return;
+            int chgdNumCols = int.Parse(kernelDimCol.Text);
+            int oldNumCols = kernelDataGridView.ColumnCount;
+            if (chgdNumCols < oldNumCols)
+            {
+                for (int j = 0; j < oldNumCols - chgdNumCols; j++)
+                {
+                    kernelDataGridView.Columns.RemoveAt(kernelDataGridView.ColumnCount - 1);
+                }
+                convertDatagridCnvMat();
+            }
+            else if (chgdNumCols > oldNumCols)
+            {
+                for (int j = 0; j < chgdNumCols - oldNumCols; j++)
+                {
+                    //kernelDataGridView.cols.AddCopy(kernelDataGridView.colCount - 1);
+                    int lastAddedCol = kernelDataGridView.Columns.Add(kernelDataGridView.ColumnCount.ToString(),"");
+                    if (oldNumCols == 0&&j==0)
+                    {
+                        kernelDataGridView.Rows.Add(int.Parse(kernelDimRow.Text));
+                    }
+                    for (int r = 0; r < kernelDataGridView.RowCount; r++)
+                    {
+                        kernelDataGridView[lastAddedCol,r].Value = string.Copy("0");
+                    }
+                }
+                convertDatagridCnvMat();
+            }
+        }
     }
 }
