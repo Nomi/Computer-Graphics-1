@@ -21,6 +21,7 @@ namespace Computer_Graphics_1
         private WriteableBitmap wBmpToEdit = null;
         public static class cnvFilt
         {
+            public static bool convFilterParametersSet = false;
             public static int[,] Mat = null;
             public static double divisor = -99999;
             public static _coords anchorCoords; //indexed from 1
@@ -52,7 +53,7 @@ namespace Computer_Graphics_1
             {
                 //openFileDialog.InitialDirectory = "C:\\";
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                openFileDialog.Filter = "Bitmap image file (*.bmp)|*.bmp;|Image files (*.bmp,*.jpg,*.png)|*.bmp;*.jpg;*.png|All files|*.*";
+                openFileDialog.Filter = "Image files (*.bmp,*.jpg,*.png)|*.bmp;*.jpg;*.png|Bitmap image file (*.bmp)|*.bmp;|All files|*.*";
                 openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = true;
 
@@ -69,6 +70,8 @@ namespace Computer_Graphics_1
                     //}
                     labsTabControl.Enabled = true;
                     undoAllProcessingMenuItem.Enabled = true;
+
+                    inversionCheckBox.Checked = false;
                 }
                 else
                 {
@@ -93,6 +96,7 @@ namespace Computer_Graphics_1
         {
             wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+            inversionCheckBox.Checked = false;
         }
 
         private void brightnessCorrection_Click(object sender, EventArgs e)
@@ -115,7 +119,7 @@ namespace Computer_Graphics_1
 
         private void applyConvFiltButton_Click(object sender, EventArgs e)
         {
-            if(cnvFilt.Mat!=null)
+            if(cnvFilt.convFilterParametersSet)
             {
                 int[,] blurConvMat3x3 = new int[3, 3];//[9, 9];
                 for (int i = 0; i < 3; i++)//i<9
@@ -191,6 +195,8 @@ namespace Computer_Graphics_1
                 cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = 0; cnvFilt.Mat[0, 2] = 0;
                 cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 1; cnvFilt.Mat[1, 2] = 0;
                 cnvFilt.Mat[2, 0] = 0; cnvFilt.Mat[2, 1] = 0; cnvFilt.Mat[2, 2] = 0;
+
+                cnvFilt.convFilterParametersSet = true;
             }
         }
 
@@ -209,6 +215,8 @@ namespace Computer_Graphics_1
                         cnvFilt.Mat[i, j] = 1;//0;//1;
                     }
                 }
+
+                cnvFilt.convFilterParametersSet = true;
             }
         }
 
@@ -224,6 +232,8 @@ namespace Computer_Graphics_1
                 cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = 1; cnvFilt.Mat[0, 2] = 0;
                 cnvFilt.Mat[1, 0] = 1; cnvFilt.Mat[1, 1] = 4; cnvFilt.Mat[1, 2] = 1;
                 cnvFilt.Mat[2, 0] = 0; cnvFilt.Mat[2, 1] = 1; cnvFilt.Mat[2, 2] = 0;
+
+                cnvFilt.convFilterParametersSet = true;
             }
         }
 
@@ -239,6 +249,8 @@ namespace Computer_Graphics_1
                 cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = -1; cnvFilt.Mat[0, 2] = 0;
                 cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 5; cnvFilt.Mat[1, 2] = -1;
                 cnvFilt.Mat[2, 0] = 0; cnvFilt.Mat[2, 1] = -1; cnvFilt.Mat[2, 2] = 0;
+
+                cnvFilt.convFilterParametersSet = true;
             }
         }
 
@@ -254,6 +266,8 @@ namespace Computer_Graphics_1
                 cnvFilt.Mat[0, 0] = -1; cnvFilt.Mat[0, 1] = -1; cnvFilt.Mat[0, 2] = -1;
                 cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 9; cnvFilt.Mat[1, 2] = -1;
                 cnvFilt.Mat[2, 0] = -1; cnvFilt.Mat[2, 1] = -1; cnvFilt.Mat[2, 2] = -1;
+
+                cnvFilt.convFilterParametersSet = true;
             }
         }
 
@@ -269,6 +283,29 @@ namespace Computer_Graphics_1
                 cnvFilt.Mat[0, 0] = -1; cnvFilt.Mat[0, 1] = 0; cnvFilt.Mat[0, 2] = 1;
                 cnvFilt.Mat[1, 0] = -1; cnvFilt.Mat[1, 1] = 1; cnvFilt.Mat[1, 2] = 1;
                 cnvFilt.Mat[2, 0] = -1; cnvFilt.Mat[2, 1] = 0; cnvFilt.Mat[2, 2] = 1;
+
+                cnvFilt.convFilterParametersSet = true;
+            }
+        }
+
+        private void customizeConvFilterButton_Click(object sender, EventArgs e)
+        {
+            if(!cnvFilt.convFilterParametersSet)
+            {
+                MessageBox.Show("Select a base Convolution Filter to customize first.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            using (ConvFiltCustomizer cFCD = new ConvFiltCustomizer(cnvFilt.Mat, cnvFilt.anchorCoords, cnvFilt.divisor, cnvFilt.offset))
+            {
+                if(cFCD.ShowDialog()!=DialogResult.OK)
+                {
+                    ConvolutionFilters.Apply(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
+                    newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+                }
+                else
+                {
+                    MessageBox.Show("Custom filter not applied.", "Action cancelled", MessageBoxButtons.OK);
+                }
             }
         }
     }

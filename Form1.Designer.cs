@@ -247,6 +247,7 @@ namespace Computer_Graphics_1
             this.customizeConvFilterButton.TabIndex = 25;
             this.customizeConvFilterButton.Text = "Customize Filter";
             this.customizeConvFilterButton.UseVisualStyleBackColor = true;
+            this.customizeConvFilterButton.Click += new System.EventHandler(this.customizeConvFilterButton_Click);
             // 
             // embossRadioButton
             // 
