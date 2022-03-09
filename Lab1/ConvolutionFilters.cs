@@ -141,6 +141,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
@@ -247,6 +250,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
@@ -296,7 +302,10 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
-                        blue= ImgUtil.Clamp(blue, 0, 255);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
+                        blue = ImgUtil.Clamp(blue, 0, 255);
                         green= ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
 
@@ -342,6 +351,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
@@ -383,6 +395,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
@@ -434,6 +449,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
@@ -482,6 +500,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);

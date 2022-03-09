@@ -150,7 +150,7 @@ namespace Computer_Graphics_1
                 ////ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
                 _coords Coords; Coords.r = 2; Coords.c = 2; //7x7:5,6 //6,5 //indexed from 1
                 //ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit, 0.1);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
-                ConvolutionFilters.Apply(cnvFilt.Mat, cnvFilt.anchorCoords, wBmpToEdit, cnvFilt.divisor);
+                ConvolutionFilters.Apply(cnvFilt.Mat, cnvFilt.anchorCoords, wBmpToEdit, cnvFilt.divisor,cnvFilt.offset);
                 newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
             }
         }
@@ -184,7 +184,8 @@ namespace Computer_Graphics_1
             if(edgeDetRadioButton.Checked)
             {
                 cnvFilt.Mat = new int[3, 3];
-                cnvFilt.divisor = 0.1;
+                cnvFilt.divisor = -99999;
+                cnvFilt.offset = 128;
                 cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
                 ///Edge detection: (Works! (USE 0.1 divisor THO)
                 cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = 0; cnvFilt.Mat[0, 2] = 0;
@@ -199,6 +200,7 @@ namespace Computer_Graphics_1
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
+                cnvFilt.offset = 0;
                 cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
                 for (int i = 0; i < 3; i++)//i<9
                 {
@@ -216,6 +218,7 @@ namespace Computer_Graphics_1
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
+                cnvFilt.offset = 0;
                 cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
                 ///Gaussian Smoothening/blur: (should work)
                 cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = 1; cnvFilt.Mat[0, 2] = 0;
@@ -230,6 +233,7 @@ namespace Computer_Graphics_1
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
+                cnvFilt.offset = 0;
                 cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
                 ///Sharpen: (works)
                 cnvFilt.Mat[0, 0] = 0; cnvFilt.Mat[0, 1] = -1; cnvFilt.Mat[0, 2] = 0;
@@ -244,6 +248,7 @@ namespace Computer_Graphics_1
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
+                cnvFilt.offset = 0;
                 cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
                 ///Mean removal sharpen?: (probably works as it should)
                 cnvFilt.Mat[0, 0] = -1; cnvFilt.Mat[0, 1] = -1; cnvFilt.Mat[0, 2] = -1;
@@ -258,6 +263,7 @@ namespace Computer_Graphics_1
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
+                cnvFilt.offset = 0;
                 cnvFilt.anchorCoords.r = 2; cnvFilt.anchorCoords.c = 2;
                 ///Emboss: (works)
                 cnvFilt.Mat[0, 0] = -1; cnvFilt.Mat[0, 1] = 0; cnvFilt.Mat[0, 2] = 1;
