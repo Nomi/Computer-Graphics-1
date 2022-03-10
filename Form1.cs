@@ -55,7 +55,7 @@ namespace Computer_Graphics_1
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                 openFileDialog.Filter = "Image files (*.bmp,*.jpg,*.png)|*.bmp;*.jpg;*.png|Bitmap image file (*.bmp)|*.bmp;|All files|*.*";
                 openFileDialog.FilterIndex = 1;
-                openFileDialog.RestoreDirectory = true;
+                //openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -297,7 +297,7 @@ namespace Computer_Graphics_1
             }
             using (ConvFiltCustomizer cFCD = new ConvFiltCustomizer(cnvFilt.Mat, cnvFilt.anchorCoords, cnvFilt.divisor, cnvFilt.offset))
             {
-                if(cFCD.ShowDialog()!=DialogResult.OK)
+                if(cFCD.ShowDialog()==DialogResult.OK)
                 {
                     ConvolutionFilters.Apply(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
                     newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);

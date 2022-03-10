@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Computer_Graphics_1
 {
@@ -18,6 +21,7 @@ namespace Computer_Graphics_1
         public _coords anchorKernel;
         public double divisor = -99999;
         public int offset = 0;
+
         public ConvFiltCustomizer(int[,] _sqrCnvMat, _coords _anchorKernel, double _divisor, int _offset)
         {
             InitializeComponent();
@@ -26,6 +30,7 @@ namespace Computer_Graphics_1
             //kernelDataGridView.AllowUserToOrderColumns = false;
             setFilterParameters(_sqrCnvMat, _anchorKernel, _divisor, _offset);
         }
+        
         private void setFilterParameters(int[,] _sqrCnvMat, _coords _anchorKernel, double _divisor, int _offset)
         {
             this.sqrCnvMat = _sqrCnvMat;
@@ -46,23 +51,42 @@ namespace Computer_Graphics_1
 
         private void setKernelDataGrid()
         {
-            kernelDataGridView.Rows.Clear();
-            kernelDataGridView.Columns.Clear();
+            //kernelDataGridView.Columns.Clear();
+            //kernelDataGridView.Rows.Clear();
+            int oldColCount = kernelDataGridView.Columns.Count;
+            int oldRowCount = kernelDataGridView.RowCount;
             int rowCount = sqrCnvMat.GetLength(0);
             int colCount = sqrCnvMat.GetLength(1);
             for (int c = 0; c < colCount; c++)
             {
                 kernelDataGridView.Columns.Add(c.ToString(), "");
                 
-                if (kernelDataGridView.RowCount == 0)
+                if (kernelDataGridView.RowCount == oldRowCount)//==0
                 {
                     kernelDataGridView.Rows.Add(rowCount);
                 }
                 for (int r = 0; r < rowCount; r++)
                 {
                     kernelDataGridView[c, r].Value = sqrCnvMat[r, c];
+                    //if(kernelDataGridView[c, r].Selected)
+                    //{
+                    //    kernelDataGridView[c,r]
+                    //}
                 }
             }
+            for(int i=0;i<oldColCount;i++)
+            {
+                kernelDataGridView.Columns.RemoveAt(kernelDataGridView.Columns.Count-1);
+            }
+            for(int i=0; i<oldRowCount;i++)
+            {
+                kernelDataGridView.Rows.RemoveAt(kernelDataGridView.Rows.Count-1);
+            }
+            //kernelDataGridView.
+            kernelDataGridView.Refresh();
+            kernelDataGridView.Update();
+            kernelDataGridView.RefreshEdit();
+            //kernelDataGridView.RefreshEdit();
             ////kernelDataGridView.DataSource = this.sqrCnvMat;
         }
 
@@ -82,9 +106,51 @@ namespace Computer_Graphics_1
             sqrCnvMat = newConvMat;
         }
 
+        public string serializeToXML(string filePath)
+        {
+            Computer_Graphics_1.Lab1.cFDSerializerMidpoint serializerMidpoint = new Lab1.cFDSerializerMidpoint(sqrCnvMat, anchorKernel, divisor, offset);
+            var xSer = new XmlSerializer(serializerMidpoint.GetType());
+
+
+            //string filePath = System.AppContext.BaseDirectory + "/Custom Filters/filter.xml";
+            System.IO.FileInfo file = new System.IO.FileInfo(filePath);
+            file.Directory.Create();
+
+            FileStream fs = File.Create(filePath);
+            fs.Close();
+
+            using (TextWriter tw = new StreamWriter(filePath))
+            {
+                xSer.Serialize(tw, serializerMidpoint);
+            }
+            return filePath;
+
+            //throw new NotImplementedException();
+        }
+        public string deserializeFromXML(string filePath)
+        {
+            //string filePath = System.AppContext.BaseDirectory + "/Custom Filters/filter.xml";
+            Lab1.cFDSerializerMidpoint cfdmp = new Lab1.cFDSerializerMidpoint();
+            using(var sr= new StreamReader(filePath))
+            {
+                var xSer = new XmlSerializer(cfdmp.GetType());//typeof(Lab1.cFDSerializerMidpoint));
+                //sr.ReadToEnd();
+                cfdmp =(Lab1.cFDSerializerMidpoint) xSer.Deserialize(sr);
+            }
+            if(cfdmp!=null)
+            {
+                setFilterParameters(cfdmp.getSqrCnvMat(), cfdmp.anchorKernel, cfdmp.divisor, cfdmp.offset);
+                return filePath;
+            }
+            else
+            {
+                throw new Exception("Done fudged up.");
+            }
+        }
         private void kernelDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            string data = kernelDataGridView[e.ColumnIndex, e.RowIndex].Value.ToString();
+            string data=kernelDataGridView[e.ColumnIndex, e.RowIndex].Value?.ToString();
+
             if (!int.TryParse(data, out int value))
             {
                 MessageBox.Show("Enter valid integer.");
@@ -153,16 +219,19 @@ namespace Computer_Graphics_1
             }
             else if (chgdNumRows> oldNumRows)
             {
-                for(int i=0; i< chgdNumRows- oldNumRows; i++)
+                if(kernelDataGridView.Columns.Count!=0)
                 {
-                    //kernelDataGridView.Rows.AddCopy(kernelDataGridView.RowCount - 1);
-                    int lastAddedRow=kernelDataGridView.Rows.Add();
-                    for(int c=0;c<kernelDataGridView.ColumnCount;c++)
+                    for (int i = 0; i < chgdNumRows - oldNumRows; i++)
                     {
-                        kernelDataGridView[ c, lastAddedRow].Value = string.Copy("0");
+                        //kernelDataGridView.Rows.AddCopy(kernelDataGridView.RowCount - 1);
+                        int lastAddedRow = kernelDataGridView.Rows.Add();
+                        for (int c = 0; c < kernelDataGridView.ColumnCount; c++)
+                        {
+                            kernelDataGridView[c, lastAddedRow].Value = string.Copy("0");
+                        }
                     }
+                    convertDatagridCnvMat();
                 }
-                convertDatagridCnvMat();
             }
             //int test = sqrCnvMat.Length;
 
@@ -200,5 +269,61 @@ namespace Computer_Graphics_1
                 convertDatagridCnvMat();
             }
         }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                //openFileDialog.RestoreDirectory = false;
+                openFileDialog.InitialDirectory = AppContext.BaseDirectory + "Custom Filters\\";
+                openFileDialog.Filter = "Filter files (*.filt)|*.filt|XML file (*.XML)|*.XML;|All files|*.*";
+                openFileDialog.FilterIndex = 1;
+                
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    deserializeFromXML(openFileDialog.FileName);
+                }
+                else
+                {
+                    MessageBox.Show("No filter selected.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            using(SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.InitialDirectory = AppContext.BaseDirectory + "Custom Filters\\";
+                saveFileDialog.Filter = "Filter files (*.filt)|*.filt|XML file (*.XML)|*.XML;|All files|*.*";
+                saveFileDialog.FilterIndex = 1;
+                //saveFileDialog.RestoreDirectory = true;
+                saveFileDialog.FileName = "customFilter";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    serializeToXML(saveFileDialog.FileName);
+                }
+                else
+                {
+                    MessageBox.Show("No destination file selected.", "Saving cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
+        }
+
+        private void applyButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        //private void kernelDataGridView_Leave(object sender, EventArgs e)
+        //{
+        //    kernelDataGridView.ClearSelection();
+        //    kernelDataGridView.Refresh();
+        //}
     }
+
+
 }

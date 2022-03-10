@@ -46,6 +46,10 @@ namespace Computer_Graphics_1
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.divisorNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.divisorLabel = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.loadButton = new System.Windows.Forms.Button();
+            this.applyButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kernelDataGridView)).BeginInit();
@@ -53,6 +57,7 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.divisorNumericUpDown)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -63,6 +68,7 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBox3, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox4, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -284,6 +290,55 @@ namespace Computer_Graphics_1
             this.divisorLabel.TabIndex = 1;
             this.divisorLabel.Text = "Divisor";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.saveButton);
+            this.groupBox4.Controls.Add(this.loadButton);
+            this.groupBox4.Controls.Add(this.applyButton);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(292, 180);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(283, 172);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Apply/Save/Load";
+            // 
+            // saveButton
+            // 
+            this.saveButton.AutoSize = true;
+            this.saveButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.saveButton.Location = new System.Drawing.Point(3, 88);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(277, 27);
+            this.saveButton.TabIndex = 2;
+            this.saveButton.Text = "Save Filter";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // loadButton
+            // 
+            this.loadButton.AutoSize = true;
+            this.loadButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.loadButton.Location = new System.Drawing.Point(3, 115);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(277, 27);
+            this.loadButton.TabIndex = 1;
+            this.loadButton.Text = "Load Filter";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // applyButton
+            // 
+            this.applyButton.AutoSize = true;
+            this.applyButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.applyButton.Location = new System.Drawing.Point(3, 142);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(277, 27);
+            this.applyButton.TabIndex = 0;
+            this.applyButton.Text = "Apply";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
+            // 
             // ConvFiltCustomizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -291,6 +346,8 @@ namespace Computer_Graphics_1
             this.ClientSize = new System.Drawing.Size(578, 355);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ConvFiltCustomizer";
             this.Text = "ConvFiltCustomizer";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -302,6 +359,8 @@ namespace Computer_Graphics_1
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.divisorNumericUpDown)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -325,5 +384,9 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.MaskedTextBox anchorCoordR;
         private System.Windows.Forms.MaskedTextBox kernelDimCol;
         private System.Windows.Forms.MaskedTextBox anchorCoordC;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button loadButton;
+        private System.Windows.Forms.Button applyButton;
     }
 }
