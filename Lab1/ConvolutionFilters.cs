@@ -14,7 +14,10 @@ namespace Computer_Graphics_1.Lab1
         public static void Apply(int[,] sqrCnvMat, _coords anchorKernel, WriteableBitmap wbmp, double divisor = -99999, int offset=0)
         {
             WriteableBitmap cloneWbmp = wbmp.Clone();
-            int cnvMatSiz = (int)Math.Sqrt(sqrCnvMat.Length); //square matrix nxn length = n^2
+            //int cnvMatSiz = (int)Math.Sqrt(sqrCnvMat.Length); //square matrix nxn length = n^2
+            int cnvMatRowCount = sqrCnvMat.GetLength(0);
+            int cnvMatColCount = sqrCnvMat.GetLength(1);
+
             int wbmpRowCount = wbmp.PixelHeight;
             int wbmpColCount = wbmp.PixelWidth;
 
@@ -32,17 +35,19 @@ namespace Computer_Graphics_1.Lab1
                     divisor = 1;
                 }
             }
-            
 
-            int mid = (cnvMatSiz - 1) / 2 + 1;
+
+            //int mid = (cnvMatSiz - 1) / 2 + 1;
+            int midR = (cnvMatRowCount - 1) / 2 + 1;
+            int midC = (cnvMatColCount - 1) / 2 + 1;
             if (anchorKernel.c == -1)
-                anchorKernel.c = mid; //sets midpoint of column //remember, this works because COnv mat size is odd by our requirements
+                anchorKernel.c = midR; //midpoint of col ///DEPRECATED:sets midpoint of column //remember, this works because COnv mat size is odd by our requirements
             if (anchorKernel.r == -1)
-                anchorKernel.r = mid; //same as above, just for row.
+                anchorKernel.r = midC; //midpoint of row ///DEPRECATED:same as above, just for row.
 
             _coords anchorOffsetCenter; 
-            anchorOffsetCenter.r = anchorKernel.r - mid;
-            anchorOffsetCenter.c = anchorKernel.c - mid;
+            anchorOffsetCenter.r = anchorKernel.r - midR;
+            anchorOffsetCenter.c = anchorKernel.c - midC;
 
             int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
             int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
@@ -52,8 +57,8 @@ namespace Computer_Graphics_1.Lab1
                 wbmp.Lock();
                 int TotalMissingRowsTop = anchorKernel.r - 1;
                 int TotalMissingColsLeft = anchorKernel.c - 1; //for the full row
-                int TotalMissingColsRight = (cnvMatSiz - anchorKernel.c); //for the full row
-                int TotalMissingRowsBottom = (cnvMatSiz - anchorKernel.r);
+                int TotalMissingColsRight = (cnvMatColCount - anchorKernel.c); //for the full row
+                int TotalMissingRowsBottom = (cnvMatRowCount - anchorKernel.r);
                 //For math min/max functions i might need to us imgRow and/or imgCo with + or minus.
                 //For img pixels missing both upper rows and left columns (diagonal square/rectangle)
                 for (int imgRow = 0; imgRow < TotalMissingRowsTop; imgRow++)
@@ -63,12 +68,12 @@ namespace Computer_Graphics_1.Lab1
                     {
                         int currMissingCols = anchorKernel.c - (imgCol + 1);
 
-                        byte[] subPixDat = new byte[(cnvMatSiz - currMissingRows) * (cnvMatSiz - currMissingCols) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount - currMissingRows) * (cnvMatColCount - currMissingCols) * numBytesPerPix];
 
                         int rLeftSart = imgCol - anchorKernel.c + 1 + currMissingCols;
                         int rTopStart = imgRow - anchorKernel.r + 1 + currMissingRows;
-                        int rWidth = cnvMatSiz - currMissingCols;
-                        int rHeight = cnvMatSiz - currMissingRows;
+                        int rWidth = cnvMatColCount - currMissingCols;
+                        int rHeight = cnvMatRowCount - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
@@ -76,9 +81,9 @@ namespace Computer_Graphics_1.Lab1
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
                         //the following goes through cnvMat
-                        for (int r = 0; r < cnvMatSiz; r++)
+                        for (int r = 0; r < cnvMatRowCount; r++)
                         {
-                            for (int c = 0; c < cnvMatSiz; c++)
+                            for (int c = 0; c < cnvMatColCount; c++)
                             {
                                 int pxRow = Math.Max(r - currMissingRows, 0);
                                 int pxCol = Math.Max(c - currMissingCols, 0);
@@ -110,15 +115,15 @@ namespace Computer_Graphics_1.Lab1
                     for (int imgCol = wbmpColCount - TotalMissingColsRight; imgCol < wbmpColCount; imgCol++)
                     {
                         int colsToRightOfImgRow = wbmpColCount - (imgCol + 1);
-                        int colsNeededToRightOfImgCol = (cnvMatSiz - anchorKernel.c) - colsToRightOfImgRow;
+                        int colsNeededToRightOfImgCol = (cnvMatColCount - anchorKernel.c) - colsToRightOfImgRow;
                         int currMissingCols = colsNeededToRightOfImgCol;
 
-                        byte[] subPixDat = new byte[(cnvMatSiz - currMissingRows) * (cnvMatSiz - currMissingCols) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount - currMissingRows) * (cnvMatColCount - currMissingCols) * numBytesPerPix];
 
                         int rLeftSart = imgCol - anchorKernel.c + 1;
                         int rTopStart = imgRow - anchorKernel.r + 1 + currMissingRows;
-                        int rWidth = cnvMatSiz - currMissingCols;
-                        int rHeight = cnvMatSiz - currMissingRows;
+                        int rWidth = cnvMatColCount - currMissingCols;
+                        int rHeight = cnvMatRowCount - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
@@ -126,12 +131,12 @@ namespace Computer_Graphics_1.Lab1
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
                         //the following goes through cnvMat
-                        for (int r = 0; r < cnvMatSiz; r++)
+                        for (int r = 0; r < cnvMatRowCount; r++)
                         {
-                            for (int c = 0; c < cnvMatSiz; c++)
+                            for (int c = 0; c < cnvMatColCount; c++)
                             {
                                 int pxRow = Math.Max(r - currMissingRows, 0);
-                                int pxCol = Math.Min(c, cnvMatSiz - 1 - currMissingCols);
+                                int pxCol = Math.Min(c, cnvMatColCount - 1 - currMissingCols);
                                 _pixel_bgr24_bgra32 px = sub2DPixDat.GetPixelAt(pxRow, pxCol, numChannelsPerPix);
                                 blue += sqrCnvMat[r, c] * px.blue;
                                 green += sqrCnvMat[r, c] * px.green;
@@ -160,18 +165,18 @@ namespace Computer_Graphics_1.Lab1
                 for (int imgRow = wbmpRowCount-TotalMissingRowsBottom; imgRow < wbmpRowCount; imgRow++)
                 {
                     int rowsBelowImgRow = wbmpRowCount - (imgRow + 1);
-                    int rowsNeededBelowImgRow = (cnvMatSiz - anchorKernel.r) - rowsBelowImgRow;
+                    int rowsNeededBelowImgRow = (cnvMatRowCount - anchorKernel.r) - rowsBelowImgRow;
                     int currMissingRows = rowsNeededBelowImgRow;
                     for (int imgCol = 0; imgCol < wbmpColCount - TotalMissingColsRight; imgCol++)
                     {
                         int currMissingCols = anchorKernel.c - (imgCol + 1);
 
-                        byte[] subPixDat = new byte[(cnvMatSiz - currMissingRows) * (cnvMatSiz - currMissingCols) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount - currMissingRows) * (cnvMatColCount - currMissingCols) * numBytesPerPix];
 
                         int rLeftSart = imgCol - anchorKernel.c + 1 + currMissingCols;
                         int rTopStart = imgRow - anchorKernel.r + 1;
-                        int rWidth = cnvMatSiz - currMissingCols;
-                        int rHeight = cnvMatSiz - currMissingRows;
+                        int rWidth = cnvMatColCount - currMissingCols;
+                        int rHeight = cnvMatRowCount - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
@@ -179,12 +184,12 @@ namespace Computer_Graphics_1.Lab1
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
                         //the following goes through cnvMat
-                        for (int r = 0; r < cnvMatSiz; r++)
+                        for (int r = 0; r < cnvMatRowCount; r++)
                         {
-                            for (int c = 0; c < cnvMatSiz; c++)
+                            for (int c = 0; c < cnvMatColCount; c++)
                             {
                                 int pxRow = Math.Max(r - currMissingRows, 0);
-                                int pxCol = Math.Min(c, cnvMatSiz - 1 - currMissingCols);
+                                int pxCol = Math.Min(c, cnvMatColCount - 1 - currMissingCols);
                                 _pixel_bgr24_bgra32 px = sub2DPixDat.GetPixelAt(pxRow, pxCol, numChannelsPerPix);
                                 blue += sqrCnvMat[r, c] * px.blue;
                                 green += sqrCnvMat[r, c] * px.green;
@@ -213,21 +218,21 @@ namespace Computer_Graphics_1.Lab1
                 for (int imgRow = wbmpRowCount-TotalMissingRowsBottom; imgRow < wbmpRowCount; imgRow++)
                 {
                     int rowsBelowImgRow = wbmpRowCount - (imgRow + 1);
-                    int rowsNeededBelowImgRow = (cnvMatSiz - anchorKernel.r) - rowsBelowImgRow;
+                    int rowsNeededBelowImgRow = (cnvMatRowCount - anchorKernel.r) - rowsBelowImgRow;
                     int currMissingRows = rowsNeededBelowImgRow;
 
                     for (int imgCol = wbmpColCount - TotalMissingColsRight; imgCol < wbmpColCount; imgCol++)
                     {
                         int colsToRightOfImgRow = wbmpColCount - (imgCol + 1);
-                        int colsNeededToRightOfImgCol = (cnvMatSiz - anchorKernel.c) - colsToRightOfImgRow;
+                        int colsNeededToRightOfImgCol = (cnvMatColCount - anchorKernel.c) - colsToRightOfImgRow;
                         int currMissingCols = colsNeededToRightOfImgCol;
 
-                        byte[] subPixDat = new byte[(cnvMatSiz - currMissingRows) * (cnvMatSiz - currMissingCols) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount - currMissingRows) * (cnvMatColCount - currMissingCols) * numBytesPerPix];
 
                         int rLeftSart = imgCol - anchorKernel.c + 1;
                         int rTopStart = imgRow - anchorKernel.r + 1;
-                        int rWidth = cnvMatSiz - currMissingCols;
-                        int rHeight = cnvMatSiz - currMissingRows;
+                        int rWidth = cnvMatColCount - currMissingCols;
+                        int rHeight = cnvMatRowCount - currMissingRows;
                         int arrStride = rWidth * numBytesPerPix;
 
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
@@ -235,12 +240,12 @@ namespace Computer_Graphics_1.Lab1
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
                         int red = 0; int green = 0; int blue = 0;
                         //the following goes through cnvMat
-                        for (int r = 0; r < cnvMatSiz; r++)
+                        for (int r = 0; r < cnvMatRowCount; r++)
                         {
-                            for (int c = 0; c < cnvMatSiz; c++)
+                            for (int c = 0; c < cnvMatColCount; c++)
                             {
-                                int pxRow = Math.Min(c, cnvMatSiz - 1 - currMissingRows);
-                                int pxCol = Math.Min(c, cnvMatSiz - 1 - currMissingCols);
+                                int pxRow = Math.Min(c, cnvMatRowCount - 1 - currMissingRows);
+                                int pxCol = Math.Min(c, cnvMatColCount - 1 - currMissingCols);
                                 _pixel_bgr24_bgra32 px = sub2DPixDat.GetPixelAt(pxRow, pxCol, numChannelsPerPix);
                                 blue += sqrCnvMat[r, c] * px.blue;
                                 green += sqrCnvMat[r, c] * px.green;
@@ -274,12 +279,12 @@ namespace Computer_Graphics_1.Lab1
                     for (int imgCol=TotalMissingColsLeft;imgCol<wbmpColCount-TotalMissingColsRight;imgCol++)
                     {
                         //since I've chosen the boundaries of this for loop carefully so as to only extend the first row upwards, we don't have any missing columns here.
-                        byte[] subPixDat = new byte[(cnvMatSiz - currMissingRows) * (cnvMatSiz) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount - currMissingRows) * (cnvMatColCount) * numBytesPerPix];
                         int rLeftSart = imgCol - anchorKernel.c +1;
                         int rTopStart = imgRow - anchorKernel.r +1 + currMissingRows;
-                        int rWidth = cnvMatSiz;
-                        int rHeight = cnvMatSiz-currMissingRows;
-                        int arrStride = (cnvMatSiz) * numBytesPerPix; //numcolumns*numBYtesPerPixel
+                        int rWidth = cnvMatColCount;
+                        int rHeight = cnvMatRowCount-currMissingRows;
+                        int arrStride = (cnvMatColCount) * numBytesPerPix; //numcolumns*numBYtesPerPixel
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
                         //So far,
                         //We have gotten the non-missing pixels in subPixDat array.
@@ -288,9 +293,9 @@ namespace Computer_Graphics_1.Lab1
 
                         int red = 0; int green = 0; int blue=0;
                         //the following goes through cnvMat
-                        for(int r=0;r<cnvMatSiz;r++)
+                        for(int r=0;r<cnvMatRowCount;r++)
                         {
-                            for(int c=0;c<cnvMatSiz;c++)
+                            for(int c=0;c<cnvMatColCount;c++)
                             {
                                 int pxRow = Math.Max(r - currMissingRows,0);
                                 _pixel_bgr24_bgra32 px = sub2DPixDat.GetPixelAt(pxRow, c, numChannelsPerPix);
@@ -325,21 +330,21 @@ namespace Computer_Graphics_1.Lab1
                     {
                         int currMissingCols = anchorKernel.c - (imgCol + 1);
                         //since I've chosen the boundaries of this for loop carefully so as to only extend the first column to left, we don't have any missing rows here.
-                        byte[] subPixDat = new byte[(cnvMatSiz) * (cnvMatSiz-currMissingCols) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount) * (cnvMatColCount -currMissingCols) * numBytesPerPix];
                         int rLeftSart = imgCol - anchorKernel.c + 1+currMissingCols;
                         int rTopStart = imgRow - anchorKernel.r + 1;
-                        int rWidth = cnvMatSiz-currMissingCols;
-                        int rHeight = cnvMatSiz;
-                        int arrStride = (cnvMatSiz-currMissingCols) * numBytesPerPix;
+                        int rWidth = cnvMatColCount-currMissingCols;
+                        int rHeight = cnvMatRowCount;
+                        int arrStride = (cnvMatColCount -currMissingCols) * numBytesPerPix;
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
 
                         int red = 0; int green = 0; int blue = 0;
                         //the following goes through cnvMat
-                        for (int r = 0; r < cnvMatSiz; r++)
+                        for (int r = 0; r < cnvMatRowCount; r++)
                         {
-                            for (int c = 0; c < cnvMatSiz; c++)
+                            for (int c = 0; c < cnvMatColCount; c++)
                             {
                                 int pxCol = Math.Max(c-currMissingCols, 0);
                                 _pixel_bgr24_bgra32 px = sub2DPixDat.GetPixelAt(r, pxCol, numChannelsPerPix);
@@ -372,20 +377,20 @@ namespace Computer_Graphics_1.Lab1
                 {
                     for (int imgCol = TotalMissingColsLeft; imgCol < wbmpColCount-TotalMissingColsRight; imgCol++)
                     {
-                        byte[] pixDat = new byte[cnvMatSiz*cnvMatSiz* numBytesPerPix];
+                        byte[] pixDat = new byte[cnvMatRowCount * cnvMatColCount* numBytesPerPix];
                         int rLeftSart = imgCol - (anchorKernel.c-1); //-1 because of indexing
                         int rTopStart = imgRow - (anchorKernel.r-1); //-1 because of indexing
-                        int rWidth = cnvMatSiz;
-                        int rHeight = cnvMatSiz;
-                        int arrStride = cnvMatSiz * numBytesPerPix;
+                        int rWidth = cnvMatColCount;
+                        int rHeight = cnvMatRowCount;
+                        int arrStride = cnvMatColCount * numBytesPerPix;
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), pixDat, arrStride, 0);
 
                         int red = 0, green = 0, blue = 0;
-                        for (int mR = 0, i = 0; mR < cnvMatSiz; mR++)   //might only work for bgr pixels.
+                        for (int mR = 0, i = 0; mR < cnvMatRowCount; mR++)   //might only work for bgr pixels.
                         {
-                            for (int mC = 0; mC < cnvMatSiz; mC++, i += 3)
+                            for (int mC = 0; mC < cnvMatColCount; mC++, i += 3)
                             {
-                                int baseIndex = mR * cnvMatSiz + mC * 3;
+                                int baseIndex = mR * cnvMatRowCount + mC * 3;
                                 baseIndex = i; //the above might work by itself;
                                 blue += sqrCnvMat[mR, mC] * pixDat[baseIndex + 0]; ///clamp values to 255 and 0
                                 green += sqrCnvMat[mR, mC] * pixDat[baseIndex + 1];
@@ -415,18 +420,18 @@ namespace Computer_Graphics_1.Lab1
                 for (int imgRow = wbmpRowCount-TotalMissingRowsBottom; imgRow < wbmpRowCount; imgRow++)
                 {
                     int rowsBelowImgRow= wbmpRowCount - (imgRow+1);
-                    int rowsNeededBelowImgRow = (cnvMatSiz - anchorKernel.r) - rowsBelowImgRow;
+                    int rowsNeededBelowImgRow = (cnvMatRowCount - anchorKernel.r) - rowsBelowImgRow;
                     int currMissingRows = rowsNeededBelowImgRow;
                     //currMissingRows= anchorKernel.r - (imgRow + 1); ;
                     for (int imgCol = TotalMissingColsLeft; imgCol < wbmpColCount - TotalMissingColsRight; imgCol++)
                     {
                         //since I've chosen the boundaries of this for loop carefully so as to only extend the first row upwards, we don't have any missing columns here.
-                        byte[] subPixDat = new byte[(cnvMatSiz - currMissingRows) * (cnvMatSiz) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount - currMissingRows) * (cnvMatColCount) * numBytesPerPix];
                         int rLeftSart = imgCol - anchorKernel.c + 1;
                         int rTopStart = imgRow - anchorKernel.r + 1;
-                        int rWidth = cnvMatSiz;
-                        int rHeight = cnvMatSiz - currMissingRows;
-                        int arrStride = (cnvMatSiz) * numBytesPerPix; //numcolumns*numBYtesPerPixel
+                        int rWidth = cnvMatColCount;
+                        int rHeight = cnvMatRowCount - currMissingRows;
+                        int arrStride = (cnvMatColCount) * numBytesPerPix; //numcolumns*numBYtesPerPixel
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
                         //So far,
                         //We have gotten the non-missing pixels in subPixDat array.
@@ -435,11 +440,11 @@ namespace Computer_Graphics_1.Lab1
 
                         int red = 0; int green = 0; int blue = 0;
                         //the following goes through cnvMat
-                        for (int r = 0; r < cnvMatSiz; r++)
+                        for (int r = 0; r < cnvMatRowCount; r++)
                         {
-                            for (int c = 0; c < cnvMatSiz; c++)
+                            for (int c = 0; c < cnvMatColCount; c++)
                             {
-                                int pxRow = Math.Min(r, cnvMatSiz-1-currMissingRows);
+                                int pxRow = Math.Min(r, cnvMatRowCount -1-currMissingRows);
                                 _pixel_bgr24_bgra32 px = sub2DPixDat.GetPixelAt(pxRow, c, numChannelsPerPix);
                                 blue += sqrCnvMat[r, c] * px.blue;
                                 green += sqrCnvMat[r, c] * px.green;
@@ -471,26 +476,26 @@ namespace Computer_Graphics_1.Lab1
                     for (int imgCol = wbmpColCount - TotalMissingColsRight; imgCol < wbmpColCount; imgCol++)
                     {
                         int colsToRightOfImgRow = wbmpColCount - (imgCol + 1);
-                        int colsNeededToRightOfImgCol = (cnvMatSiz - anchorKernel.c) - colsToRightOfImgRow;
+                        int colsNeededToRightOfImgCol = (cnvMatColCount - anchorKernel.c) - colsToRightOfImgRow;
                         int currMissingCols = colsNeededToRightOfImgCol;
                         //since I've chosen the boundaries of this for loop carefully so as to only extend the first column to left, we don't have any missing rows here.
-                        byte[] subPixDat = new byte[(cnvMatSiz) * (cnvMatSiz - currMissingCols) * numBytesPerPix];
+                        byte[] subPixDat = new byte[(cnvMatRowCount) * (cnvMatColCount - currMissingCols) * numBytesPerPix];
                         int rLeftSart = imgCol - anchorKernel.c + 1;
                         int rTopStart = imgRow - anchorKernel.r+1;
-                        int rWidth = cnvMatSiz - currMissingCols;
-                        int rHeight = cnvMatSiz;
-                        int arrStride = (cnvMatSiz - currMissingCols) * numBytesPerPix;
+                        int rWidth = cnvMatColCount - currMissingCols;
+                        int rHeight = cnvMatRowCount;
+                        int arrStride = (cnvMatColCount - currMissingCols) * numBytesPerPix;
                         cloneWbmp.CopyPixels(new System.Windows.Int32Rect(rLeftSart, rTopStart, rWidth, rHeight), subPixDat, arrStride, 0);
 
                         byte[,] sub2DPixDat = subPixDat.ConvertTo2D(rWidth * numChannelsPerPix, rHeight);
 
                         int red = 0; int green = 0; int blue = 0;
                         //the following goes through cnvMat
-                        for (int r = 0; r < cnvMatSiz; r++)
+                        for (int r = 0; r < cnvMatRowCount; r++)
                         {
-                            for (int c = 0; c < cnvMatSiz; c++)
+                            for (int c = 0; c < cnvMatColCount; c++)
                             {
-                                int pxCol = Math.Min(c, cnvMatSiz-1-currMissingCols);
+                                int pxCol = Math.Min(c, cnvMatColCount -1-currMissingCols);
                                 _pixel_bgr24_bgra32 px = sub2DPixDat.GetPixelAt(r, pxCol, numChannelsPerPix);
                                 blue += sqrCnvMat[r, c] * px.blue;
                                 green += sqrCnvMat[r, c] * px.green;
