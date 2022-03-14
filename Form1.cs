@@ -340,5 +340,16 @@ namespace Computer_Graphics_1
             stretchToolStripMenuItem.Checked = false;
             zoomToolStripMenuItem.Checked = true;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ConvolutionFilters.MedianFilter3x3(wBmpToEdit);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void lab1TabPage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
