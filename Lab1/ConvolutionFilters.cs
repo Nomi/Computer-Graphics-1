@@ -96,6 +96,9 @@ namespace Computer_Graphics_1.Lab1
                         blue = (int)(blue / (double)divisor);
                         green = (int)(green / (double)divisor);
                         red = (int)(red / (double)divisor);
+                        blue += offset;
+                        green += offset;
+                        red += offset;
                         blue = ImgUtil.Clamp(blue, 0, 255);
                         green = ImgUtil.Clamp(green, 0, 255);
                         red = ImgUtil.Clamp(red, 0, 255);
@@ -821,6 +824,7 @@ namespace Computer_Graphics_1.Lab1
             byte[] redVals = new byte[3 * 3];
             unsafe
             {
+                wbmp.Lock();
                 for (int row = 0; row < wbmp.PixelHeight; row++)
                 {
                     for (int col = 0; col < wbmp.PixelWidth; col++)
@@ -834,18 +838,90 @@ namespace Computer_Graphics_1.Lab1
                                 _pixel_bgr24_bgra32* currPx = (_pixel_bgr24_bgra32*) cloneWbmp.GetPixelIntPtrAt(r, c);
                                 blueVals[(i+1)*3 + (j+1)] = currPx->blue;
                                 greenVals[(i + 1) * 3 + (j + 1)] = currPx->green;
-                                redVals[(i + 1) * 3 + (j + 1)] = currPx->green;
+                                redVals[(i + 1) * 3 + (j + 1)] = currPx->red;
                             }
                         }
                         Array.Sort(blueVals);
                         Array.Sort(greenVals);
                         Array.Sort(redVals);
                         _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(row, col);
-                        px->blue = blueVals[5];
-                        px->green = greenVals[5];
-                        px->red = redVals[5];
+                        px->blue = blueVals[4];
+                        px->green = greenVals[4];
+                        px->red = redVals[4];
                     }
                 }
+                //wbmp.AddDirtyRect(
+                wbmp.Unlock();
+            }
+        }
+
+        public static void ConvFilCleanCode(int[,] sqrCnvMat, _coords anchorKernel, WriteableBitmap wbmp, double divisor = -99999, int offset = 0)
+        {
+            WriteableBitmap cloneWbmp = wbmp.Clone();
+            int cnvMatRowCount = sqrCnvMat.GetLength(0);
+            int cnvMatColCount = sqrCnvMat.GetLength(1);
+
+            int wbmpRowCount = wbmp.PixelHeight;
+            int wbmpColCount = wbmp.PixelWidth;
+
+            double sumCM = 0;
+            foreach (int c in sqrCnvMat)
+            {
+                sumCM += c;
+            }
+
+            if (divisor == -99999)
+            {
+                divisor = sumCM;
+                if (divisor == 0)
+                {
+                    divisor = 1;
+                }
+            }
+            int midR = (cnvMatRowCount - 1) / 2 + 1; //can't accept even matrices
+            int midC = (cnvMatColCount - 1) / 2 + 1; //can't accept even matrices
+
+            _coords anchorOffsetCenter; //doesn't contatin the center itself, just the number of elements before that
+            anchorOffsetCenter.r = anchorKernel.r - midR;
+            anchorOffsetCenter.c = anchorKernel.c - midC;
+
+            int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
+            int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
+            unsafe
+            {
+                wbmp.Lock();
+                for (int row = 0; row < wbmpRowCount; row++)
+                {
+                    for (int col = 0; col < wbmpColCount; col++)
+                    {
+                        int sumBlue = 0;
+                        int sumGreen = 0;
+                        int sumRed = 0;
+                        for (int i = -(anchorKernel.r-1), cnvI=0; i < (cnvMatRowCount-(anchorKernel.r-1)); i++,cnvI++) //We have -1s inside brackets because anchorKernel is indexed from 1, while we need index from 0. //+1 outside to include last element //notice that 0 is included in this (for the center element)
+                        {
+                            for (int j = -(anchorKernel.c - 1), cnvJ=0; j < (cnvMatColCount - (anchorKernel.c - 1)); j++,cnvJ++)
+                            {
+                                int r = ImgUtil.Clamp(row + i, 0, wbmp.PixelHeight - 1);
+                                int c = ImgUtil.Clamp(col + j, 0, wbmp.PixelWidth - 1);
+                                _pixel_bgr24_bgra32* currPx = (_pixel_bgr24_bgra32*)cloneWbmp.GetPixelIntPtrAt(r, c);
+                                sumBlue += currPx->blue*sqrCnvMat[cnvI,cnvJ];
+                                sumGreen += currPx->green * sqrCnvMat[cnvI, cnvJ];
+                                sumRed += currPx->red * sqrCnvMat[cnvI, cnvJ];
+                            }
+                        }
+                        sumBlue = (int)(sumBlue / (double)divisor);
+                        sumGreen = (int)(sumGreen / (double)divisor);
+                        sumRed = (int)(sumRed / (double)divisor);
+                        sumBlue += offset;
+                        sumGreen += offset;
+                        sumRed += offset;
+                        _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(row, col);
+                        px->blue = (byte)ImgUtil.Clamp(sumBlue, 0,255);
+                        px->green = (byte)ImgUtil.Clamp(sumGreen, 0, 255);
+                        px->red = (byte)ImgUtil.Clamp(sumRed, 0, 255);
+                    }
+                }
+                wbmp.Unlock();
             }
         }
     }

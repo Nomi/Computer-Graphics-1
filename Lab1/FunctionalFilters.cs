@@ -50,6 +50,8 @@ namespace Computer_Graphics_1.Lab1
                     {
                         //byte[] pixCols = BitConverter.GetBytes(*(int*)writtenImg.BackBuffer);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)writtenImg.GetPixelIntPtrAt(row, col); //Type Punning for the win!
+                        //byte* array= (byte*)((long)writtenImg.BackBuffer + row * writtenImg.BackBufferStride + col *3);
+                        //array[0] = 1;
                         int newBlue = (brtInc + pxl->blue);
                         newBlue = newBlue > 255 ? 255 : newBlue;
 
