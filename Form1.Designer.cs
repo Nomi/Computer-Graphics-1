@@ -39,6 +39,7 @@ namespace Computer_Graphics_1
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labsTabControl = new System.Windows.Forms.TabControl();
             this.lab1TabPage = new System.Windows.Forms.TabPage();
+            this.medianFilterButton = new System.Windows.Forms.Button();
             this.convultionFiltersGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ApplyConvFiltButton = new System.Windows.Forms.Button();
@@ -71,7 +72,6 @@ namespace Computer_Graphics_1
             this.stretchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newPictureBox = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -183,7 +183,7 @@ namespace Computer_Graphics_1
             // lab1TabPage
             // 
             this.lab1TabPage.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.lab1TabPage.Controls.Add(this.button1);
+            this.lab1TabPage.Controls.Add(this.medianFilterButton);
             this.lab1TabPage.Controls.Add(this.convultionFiltersGroupBox);
             this.lab1TabPage.Controls.Add(this.funcFilGroupBox);
             this.lab1TabPage.Location = new System.Drawing.Point(4, 25);
@@ -193,6 +193,20 @@ namespace Computer_Graphics_1
             this.lab1TabPage.TabIndex = 0;
             this.lab1TabPage.Text = "L1";
             this.lab1TabPage.Click += new System.EventHandler(this.lab1TabPage_Click);
+            // 
+            // medianFilterButton
+            // 
+            this.medianFilterButton.AutoSize = true;
+            this.medianFilterButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.medianFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.medianFilterButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.medianFilterButton.Location = new System.Drawing.Point(3, 338);
+            this.medianFilterButton.Name = "medianFilterButton";
+            this.medianFilterButton.Size = new System.Drawing.Size(218, 27);
+            this.medianFilterButton.TabIndex = 5;
+            this.medianFilterButton.Text = "Median Filter";
+            this.medianFilterButton.UseVisualStyleBackColor = true;
+            this.medianFilterButton.Click += new System.EventHandler(this.medianFilterButtonClick);
             // 
             // convultionFiltersGroupBox
             // 
@@ -587,16 +601,6 @@ namespace Computer_Graphics_1
             this.newPictureBox.TabIndex = 5;
             this.newPictureBox.TabStop = false;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(77, 356);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -676,7 +680,7 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stretchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button medianFilterButton;
     }
 }
 

@@ -123,6 +123,7 @@
     <Compile Include="Lab1\ConvolutionFilters.cs" />
     <Compile Include="Lab1\FunctionalFilters.cs" />
     <Compile Include="HelperClasses\pixel.cs" />
+    <Compile Include="Lab1\LabPart\Class1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Lab1\ConvFiltCustomizer.resx">

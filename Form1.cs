@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab1;
+using Computer_Graphics_1.Lab1.LabPart;
 
 namespace Computer_Graphics_1
 {
@@ -166,7 +167,8 @@ namespace Computer_Graphics_1
             //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
             Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg
-
+            
+            //TBH, this checkbox should have been a button rather than a checkbox.
         }
 
         private void invertFilter_Click(object sender, EventArgs e)
@@ -343,9 +345,9 @@ namespace Computer_Graphics_1
             zoomToolStripMenuItem.Checked = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void medianFilterButtonClick(object sender, EventArgs e)
         {
-            ConvolutionFilters.MedianFilter3x3(wBmpToEdit);
+            MedianFilter.MedianFilter3x3(wBmpToEdit); //passed by reference by default.
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
 
