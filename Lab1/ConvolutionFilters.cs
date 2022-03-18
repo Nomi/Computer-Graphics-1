@@ -819,6 +819,7 @@ namespace Computer_Graphics_1.Lab1
             WriteableBitmap cloneWbmp = wbmp.Clone();
             //int[,] pixelSample = new int[3, 3];
             //List<byte> blueVals= new List<byte>
+            //The following will contain the respective colors of the pixels in a one-dimensional array to make picking mean easier.
             byte[] blueVals = new byte[3*3];
             byte[] greenVals = new byte[3 * 3];
             byte[] redVals = new byte[3 * 3];
@@ -923,6 +924,115 @@ namespace Computer_Graphics_1.Lab1
                 }
                 wbmp.Unlock();
             }
+        }
+
+
+        public static void convFiltMultiThreaded(int[,] sqrCnvMat, _coords anchorKernel, WriteableBitmap wbmp, double divisor = -99999, int offset = 0)
+        {
+            WriteableBitmap cloneWbmp = wbmp.Clone();
+            int cnvMatRowCount = sqrCnvMat.GetLength(0);
+            int cnvMatColCount = sqrCnvMat.GetLength(1);
+
+            int wbmpRowCount = wbmp.PixelHeight;
+            int wbmpColCount = wbmp.PixelWidth;
+
+            double sumCM = 0;
+            foreach (int c in sqrCnvMat)
+            {
+                sumCM += c;
+            }
+
+            if (divisor == -99999)
+            {
+                divisor = sumCM;
+                if (divisor == 0)
+                {
+                    divisor = 1;
+                }
+            }
+            int midR = (cnvMatRowCount - 1) / 2 + 1; //can't accept even matrices
+            int midC = (cnvMatColCount - 1) / 2 + 1; //can't accept even matrices
+
+            _coords anchorOffsetCenter; //doesn't contatin the center itself, just the number of elements before that
+            anchorOffsetCenter.r = anchorKernel.r - midR;
+            anchorOffsetCenter.c = anchorKernel.c - midC;
+
+            int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
+            int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
+
+            unsafe
+            {
+                wbmp.Lock();
+                
+                wbmp.Unlock();
+            }
+
+        }
+        private class cfPPMTPparams
+        {
+            public int wbmpRowCount;
+            public int wbmpColCount;
+            public _coords anchorKernel;
+            public WriteableBitmap cloneWbmp;
+            public int divisor;
+            public int offset;
+            public WriteableBitmap wbmp;
+            public cfPPMTPparams(int _wbmpRowCount,int _wbmpColCount, _coords _anchorKernel, WriteableBitmap _cloneWbmp, int _divisor, int _offset, WriteableBitmap _wbmp)
+            {
+                wbmpRowCount = _wbmpRowCount;
+                wbmpColCount = _wbmpColCount;
+                anchorKernel = _anchorKernel;
+                cloneWbmp = _cloneWbmp;
+                divisor = _divisor;
+                offset = _offset;
+                wbmp = _wbmp;
+            }
+        }
+        private static WriteableBitmap CfPrivParamMultiThreadedPart(Object paramsObj)
+        {
+            cfPPMTPparams param = (cfPPMTPparams) paramsObj;
+            int wbmpRowCount = param.wbmpRowCount;
+            int wbmpColCount = param.wbmpColCount;
+            _coords anchorKernel = param.anchorKernel;
+            WriteableBitmap cloneWbmp = param.cloneWbmp;
+            int divisor = param.divisor;
+            int offset = param.offset;
+            WriteableBitmap wbmp = param.wbmp;
+            unsafe
+            {
+                for (int row = 0; row < wbmpRowCount; row++)
+                {
+                    for (int col = 0; col < wbmpColCount; col++)
+                    {
+                        int sumBlue = 0;
+                        int sumGreen = 0;
+                        int sumRed = 0;
+                        for (int i = -(anchorKernel.r - 1), cnvI = 0; i < (cnvMatRowCount - (anchorKernel.r - 1)); i++, cnvI++) //We have -1s inside brackets because anchorKernel is indexed from 1, while we need index from 0. //+1 outside to include last element //notice that 0 is included in this (for the center element)
+                        {
+                            for (int j = -(anchorKernel.c - 1), cnvJ = 0; j < (cnvMatColCount - (anchorKernel.c - 1)); j++, cnvJ++)
+                            {
+                                int r = ImgUtil.Clamp(row + i, 0, wbmp.PixelHeight - 1);
+                                int c = ImgUtil.Clamp(col + j, 0, wbmp.PixelWidth - 1);
+                                _pixel_bgr24_bgra32* currPx = (_pixel_bgr24_bgra32*)cloneWbmp.GetPixelIntPtrAt(r, c);
+                                sumBlue += currPx->blue * sqrCnvMat[cnvI, cnvJ];
+                                sumGreen += currPx->green * sqrCnvMat[cnvI, cnvJ];
+                                sumRed += currPx->red * sqrCnvMat[cnvI, cnvJ];
+                            }
+                        }
+                        sumBlue = (int)(sumBlue / (double)divisor);
+                        sumGreen = (int)(sumGreen / (double)divisor);
+                        sumRed = (int)(sumRed / (double)divisor);
+                        sumBlue += offset;
+                        sumGreen += offset;
+                        sumRed += offset;
+                        _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)wbmp->GetPixelIntPtrAt(row, col);
+                        px->blue = (byte)ImgUtil.Clamp(sumBlue, 0, 255);
+                        px->green = (byte)ImgUtil.Clamp(sumGreen, 0, 255);
+                        px->red = (byte)ImgUtil.Clamp(sumRed, 0, 255);
+                    }
+                }
+            }
+            return wbmp;
         }
     }
 }
