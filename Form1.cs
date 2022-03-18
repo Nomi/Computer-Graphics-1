@@ -153,9 +153,9 @@ namespace Computer_Graphics_1
 
                 ////ConvolutionFilters.ConvolutionFilter(blurConvMat3x3, wBmpToEdit);//,ref newPictureBox);
                 _coords Coords; Coords.r = 2; Coords.c = 2; //7x7:5,6 //6,5 //indexed from 1
-                //ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit, 0.1);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
-                ConvolutionFilters.Apply(cnvFilt.Mat, cnvFilt.anchorCoords, wBmpToEdit, cnvFilt.divisor, cnvFilt.offset);
-                //ConvolutionFilters.ConvFilCleanCode(cnvFilt.Mat, cnvFilt.anchorCoords, wBmpToEdit, cnvFilt.divisor, cnvFilt.offset);
+                ////ConvolutionFilters.Apply(blurConvMat3x3, Coords, wBmpToEdit, 0.1);//,0.1);//(blurConvMat3x3,Coords,wBmpToEdit,0); ,0.1
+                //ConvolutionFilters.Apply(cnvFilt.Mat, cnvFilt.anchorCoords, wBmpToEdit, cnvFilt.divisor, cnvFilt.offset);
+                ConvolutionFilters.ConvFilCleanCode(cnvFilt.Mat, cnvFilt.anchorCoords, wBmpToEdit, cnvFilt.divisor, cnvFilt.offset);
                 newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
             }
         }
@@ -300,8 +300,8 @@ namespace Computer_Graphics_1
             {
                 if(cFCD.ShowDialog()==DialogResult.OK)
                 {
-                    ConvolutionFilters.Apply(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
-                    //ConvolutionFilters.ConvFilCleanCode(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
+                    //ConvolutionFilters.Apply(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
+                    ConvolutionFilters.ConvFilCleanCode(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
                     newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
                 }
                 else
