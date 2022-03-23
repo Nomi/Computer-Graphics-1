@@ -29,7 +29,6 @@ namespace Computer_Graphics_1
             public static _coords anchorCoords; //indexed from 1
             public static int offset = 0;
         }
-        
         public MainForm()
         {
             InitializeComponent();
@@ -381,6 +380,12 @@ namespace Computer_Graphics_1
             {
                 colorperchannelNumericUpDown.Value += 1;
             }
+        }
+
+        private void octreeQuantizationButton_Click(object sender, EventArgs e)
+        {
+            OctreeQuantization.Apply(wBmpToEdit, Decimal.ToInt32(octreeColorsPerChannelNumericUpDown.Value));
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
     }
 }
