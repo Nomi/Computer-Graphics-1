@@ -361,7 +361,7 @@ namespace Computer_Graphics_1
 
         private void averageDitheringButton_Click(object sender, EventArgs e)
         {
-            wBmpToEdit.ConvertRGB2GrayscaleRGB();
+            //wBmpToEdit.ConvertRGB2GrayscaleRGB();
 
 
             AverageDithering.apply(wBmpToEdit);
