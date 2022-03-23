@@ -34,6 +34,8 @@ namespace Computer_Graphics_1
         {
             InitializeComponent();
 
+            labsTabControl.SelectedTab = lab2TabPage;
+
             //foreach (Control cntrl in lab1TabPage.Controls)
             //{
             //    cntrl.Enabled = false;
