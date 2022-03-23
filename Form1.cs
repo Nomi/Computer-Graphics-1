@@ -355,5 +355,11 @@ namespace Computer_Graphics_1
         {
 
         }
+
+        private void averageDitheringButton_Click(object sender, EventArgs e)
+        {
+            wBmpToEdit.ConvertRGB2GrayscaleRGB();
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
     }
 }

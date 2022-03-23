@@ -37,5 +37,25 @@ namespace Computer_Graphics_1.HelperClasses.Extensions
                 encoder.Save(stream);
             }
         }
+
+        public static void ConvertRGB2GrayscaleRGB(this WriteableBitmap wbmp)
+        {
+            int numChannels = wbmp.GetPixelSizeBytes() / 8;
+            unsafe
+            {
+                wbmp.Lock();
+                for (int i = 0; i < wbmp.PixelHeight; i++)
+                {
+                    for (int j = 0; j < wbmp.BackBufferStride; j += numChannels)
+                    {
+                        _pixel_bgr24_bgra32* ptrPX = (_pixel_bgr24_bgra32*) wbmp.GetPixelIntPtrAt(i, j / numChannels);
+                        int avg = (ptrPX->blue + ptrPX->green + ptrPX->red) / 3;
+                        //avg = ImgUtil.Clamp(avg, 0, 255); //Commented out because it's not really needed considering it's the average of numbers between 0 and 255 (should also be in that range).
+                        ptrPX->blue = ptrPX->green = ptrPX->red = (byte) avg;
+                    }
+                }
+                wbmp.Unlock();
+            }
+        }
     }
 }
