@@ -30,8 +30,8 @@ namespace Computer_Graphics_1.Lab1.LabPart
                         {
                             for (int j = -1; j < 2; j++)
                             {
-                                int r = ImgUtil.Clamp(row + i, 0, wbmp.PixelHeight - 1);
-                                int c = ImgUtil.Clamp(col + j, 0, wbmp.PixelWidth - 1);
+                                int r = MathUtil.Clamp(row + i, 0, wbmp.PixelHeight - 1);
+                                int c = MathUtil.Clamp(col + j, 0, wbmp.PixelWidth - 1);
                                 _pixel_bgr24_bgra32* currPx = (_pixel_bgr24_bgra32*)cloneWbmp.GetPixelIntPtrAt(r, c);
                                 blueVals[(i + 1) * 3 + (j + 1)] = currPx->blue;
                                 greenVals[(i + 1) * 3 + (j + 1)] = currPx->green;
