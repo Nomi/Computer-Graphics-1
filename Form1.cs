@@ -13,6 +13,7 @@ using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab1;
 using Computer_Graphics_1.Lab1.LabPart;
+using Computer_Graphics_1.Lab2;
 
 namespace Computer_Graphics_1
 {
@@ -361,6 +362,10 @@ namespace Computer_Graphics_1
         private void averageDitheringButton_Click(object sender, EventArgs e)
         {
             wBmpToEdit.ConvertRGB2GrayscaleRGB();
+
+
+            AverageDithering.apply(wBmpToEdit);
+
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
     }
