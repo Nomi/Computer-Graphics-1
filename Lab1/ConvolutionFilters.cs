@@ -49,7 +49,7 @@ namespace Computer_Graphics_1.Lab1
             anchorOffsetCenter.r = anchorKernel.r - midR;
             anchorOffsetCenter.c = anchorKernel.c - midC;
 
-            int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
+            int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
             int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
 
             unsafe // do: upper row, left col, right col, lower row, all the corner squares, and the middle part that isn't missing pixels
@@ -99,9 +99,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
 
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
@@ -152,9 +152,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
 
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
@@ -205,9 +205,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
 
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
@@ -261,9 +261,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
 
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
@@ -313,9 +313,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green= ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green= MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
@@ -362,9 +362,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
@@ -406,9 +406,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
@@ -460,9 +460,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
@@ -511,9 +511,9 @@ namespace Computer_Graphics_1.Lab1
                         blue += offset;
                         green += offset;
                         red += offset;
-                        blue = ImgUtil.Clamp(blue, 0, 255);
-                        green = ImgUtil.Clamp(green, 0, 255);
-                        red = ImgUtil.Clamp(red, 0, 255);
+                        blue = MathUtil.Clamp(blue, 0, 255);
+                        green = MathUtil.Clamp(green, 0, 255);
+                        red = MathUtil.Clamp(red, 0, 255);
 
                         //_pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow + anchorOffsetCenter.r, imgCol + anchorOffsetCenter.c);
                         _pixel_bgr24_bgra32* pxl = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(imgRow, imgCol);
@@ -549,8 +549,8 @@ namespace Computer_Graphics_1.Lab1
                 {
                     for(int col=0; col<(_mSz-1)/2;col++)
                     {
-                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
-                        int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
+                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+                        int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8; //same as the line above tbh.
 
                         int missingRows = (_mSz - 1) / 2 +1 - (row+1);//(_mSz-(row+1)-1);  //_mSz-(row+1) includes the middle element, so to remove that we subtract 1
                         int missingCols = (_mSz - 1) / 2 + 1 - (col + 1);//(_mSz - (col + 1) - 1);
@@ -646,7 +646,7 @@ namespace Computer_Graphics_1.Lab1
                 {
                     for (int col = (_mSz-1)/2; col < columnCount-(_mSz - 1) / 2; col++)
                     {
-                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
+                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
                         int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
                         byte[] pixDat = new byte[_mSz * _mSz * numBytesPerPix];
                         //int stride = wbmp.PixelWidth*(wbmp.Format.BitsPerPixel + 7) / 8;
@@ -709,8 +709,8 @@ namespace Computer_Graphics_1.Lab1
                     //lower-right corner square here to replace upper-left in previous code and so on.
                     for (int col = columnCount - (_mSz - 1) / 2; col < columnCount; col++)
                     {
-                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
-                        int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
+                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+                        int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8; //same as the line above tbh.
 
                         int missingRows = (_mSz - 1) / 2 + 1 - (row + 1);//(_mSz-(row+1)-1);  //_mSz-(row+1) includes the middle element, so to remove that we subtract 1
                         int missingCols = (_mSz - 1) / 2 + 1 - (col + 1);//(_mSz - (col + 1) - 1);
@@ -845,8 +845,8 @@ namespace Computer_Graphics_1.Lab1
             anchorOffsetCenter.r = anchorKernel.r - midR;
             anchorOffsetCenter.c = anchorKernel.c - midC;
 
-            int numChannelsPerPix = (wbmp.GetPixelSizeBytes() / 8);
-            int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
+            int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+            int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8; //same as the line above tbh
             unsafe
             {
                 wbmp.Lock();
@@ -861,8 +861,8 @@ namespace Computer_Graphics_1.Lab1
                         {
                             for (int j = -(anchorKernel.c - 1), cnvJ=0; j < (cnvMatColCount - (anchorKernel.c - 1)); j++,cnvJ++)
                             {
-                                int r = ImgUtil.Clamp(row + i, 0, wbmp.PixelHeight - 1);
-                                int c = ImgUtil.Clamp(col + j, 0, wbmp.PixelWidth - 1);
+                                int r = MathUtil.Clamp(row + i, 0, wbmp.PixelHeight - 1);
+                                int c = MathUtil.Clamp(col + j, 0, wbmp.PixelWidth - 1);
                                 _pixel_bgr24_bgra32* currPx = (_pixel_bgr24_bgra32*)cloneWbmp.GetPixelIntPtrAt(r, c);
                                 sumBlue += currPx->blue*sqrCnvMat[cnvI,cnvJ];
                                 sumGreen += currPx->green * sqrCnvMat[cnvI, cnvJ];
@@ -876,9 +876,9 @@ namespace Computer_Graphics_1.Lab1
                         sumGreen += offset;
                         sumRed += offset;
                         _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(row, col);
-                        px->blue = (byte)ImgUtil.Clamp(sumBlue, 0,255);
-                        px->green = (byte)ImgUtil.Clamp(sumGreen, 0, 255);
-                        px->red = (byte)ImgUtil.Clamp(sumRed, 0, 255);
+                        px->blue = (byte)MathUtil.Clamp(sumBlue, 0,255);
+                        px->green = (byte)MathUtil.Clamp(sumGreen, 0, 255);
+                        px->red = (byte)MathUtil.Clamp(sumRed, 0, 255);
                     }
                 }
                 wbmp.Unlock();

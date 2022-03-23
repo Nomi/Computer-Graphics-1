@@ -13,6 +13,7 @@ using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab1;
 using Computer_Graphics_1.Lab1.LabPart;
+using Computer_Graphics_1.Lab2;
 
 namespace Computer_Graphics_1
 {
@@ -28,11 +29,12 @@ namespace Computer_Graphics_1
             public static _coords anchorCoords; //indexed from 1
             public static int offset = 0;
         }
-
         
         public MainForm()
         {
             InitializeComponent();
+
+            labsTabControl.SelectedTab = lab2TabPage;
 
             //foreach (Control cntrl in lab1TabPage.Controls)
             //{
@@ -95,6 +97,8 @@ namespace Computer_Graphics_1
 
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
         {
+            if (ogBitmap == null)
+                return;
             wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
             inversionCheckBox.Checked = false;
@@ -354,6 +358,29 @@ namespace Computer_Graphics_1
         private void lab1TabPage_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void averageDitheringButton_Click(object sender, EventArgs e)
+        {
+            AverageDithering.apply(wBmpToEdit, (int)colorperchannelNumericUpDown.Value);
+
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+
+        private void cnvrtToGrayscaleButton_Click(object sender, EventArgs e)
+        {
+            wBmpToEdit.ConvertRGB2GrayscaleRGB();
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+
+        private void colorperchannelNumericUpDown_Validating(object sender, CancelEventArgs e)
+        {
+            if(colorperchannelNumericUpDown.Value%2!=0)
+            {
+                colorperchannelNumericUpDown.Value += 1;
+            }
         }
     }
 }
