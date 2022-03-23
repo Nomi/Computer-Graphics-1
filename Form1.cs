@@ -29,7 +29,6 @@ namespace Computer_Graphics_1
             public static _coords anchorCoords; //indexed from 1
             public static int offset = 0;
         }
-
         
         public MainForm()
         {
@@ -98,6 +97,8 @@ namespace Computer_Graphics_1
 
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
         {
+            if (ogBitmap == null)
+                return;
             wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
             inversionCheckBox.Checked = false;
@@ -361,12 +362,25 @@ namespace Computer_Graphics_1
 
         private void averageDitheringButton_Click(object sender, EventArgs e)
         {
-            //wBmpToEdit.ConvertRGB2GrayscaleRGB();
-
-
-            AverageDithering.apply(wBmpToEdit);
+            AverageDithering.apply(wBmpToEdit, (int)colorperchannelNumericUpDown.Value);
 
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+
+        private void cnvrtToGrayscaleButton_Click(object sender, EventArgs e)
+        {
+            wBmpToEdit.ConvertRGB2GrayscaleRGB();
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+
+        private void colorperchannelNumericUpDown_Validating(object sender, CancelEventArgs e)
+        {
+            if(colorperchannelNumericUpDown.Value%2!=0)
+            {
+                colorperchannelNumericUpDown.Value += 1;
+            }
         }
     }
 }

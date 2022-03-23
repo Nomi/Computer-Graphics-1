@@ -56,6 +56,16 @@ namespace Computer_Graphics_1
             this.brightnessCorrection = new System.Windows.Forms.Button();
             this.inversionCheckBox = new System.Windows.Forms.CheckBox();
             this.lab2TabPage = new System.Windows.Forms.TabPage();
+            this.miscGroupBox = new System.Windows.Forms.GroupBox();
+            this.cnvrtToGrayscaleButton = new System.Windows.Forms.Button();
+            this.colorQuantizationGroupBox = new System.Windows.Forms.GroupBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.dithering_GroupBox = new System.Windows.Forms.GroupBox();
+            this.averageDitheringGroupBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.averageDitheringButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.colorperchannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.lab3TabPage = new System.Windows.Forms.TabPage();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
             this.lab5TabPage = new System.Windows.Forms.TabPage();
@@ -72,10 +82,6 @@ namespace Computer_Graphics_1
             this.stretchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newPictureBox = new System.Windows.Forms.PictureBox();
-            this.dithering_GroupBox = new System.Windows.Forms.GroupBox();
-            this.averageDitheringButton = new System.Windows.Forms.Button();
-            this.colorQuantizationGroupBox = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -84,14 +90,18 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel1.SuspendLayout();
             this.funcFilGroupBox.SuspendLayout();
             this.lab2TabPage.SuspendLayout();
+            this.miscGroupBox.SuspendLayout();
+            this.colorQuantizationGroupBox.SuspendLayout();
+            this.dithering_GroupBox.SuspendLayout();
+            this.averageDitheringGroupBox.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).BeginInit();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.newPictureBox)).BeginInit();
-            this.dithering_GroupBox.SuspendLayout();
-            this.colorQuantizationGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -435,6 +445,7 @@ namespace Computer_Graphics_1
             // lab2TabPage
             // 
             this.lab2TabPage.BackColor = System.Drawing.Color.PaleVioletRed;
+            this.lab2TabPage.Controls.Add(this.miscGroupBox);
             this.lab2TabPage.Controls.Add(this.colorQuantizationGroupBox);
             this.lab2TabPage.Controls.Add(this.dithering_GroupBox);
             this.lab2TabPage.Location = new System.Drawing.Point(4, 25);
@@ -443,6 +454,159 @@ namespace Computer_Graphics_1
             this.lab2TabPage.Size = new System.Drawing.Size(224, 375);
             this.lab2TabPage.TabIndex = 1;
             this.lab2TabPage.Text = "L2";
+            // 
+            // miscGroupBox
+            // 
+            this.miscGroupBox.AutoSize = true;
+            this.miscGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.miscGroupBox.Controls.Add(this.cnvrtToGrayscaleButton);
+            this.miscGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.miscGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.miscGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.miscGroupBox.Location = new System.Drawing.Point(3, 182);
+            this.miscGroupBox.Name = "miscGroupBox";
+            this.miscGroupBox.Size = new System.Drawing.Size(218, 56);
+            this.miscGroupBox.TabIndex = 5;
+            this.miscGroupBox.TabStop = false;
+            this.miscGroupBox.Text = "Miscellaneous";
+            // 
+            // cnvrtToGrayscaleButton
+            // 
+            this.cnvrtToGrayscaleButton.AutoSize = true;
+            this.cnvrtToGrayscaleButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cnvrtToGrayscaleButton.Enabled = false;
+            this.cnvrtToGrayscaleButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cnvrtToGrayscaleButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cnvrtToGrayscaleButton.Location = new System.Drawing.Point(3, 20);
+            this.cnvrtToGrayscaleButton.Name = "cnvrtToGrayscaleButton";
+            this.cnvrtToGrayscaleButton.Size = new System.Drawing.Size(212, 33);
+            this.cnvrtToGrayscaleButton.TabIndex = 7;
+            this.cnvrtToGrayscaleButton.Text = "Convert to Grayscale";
+            this.cnvrtToGrayscaleButton.UseVisualStyleBackColor = true;
+            this.cnvrtToGrayscaleButton.Click += new System.EventHandler(this.cnvrtToGrayscaleButton_Click);
+            // 
+            // colorQuantizationGroupBox
+            // 
+            this.colorQuantizationGroupBox.AutoSize = true;
+            this.colorQuantizationGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.colorQuantizationGroupBox.Controls.Add(this.button4);
+            this.colorQuantizationGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.colorQuantizationGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colorQuantizationGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.colorQuantizationGroupBox.Location = new System.Drawing.Point(3, 126);
+            this.colorQuantizationGroupBox.Name = "colorQuantizationGroupBox";
+            this.colorQuantizationGroupBox.Size = new System.Drawing.Size(218, 56);
+            this.colorQuantizationGroupBox.TabIndex = 4;
+            this.colorQuantizationGroupBox.TabStop = false;
+            this.colorQuantizationGroupBox.Text = "Color Quantization";
+            // 
+            // button4
+            // 
+            this.button4.AutoSize = true;
+            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button4.Enabled = false;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button4.Location = new System.Drawing.Point(3, 20);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(212, 33);
+            this.button4.TabIndex = 7;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // dithering_GroupBox
+            // 
+            this.dithering_GroupBox.AutoSize = true;
+            this.dithering_GroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.dithering_GroupBox.Controls.Add(this.averageDitheringGroupBox);
+            this.dithering_GroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dithering_GroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dithering_GroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dithering_GroupBox.Location = new System.Drawing.Point(3, 3);
+            this.dithering_GroupBox.Name = "dithering_GroupBox";
+            this.dithering_GroupBox.Size = new System.Drawing.Size(218, 123);
+            this.dithering_GroupBox.TabIndex = 3;
+            this.dithering_GroupBox.TabStop = false;
+            this.dithering_GroupBox.Text = "Dithering";
+            // 
+            // averageDitheringGroupBox
+            // 
+            this.averageDitheringGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.averageDitheringGroupBox.Controls.Add(this.tableLayoutPanel2);
+            this.averageDitheringGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.averageDitheringGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.averageDitheringGroupBox.Location = new System.Drawing.Point(3, 20);
+            this.averageDitheringGroupBox.Name = "averageDitheringGroupBox";
+            this.averageDitheringGroupBox.Size = new System.Drawing.Size(212, 100);
+            this.averageDitheringGroupBox.TabIndex = 6;
+            this.averageDitheringGroupBox.TabStop = false;
+            this.averageDitheringGroupBox.Text = "Average Dithering";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.averageDitheringButton, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.colorperchannelNumericUpDown, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 18);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(206, 79);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // averageDitheringButton
+            // 
+            this.averageDitheringButton.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.averageDitheringButton, 2);
+            this.averageDitheringButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.averageDitheringButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.averageDitheringButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.averageDitheringButton.Location = new System.Drawing.Point(3, 42);
+            this.averageDitheringButton.Name = "averageDitheringButton";
+            this.averageDitheringButton.Size = new System.Drawing.Size(200, 33);
+            this.averageDitheringButton.TabIndex = 6;
+            this.averageDitheringButton.Text = "Average Dithering";
+            this.averageDitheringButton.UseVisualStyleBackColor = true;
+            this.averageDitheringButton.Click += new System.EventHandler(this.averageDitheringButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label1.Location = new System.Drawing.Point(3, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 34);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Colors per Channel (k)";
+            // 
+            // colorperchannelNumericUpDown
+            // 
+            this.colorperchannelNumericUpDown.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.colorperchannelNumericUpDown.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.colorperchannelNumericUpDown.Location = new System.Drawing.Point(106, 14);
+            this.colorperchannelNumericUpDown.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.colorperchannelNumericUpDown.Name = "colorperchannelNumericUpDown";
+            this.colorperchannelNumericUpDown.Size = new System.Drawing.Size(97, 22);
+            this.colorperchannelNumericUpDown.TabIndex = 1;
+            this.colorperchannelNumericUpDown.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.colorperchannelNumericUpDown.Validating += new System.ComponentModel.CancelEventHandler(this.colorperchannelNumericUpDown_Validating);
             // 
             // lab3TabPage
             // 
@@ -610,64 +774,6 @@ namespace Computer_Graphics_1
             this.newPictureBox.TabIndex = 5;
             this.newPictureBox.TabStop = false;
             // 
-            // dithering_GroupBox
-            // 
-            this.dithering_GroupBox.AutoSize = true;
-            this.dithering_GroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.dithering_GroupBox.Controls.Add(this.averageDitheringButton);
-            this.dithering_GroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.dithering_GroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dithering_GroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dithering_GroupBox.Location = new System.Drawing.Point(3, 3);
-            this.dithering_GroupBox.Name = "dithering_GroupBox";
-            this.dithering_GroupBox.Size = new System.Drawing.Size(218, 56);
-            this.dithering_GroupBox.TabIndex = 3;
-            this.dithering_GroupBox.TabStop = false;
-            this.dithering_GroupBox.Text = "Dithering";
-            // 
-            // averageDitheringButton
-            // 
-            this.averageDitheringButton.AutoSize = true;
-            this.averageDitheringButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.averageDitheringButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.averageDitheringButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.averageDitheringButton.Location = new System.Drawing.Point(3, 20);
-            this.averageDitheringButton.Name = "averageDitheringButton";
-            this.averageDitheringButton.Size = new System.Drawing.Size(212, 33);
-            this.averageDitheringButton.TabIndex = 5;
-            this.averageDitheringButton.Text = "Average Dithering";
-            this.averageDitheringButton.UseVisualStyleBackColor = true;
-            this.averageDitheringButton.Click += new System.EventHandler(this.averageDitheringButton_Click);
-            // 
-            // colorQuantizationGroupBox
-            // 
-            this.colorQuantizationGroupBox.AutoSize = true;
-            this.colorQuantizationGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.colorQuantizationGroupBox.Controls.Add(this.button4);
-            this.colorQuantizationGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.colorQuantizationGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colorQuantizationGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.colorQuantizationGroupBox.Location = new System.Drawing.Point(3, 59);
-            this.colorQuantizationGroupBox.Name = "colorQuantizationGroupBox";
-            this.colorQuantizationGroupBox.Size = new System.Drawing.Size(218, 56);
-            this.colorQuantizationGroupBox.TabIndex = 4;
-            this.colorQuantizationGroupBox.TabStop = false;
-            this.colorQuantizationGroupBox.Text = "Color Quantization";
-            // 
-            // button4
-            // 
-            this.button4.AutoSize = true;
-            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button4.Enabled = false;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button4.Location = new System.Drawing.Point(3, 20);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(212, 33);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -694,6 +800,15 @@ namespace Computer_Graphics_1
             this.funcFilGroupBox.PerformLayout();
             this.lab2TabPage.ResumeLayout(false);
             this.lab2TabPage.PerformLayout();
+            this.miscGroupBox.ResumeLayout(false);
+            this.miscGroupBox.PerformLayout();
+            this.colorQuantizationGroupBox.ResumeLayout(false);
+            this.colorQuantizationGroupBox.PerformLayout();
+            this.dithering_GroupBox.ResumeLayout(false);
+            this.averageDitheringGroupBox.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).EndInit();
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
@@ -701,10 +816,6 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.newPictureBox)).EndInit();
-            this.dithering_GroupBox.ResumeLayout(false);
-            this.dithering_GroupBox.PerformLayout();
-            this.colorQuantizationGroupBox.ResumeLayout(false);
-            this.colorQuantizationGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -757,7 +868,13 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.GroupBox colorQuantizationGroupBox;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox dithering_GroupBox;
+        private System.Windows.Forms.GroupBox miscGroupBox;
+        private System.Windows.Forms.Button cnvrtToGrayscaleButton;
+        private System.Windows.Forms.GroupBox averageDitheringGroupBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button averageDitheringButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown colorperchannelNumericUpDown;
     }
 }
 
