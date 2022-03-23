@@ -18,7 +18,7 @@ namespace Computer_Graphics_1.Lab2
                 wbmp.Lock();
 
                 int sumBlue = 0, sumGreen = 0, sumRed = 0;
-                int numChannels = wbmp.GetPixelSizeBytes() / 8;
+                int numChannels = wbmp.GetPixelSizeBytes();
                 int totalPixels = wbmp.PixelWidth * wbmp.PixelHeight;
                 for (int i = 0; i < wbmp.PixelHeight; i++)
                 {
