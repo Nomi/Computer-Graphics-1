@@ -126,6 +126,9 @@
     <Compile Include="HelperClasses\pixel.cs" />
     <Compile Include="Lab1\LabPart\MedianFilter.cs" />
     <Compile Include="Lab2\AverageDithering.cs" />
+    <Compile Include="Lab2\OctreeQuantizationHelpers\OctreeNode.cs" />
+    <Compile Include="Lab2\OctreeQuantization.cs" />
+    <Compile Include="Lab2\OctreeQuantizationHelpers\OctreeQuantizer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Lab1\ConvFiltCustomizer.resx">
