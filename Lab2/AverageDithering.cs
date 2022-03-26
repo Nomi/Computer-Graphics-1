@@ -34,6 +34,12 @@ namespace Computer_Graphics_1.Lab2
                 int avgGreen = sumGreen / totalPixels;
                 int avgRed = sumRed / totalPixels;
 
+                //The following left and right interval sizes are based on something like percentiles
+                //For example:
+                //if green has a high average (meaning there probably are more pixels of greater than average value and lesser ones of smaller than average)
+                //then, we'll end up with levels of bigger gaps between levels (less frequent) before\smaller_than the average
+                //and smaller gaps between levels (more frequent) after\greater_than the average.
+
                 int l_blueIntervalSize = avgBlue / (K/2);
                 int l_greenIntervalSize = avgGreen / (K/2);
                 int l_redIntervalSize = avgRed / (K / 2);
