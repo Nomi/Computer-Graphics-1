@@ -26,26 +26,49 @@ namespace Computer_Graphics_1.Lab2
             octreeQuant.quantizer = new OctreeQuantizer();
             octreeQuant.limitedPalette = new List<Color>();
             octreeQuant.originalPalette = new List<Color>();
-            WriteableBitmap cloneWbmp = wbmp.Clone();
-
+            QuantizingOctree oct = new QuantizingOctree();
+            oct.root = new QuantOcNode();
+            oct.root.parent = null;
+            oct.root.depth = 0;
+            oct.colorLimit = k;
+            OctreeAverageQuantization octAvg = new OctreeAverageQuantization();
+            int colors = 0;
             unsafe
             {
                 wbmp.Lock();
-                for (int y = 0; y < cloneWbmp.PixelHeight; y++)
+                int colorsAdded = 0;
+                for (int y = 0; y < wbmp.PixelHeight; y++)
                 {
-                    for (int x = 0; x < cloneWbmp.PixelWidth; x++)
+                    for (int x = 0; x < wbmp.PixelWidth; x++)
                     {
-                        _pixel_bgr24_bgra32* pixPtr = (_pixel_bgr24_bgra32*)cloneWbmp.GetPixelIntPtrAt(y, x);
+                        _pixel_bgr24_bgra32* pixPtr = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(y, x);
                         Color colPix = Color.FromArgb(pixPtr->red, pixPtr->green, pixPtr->blue);
-                        octreeQuant.quantizer.AddColor(colPix);
+                        //colorsAdded+=octreeQuant.quantizer.AddColor(colPix); //get it to return if a new leaf was added.
+                        ////if(colorsAdded>k)
+                        ////{
+                        ////    octreeQuant.limitedPalette = octreeQuant.quantizer.LimitPalette(k);
+                        ////    colorsAdded = octreeQuant.limitedPalette.Count();
+                        ////}
+                        //oct.insert(ref oct.root, colPix, 0);
+                        colors = octAvg.insert(colPix);
+                        if (colors > k)
+                        {
+                            octAvg.RemoveExtraColors(k);
+                        }
+
+                        ////if a new leaf is added and it EXCEEDS maximum color count,
+                        ////quantize the current colors.
+
+                        ////don't go forward after a leaf(image)
                     }
                 }
 
 
 
-
+                int uniqColors =colors;// oct.root.GetChildTreeColorCount();
+                uniqColors = octAvg.root.GetChildTreeUniqueColorCount();
                 int limit = k;  //Decimal.ToInt32(numericUpDown.Value) seems like a useful function (should be helpful instead of casting numeric up down of Average Dithering).
-                octreeQuant.limitedPalette = octreeQuant.quantizer.GetPalette(limit);
+                //octreeQuant.limitedPalette = octreeQuant.quantizer.GetPalette(limit);
 
                 for (int y = 0; y < wbmp.PixelHeight; y++)
                 {
@@ -53,7 +76,7 @@ namespace Computer_Graphics_1.Lab2
                     {
                         _pixel_bgr24_bgra32* pixPtr = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(y, x);
                         Color colPix = Color.FromArgb(pixPtr->red, pixPtr->green, pixPtr->blue);
-                        Color quantizedColPix = octreeQuant.limitedPalette[octreeQuant.quantizer.GetPaletteIndex(colPix)];
+                        Color quantizedColPix = octAvg.GetQuantizedColor(colPix);//octreeQuant.limitedPalette[octreeQuant.quantizer.GetPaletteIndex(colPix)];
                         pixPtr->blue = quantizedColPix.B;
                         pixPtr->green = quantizedColPix.G;
                         pixPtr->red = quantizedColPix.R;

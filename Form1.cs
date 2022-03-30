@@ -321,31 +321,34 @@ namespace Computer_Graphics_1
             openImageToolStripMenuItem_Click(sender, e);
         }
 
-        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void centerimageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ogPictureBox.SizeMode = PictureBoxSizeMode.Normal;
-            newPictureBox.SizeMode = PictureBoxSizeMode.Normal;
-            normalToolStripMenuItem.Checked = true;
+            ogPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+            newPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+            centerToolStripMenuItem.Checked = true;
             stretchToolStripMenuItem.Checked = false;
             zoomToolStripMenuItem.Checked = false;
+            autoSizescrollbarToolStripMenuItem.Checked = false;
         }
 
         private void stretchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ogPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             newPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            normalToolStripMenuItem.Checked = false;
+            centerToolStripMenuItem.Checked = false;
             stretchToolStripMenuItem.Checked = true;
             zoomToolStripMenuItem.Checked = false;
+            autoSizescrollbarToolStripMenuItem.Checked = false;
         }
 
         private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ogPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             newPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            normalToolStripMenuItem.Checked = false;
+            centerToolStripMenuItem.Checked = false;
             stretchToolStripMenuItem.Checked = false;
             zoomToolStripMenuItem.Checked = true;
+            autoSizescrollbarToolStripMenuItem.Checked = false;
         }
 
         private void medianFilterButtonClick(object sender, EventArgs e)
@@ -386,6 +389,16 @@ namespace Computer_Graphics_1
         {
             OctreeQuantization.Apply(wBmpToEdit, Decimal.ToInt32(octreeColorsPerChannelNumericUpDown.Value));
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void autoSizescrollbarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ogPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            newPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            centerToolStripMenuItem.Checked = false;
+            stretchToolStripMenuItem.Checked = false;
+            zoomToolStripMenuItem.Checked = false;
+            autoSizescrollbarToolStripMenuItem.Checked = true;
         }
     }
 }
