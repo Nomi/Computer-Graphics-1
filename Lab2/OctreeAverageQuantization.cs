@@ -96,30 +96,18 @@ namespace Computer_Graphics_1.Lab2
             return root.GetChildTreeUniqueColorCount();
         }
 
-        public int RemoveExtraColors(int colorLimit)
+        public int RemoveExtraColors(int howMany)
         {
-            int startingColorCount = root.GetChildTreeUniqueColorCount();
             int removedColors = 0;
-            while(startingColorCount-colorLimit> removedColors)
+            while(howMany> removedColors)
             {
                 int deepestDepth = root.HowDeepDoesBranchXGo.Max();
                 if (deepestDepth <=1)
                     return removedColors;
                 int indexRootDeepestBranch = root.HowDeepDoesBranchXGo.ToList().IndexOf(deepestDepth);
-                //try
-                //{
-                if(root.children[indexRootDeepestBranch].isLeaf)
-                {
-                    throw new Exception();
-                }
-                    removedColors += _RemoveExtraColors(ref root.children[indexRootDeepestBranch], indexRootDeepestBranch);
+
+                removedColors += _RemoveExtraColors(ref root.children[indexRootDeepestBranch], indexRootDeepestBranch);
                 root.HowDeepDoesBranchXGo[indexRootDeepestBranch]--;
-                //}
-                //catch (Exception) //e)
-                //{
-                //    ////throw e;
-                //    return removedColors;
-                //}
             }
             return removedColors;
         }
@@ -162,20 +150,21 @@ namespace Computer_Graphics_1.Lab2
             }
             return howDeepDoesItGo;
         }
+
+        //private static readonly Byte[] Mask = new Byte[] { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
         private int BranchSelector(Color col, int depth)
         {
             int level = depth;
-            return ((col.R & Mask[level]) == Mask[level] ? 4 : 0) |
-       ((col.G & Mask[level]) == Mask[level] ? 2 : 0) |
-       ((col.B & Mask[level]) == Mask[level] ? 1 : 0);
-            //int branchIndex;
-            //branchIndex =
-            //(GetBit(col.R, depth) ? 4 : 0)
-            //| (GetBit(col.G, depth) ? 2 : 0)
-            //| (GetBit(col.B, depth) ? 1 : 0); //GetBit returns "true" instead of 1 and "false" instead of 0 so we don't need to write GetBit(...)==1 explcitly
-            //return branchIndex;
+            //     return ((col.R & Mask[level]) == Mask[level] ? 4 : 0) |
+            //((col.G & Mask[level]) == Mask[level] ? 2 : 0) |
+            //((col.B & Mask[level]) == Mask[level] ? 1 : 0);
+            int branchIndex;
+            branchIndex =
+            (GetBit(col.R, depth) ? 4 : 0)
+            | (GetBit(col.G, depth) ? 2 : 0)
+            | (GetBit(col.B, depth) ? 1 : 0); //GetBit returns "true" instead of 1 and "false" instead of 0 so we don't need to write GetBit(...)==1 explcitly
+            return branchIndex;
         }
-        private static readonly Byte[] Mask = new Byte[] { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
         private bool GetBit(byte b, int depthInTree)
         {
             int bitPosition = 7 - depthInTree;
@@ -185,35 +174,17 @@ namespace Computer_Graphics_1.Lab2
 
         private int _RemoveExtraColors(ref OcAvgNode node, int rootMaxDepthBranchIndex)
         {
-            //TO;DO Improve the HowDeepDoesBranch go tracking and updation, and then check if depth matchs.
-            //Anyhow, fix this!
             int uniqueColorsRemoved;
             if (node.isLeaf && node.depth != 0)
                 return 0;
-            if (node.isLeaf)
-            {//samura champloo image, 20 colors
-                throw new Exception(); //maybe I should just implement parent member?
-            }
-            if (node.depth+2 == root.HowDeepDoesBranchXGo[rootMaxDepthBranchIndex]) //-? as one stop before leaf, and because:///-1 because first layer of nodes is considered levl 0
+            if (node.depth == root.HowDeepDoesBranchXGo[rootMaxDepthBranchIndex]-2) //-2 as we stop one step before leaf and because first layer of nodes is considered levl 0
             {
-                if(node==root)
-                {
-                    throw new Exception("I'm exceptionally dumb, you see.");
-                }
-                else
-                {
-                    uniqueColorsRemoved = node.GetChildTreeUniqueColorCount() - 1; //subtract one because one gets added back in form of the parent.
-                    node.isLeaf = true;
-                    return uniqueColorsRemoved;
-                    ////node.HowDeepDoesBranchXGo[maxDepthIndex]--;
-                }
+                uniqueColorsRemoved = node.GetChildTreeUniqueColorCount() - 1; //subtract one because one leaf gets added back in form of the parent.
+                node.isLeaf = true;
+                return uniqueColorsRemoved;
             }
             else
             {
-                if (node.isLeaf)
-                {
-                    throw new Exception("I'm exceptionally dumb, you see.");
-                }
                 int maxDepthIndex = 0;
                 for (int i = 1; i <= node.DepthInterval.Item2; i++)
                 {
@@ -222,16 +193,8 @@ namespace Computer_Graphics_1.Lab2
                         maxDepthIndex = i;
                     }
                 }
-                if (node==root&& node.children[maxDepthIndex] == null)
-                {
-                    throw new Exception("I'm exceptionally dumb, you see.");
-                }
-                if (node.children[maxDepthIndex]==null)
-                {
-                    throw new Exception("I'm exceptionally dumb, you see.");
-                }
                 uniqueColorsRemoved = _RemoveExtraColors(ref node.children[maxDepthIndex], rootMaxDepthBranchIndex);
-                node.HowDeepDoesBranchXGo[maxDepthIndex]--; //removing 1 from depth of course.
+                node.HowDeepDoesBranchXGo[maxDepthIndex]--; //removing 1 from depth because one leaf in this branch was just removed
             }
             return uniqueColorsRemoved;
         }

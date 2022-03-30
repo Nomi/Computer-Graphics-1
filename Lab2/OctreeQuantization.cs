@@ -35,7 +35,6 @@ namespace Computer_Graphics_1.Lab2
             int colors = 0;
             unsafe
             {
-                wbmp.Lock();
                 int colorsAdded = 0;
                 for (int y = 0; y < wbmp.PixelHeight; y++)
                 {
@@ -53,7 +52,7 @@ namespace Computer_Graphics_1.Lab2
                         colors = octAvg.insert(colPix);
                         if (colors > k)
                         {
-                            octAvg.RemoveExtraColors(k);
+                            octAvg.RemoveExtraColors(colors-k);
                         }
 
                         ////if a new leaf is added and it EXCEEDS maximum color count,
@@ -66,10 +65,10 @@ namespace Computer_Graphics_1.Lab2
 
 
                 int uniqColors =colors;// oct.root.GetChildTreeColorCount();
-                uniqColors = octAvg.root.GetChildTreeUniqueColorCount();
+
                 int limit = k;  //Decimal.ToInt32(numericUpDown.Value) seems like a useful function (should be helpful instead of casting numeric up down of Average Dithering).
                 //octreeQuant.limitedPalette = octreeQuant.quantizer.GetPalette(limit);
-
+                wbmp.Lock();
                 for (int y = 0; y < wbmp.PixelHeight; y++)
                 {
                     for (int x = 0; x < wbmp.PixelWidth; x++)
