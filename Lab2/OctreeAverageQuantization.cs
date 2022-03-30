@@ -99,31 +99,21 @@ namespace Computer_Graphics_1.Lab2
         public int RemoveExtraColors(int howMany)
         {
             int removedColors = 0;
-            while(howMany> removedColors)
+            List<int> howDeepBranchX = root.HowDeepDoesBranchXGo.ToList();
+            while (howMany> removedColors)
             {
                 int deepestDepth = root.HowDeepDoesBranchXGo.Max();
                 if (deepestDepth <=1)
                     return removedColors;
-                int indexRootDeepestBranch = root.HowDeepDoesBranchXGo.ToList().IndexOf(deepestDepth);
-
+                int indexRootDeepestBranch = howDeepBranchX.IndexOf(deepestDepth);
                 removedColors += _RemoveExtraColors(ref root.children[indexRootDeepestBranch], indexRootDeepestBranch);
                 root.HowDeepDoesBranchXGo[indexRootDeepestBranch]--;
+                howDeepBranchX[indexRootDeepestBranch]--;
             }
             return removedColors;
         }
 
         //Private methods:
-        //private void initializeChildrenNodesRecursively(ref OcAvgNode node,int currentDepth)
-        //{
-        //    if(!node.isLeaf)
-        //    { 
-        //        for (int i = node.DepthInterval.Item1; i <= node.DepthInterval.Item2; i++)
-        //        {
-        //            node.children[i] = new OcAvgNode(currentDepth);
-        //            initializeChildrenNodesRecursively(ref node.children[i], currentDepth + 1);
-        //        }
-        //    }
-        //}
 
         private int _insert(ref OcAvgNode node, Color col, int depth)
         {
@@ -174,29 +164,53 @@ namespace Computer_Graphics_1.Lab2
 
         private int _RemoveExtraColors(ref OcAvgNode node, int rootMaxDepthBranchIndex)
         {
+            //new and shiny method:
             int uniqueColorsRemoved;
-            if (node.isLeaf && node.depth != 0)
-                return 0;
-            if (node.depth == root.HowDeepDoesBranchXGo[rootMaxDepthBranchIndex]-2) //-2 as we stop one step before leaf and because first layer of nodes is considered levl 0
+
+            int maxDepthIndex = 0;
+            for (int i = 1; i <= node.DepthInterval.Item2; i++)
+            {
+                if (node.HowDeepDoesBranchXGo[maxDepthIndex] < node.HowDeepDoesBranchXGo[i])
+                {
+                    maxDepthIndex = i;
+                }
+            }
+
+            if(node.children[maxDepthIndex].isLeaf)
             {
                 uniqueColorsRemoved = node.GetChildTreeUniqueColorCount() - 1; //subtract one because one leaf gets added back in form of the parent.
                 node.isLeaf = true;
-                return uniqueColorsRemoved;
             }
             else
             {
-                int maxDepthIndex = 0;
-                for (int i = 1; i <= node.DepthInterval.Item2; i++)
-                {
-                    if (node.HowDeepDoesBranchXGo[maxDepthIndex] < node.HowDeepDoesBranchXGo[i])
-                    {
-                        maxDepthIndex = i;
-                    }
-                }
                 uniqueColorsRemoved = _RemoveExtraColors(ref node.children[maxDepthIndex], rootMaxDepthBranchIndex);
-                node.HowDeepDoesBranchXGo[maxDepthIndex]--; //removing 1 from depth because one leaf in this branch was just removed
+                node.HowDeepDoesBranchXGo[maxDepthIndex]--;
             }
             return uniqueColorsRemoved;
+            ////old method
+            //int uniqueColorsRemoved;
+            //if (node.isLeaf && node.depth != 0)
+            //    return 0;
+            //if (node.depth == root.HowDeepDoesBranchXGo[rootMaxDepthBranchIndex]-2) //-2 as we stop one step before leaf and because first layer of nodes is considered levl 0
+            //{
+            //    uniqueColorsRemoved = node.GetChildTreeUniqueColorCount() - 1; //subtract one because one leaf gets added back in form of the parent.
+            //    node.isLeaf = true;
+            //    return uniqueColorsRemoved;
+            //}
+            //else
+            //{
+            //    int maxDepthIndex = 0;
+            //    for (int i = 1; i <= node.DepthInterval.Item2; i++)
+            //    {
+            //        if (node.HowDeepDoesBranchXGo[maxDepthIndex] < node.HowDeepDoesBranchXGo[i])
+            //        {
+            //            maxDepthIndex = i;
+            //        }
+            //    }
+            //    uniqueColorsRemoved = _RemoveExtraColors(ref node.children[maxDepthIndex], rootMaxDepthBranchIndex);
+            //    node.HowDeepDoesBranchXGo[maxDepthIndex]--; //removing 1 from depth because one leaf in this branch was just removed
+            //}
+            //return uniqueColorsRemoved;
         }
         private Color _GetQuantizedColor(ref OcAvgNode node, Color col, int depth)
         { 
