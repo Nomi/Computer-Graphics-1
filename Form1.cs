@@ -387,7 +387,7 @@ namespace Computer_Graphics_1
 
         private void octreeQuantizationButton_Click(object sender, EventArgs e)
         {
-            OctreeQuantization.Apply(wBmpToEdit, Decimal.ToInt32(octreeColorsPerChannelNumericUpDown.Value));
+            OctreeQuantization.ApplyAverageBasedPerformanceIntensive(wBmpToEdit, Decimal.ToInt32(octreeColorsPerChannelNumericUpDown.Value));
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
 
@@ -399,6 +399,12 @@ namespace Computer_Graphics_1
             stretchToolStripMenuItem.Checked = false;
             zoomToolStripMenuItem.Checked = false;
             autoSizescrollbarToolStripMenuItem.Checked = true;
+        }
+
+        private void popOctreeMemIntnsv_Button_Click(object sender, EventArgs e)
+        {
+            OctreeQuantization.ApplyPopularityBasedMemoryIntensive(wBmpToEdit, Decimal.ToInt32(octreeColorsPerChannelNumericUpDown.Value));
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
     }
 }

@@ -16,12 +16,10 @@ namespace Computer_Graphics_1.Lab2.OctreeQuantizationHelper
     {
         private static readonly Byte[] Mask = new Byte[] { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
 
-        //The root color RGB:
         private int red;
         private int green;
         private int blue;
 
-        //Number of times root count is repeated and its pallete index.
         private int pixelCount;
         private int paletteIndex;
 
@@ -37,7 +35,7 @@ namespace Computer_Graphics_1.Lab2.OctreeQuantizationHelper
             }
         }
 
-        public Boolean IsLeaf //use an actual bool instead??
+        public Boolean IsLeaf
         {
             get { return pixelCount > 0; } //only leaves are pixels, so only they can have count of pixels (for example black(0,0,0) might be occur in 3 pixels, so pixel count for the leaf for color black will be 3 but the upper levels of the tree (non-leaves) above it will not have count).
         }
@@ -119,9 +117,8 @@ namespace Computer_Graphics_1.Lab2.OctreeQuantizationHelper
             }
         }
 
-        public int AddColor(Color color, int level, OctreeQuantizer parent) //level - depth level
+        public void AddColor(Color color, int level, OctreeQuantizer parent) //level - depth level
         {
-            int addedCols = 0;
             // if this node is a leaf, then increase the color amount, and pixel presence
             if (level == 8)
             {
@@ -129,10 +126,6 @@ namespace Computer_Graphics_1.Lab2.OctreeQuantizationHelper
                 green += color.G;
                 blue += color.B;
                 pixelCount++;
-                if(pixelCount==1)
-                {
-                    addedCols++;
-                }
             }
             else if (level < 8) // otherwise goes one level deeper
             {
@@ -146,10 +139,8 @@ namespace Computer_Graphics_1.Lab2.OctreeQuantizationHelper
                 }
 
                 // adds a color to that branch
-                addedCols += nodes[index].AddColor(color, level + 1, parent);
+                nodes[index].AddColor(color, level + 1, parent);
             }
-            return addedCols;
-            //move quantization here
         }
 
         public int GetPaletteIndex(Color color, int level)
@@ -159,7 +150,6 @@ namespace Computer_Graphics_1.Lab2.OctreeQuantizationHelper
             // if a node is leaf, then we've found the best match already
             if (IsLeaf)
             {
-                //add leaf checking
                 result = paletteIndex;
             }
             else // otherwise continue in to the lower depths
@@ -182,25 +172,21 @@ namespace Computer_Graphics_1.Lab2.OctreeQuantizationHelper
             // scans through all the active nodes
             for (int index = 0; index < 8; index++)
             {
-                ref OctreeNode node = ref this.nodes[index];
+                OctreeNode node = nodes[index];
 
                 if (node != null)
                 {
                     // sums up their color components
-                    this.red += node.red;
-                    this.green += node.green;
-                    this.blue += node.blue;
-                    node.red = 0;
-                    node.blue = 0;
-                    node.green = 0;
+                    red += node.red;
+                    green += node.green;
+                    blue += node.blue;
+
                     // and pixel presence
-                    this.pixelCount += node.pixelCount;
-                    node.pixelCount = 0;
-                    
+                    pixelCount += node.pixelCount;
+
                     // increases the count of reduced nodes
                     result++;
                 }
-                
             }
 
             // returns a number of reduced sub-nodes, minus one because this node becomes a leaf

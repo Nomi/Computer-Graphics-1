@@ -39,6 +39,8 @@ namespace Computer_Graphics_1
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.labsTabControl = new System.Windows.Forms.TabControl();
             this.lab1TabPage = new System.Windows.Forms.TabPage();
+            this.medianFilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.medianFilterButton = new System.Windows.Forms.Button();
             this.convultionFiltersGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ApplyConvFiltButton = new System.Windows.Forms.Button();
@@ -59,10 +61,6 @@ namespace Computer_Graphics_1
             this.cnvrtToGrayscaleButton = new System.Windows.Forms.Button();
             this.colorQuantizationGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.octreeQuantizationButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.octreeColorsPerChannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.dithering_GroupBox = new System.Windows.Forms.GroupBox();
             this.averageDitheringGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -87,12 +85,16 @@ namespace Computer_Graphics_1
             this.autoSizescrollbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelOGPictureBox = new System.Windows.Forms.Panel();
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
-            this.medianFilterGroupBox = new System.Windows.Forms.GroupBox();
-            this.medianFilterButton = new System.Windows.Forms.Button();
+            this.octreeColorsPerChannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.octreeQuantizationButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.popOctreeMemIntnsv_Button = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
             this.lab1TabPage.SuspendLayout();
+            this.medianFilterGroupBox.SuspendLayout();
             this.convultionFiltersGroupBox.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.funcFilGroupBox.SuspendLayout();
@@ -100,8 +102,6 @@ namespace Computer_Graphics_1
             this.miscGroupBox.SuspendLayout();
             this.colorQuantizationGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).BeginInit();
             this.dithering_GroupBox.SuspendLayout();
             this.averageDitheringGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -113,7 +113,8 @@ namespace Computer_Graphics_1
             this.contextMenuStrip1.SuspendLayout();
             this.panelOGPictureBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
-            this.medianFilterGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).BeginInit();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -222,6 +223,33 @@ namespace Computer_Graphics_1
             this.lab1TabPage.TabIndex = 0;
             this.lab1TabPage.Text = "L1";
             this.lab1TabPage.Click += new System.EventHandler(this.lab1TabPage_Click);
+            // 
+            // medianFilterGroupBox
+            // 
+            this.medianFilterGroupBox.Controls.Add(this.medianFilterButton);
+            this.medianFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.medianFilterGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.medianFilterGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.medianFilterGroupBox.Location = new System.Drawing.Point(3, 338);
+            this.medianFilterGroupBox.Name = "medianFilterGroupBox";
+            this.medianFilterGroupBox.Size = new System.Drawing.Size(356, 100);
+            this.medianFilterGroupBox.TabIndex = 5;
+            this.medianFilterGroupBox.TabStop = false;
+            this.medianFilterGroupBox.Text = "Median Filter (Lab Part)";
+            // 
+            // medianFilterButton
+            // 
+            this.medianFilterButton.AutoSize = true;
+            this.medianFilterButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.medianFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.medianFilterButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.medianFilterButton.Location = new System.Drawing.Point(3, 20);
+            this.medianFilterButton.Name = "medianFilterButton";
+            this.medianFilterButton.Size = new System.Drawing.Size(350, 27);
+            this.medianFilterButton.TabIndex = 6;
+            this.medianFilterButton.Text = "Median Filter";
+            this.medianFilterButton.UseVisualStyleBackColor = true;
+            this.medianFilterButton.Click += new System.EventHandler(this.medianFilterButtonClick);
             // 
             // convultionFiltersGroupBox
             // 
@@ -457,13 +485,14 @@ namespace Computer_Graphics_1
             // 
             this.miscGroupBox.AutoSize = true;
             this.miscGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.miscGroupBox.Controls.Add(this.popOctreeMemIntnsv_Button);
             this.miscGroupBox.Controls.Add(this.cnvrtToGrayscaleButton);
             this.miscGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.miscGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.miscGroupBox.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.miscGroupBox.Location = new System.Drawing.Point(3, 249);
             this.miscGroupBox.Name = "miscGroupBox";
-            this.miscGroupBox.Size = new System.Drawing.Size(356, 56);
+            this.miscGroupBox.Size = new System.Drawing.Size(356, 89);
             this.miscGroupBox.TabIndex = 5;
             this.miscGroupBox.TabStop = false;
             this.miscGroupBox.Text = "Miscellaneous";
@@ -509,72 +538,6 @@ namespace Computer_Graphics_1
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Octree Quantization";
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.octreeQuantizationButton, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.octreeColorsPerChannelNumericUpDown, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 18);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(344, 79);
-            this.tableLayoutPanel3.TabIndex = 0;
-            // 
-            // octreeQuantizationButton
-            // 
-            this.octreeQuantizationButton.AutoSize = true;
-            this.tableLayoutPanel3.SetColumnSpan(this.octreeQuantizationButton, 2);
-            this.octreeQuantizationButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.octreeQuantizationButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.octreeQuantizationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.octreeQuantizationButton.Location = new System.Drawing.Point(3, 42);
-            this.octreeQuantizationButton.Name = "octreeQuantizationButton";
-            this.octreeQuantizationButton.Size = new System.Drawing.Size(338, 33);
-            this.octreeQuantizationButton.TabIndex = 8;
-            this.octreeQuantizationButton.Text = "Octree Quantization";
-            this.octreeQuantizationButton.UseVisualStyleBackColor = true;
-            this.octreeQuantizationButton.Click += new System.EventHandler(this.octreeQuantizationButton_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(166, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Max Colors per Channel";
-            // 
-            // octreeColorsPerChannelNumericUpDown
-            // 
-            this.octreeColorsPerChannelNumericUpDown.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.octreeColorsPerChannelNumericUpDown.Location = new System.Drawing.Point(175, 14);
-            this.octreeColorsPerChannelNumericUpDown.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.octreeColorsPerChannelNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.octreeColorsPerChannelNumericUpDown.Name = "octreeColorsPerChannelNumericUpDown";
-            this.octreeColorsPerChannelNumericUpDown.Size = new System.Drawing.Size(166, 22);
-            this.octreeColorsPerChannelNumericUpDown.TabIndex = 1;
-            this.octreeColorsPerChannelNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // dithering_GroupBox
             // 
@@ -810,28 +773,28 @@ namespace Computer_Graphics_1
             this.centerToolStripMenuItem.Checked = true;
             this.centerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.centerToolStripMenuItem.Name = "centerToolStripMenuItem";
-            this.centerToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.centerToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
             this.centerToolStripMenuItem.Text = "Center (default)";
             this.centerToolStripMenuItem.Click += new System.EventHandler(this.centerimageToolStripMenuItem_Click);
             // 
             // stretchToolStripMenuItem
             // 
             this.stretchToolStripMenuItem.Name = "stretchToolStripMenuItem";
-            this.stretchToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.stretchToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
             this.stretchToolStripMenuItem.Text = "Stretch";
             this.stretchToolStripMenuItem.Click += new System.EventHandler(this.stretchToolStripMenuItem_Click);
             // 
             // zoomToolStripMenuItem
             // 
             this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
             this.zoomToolStripMenuItem.Text = "Zoom";
             this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
             // 
             // autoSizescrollbarToolStripMenuItem
             // 
             this.autoSizescrollbarToolStripMenuItem.Name = "autoSizescrollbarToolStripMenuItem";
-            this.autoSizescrollbarToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.autoSizescrollbarToolStripMenuItem.Size = new System.Drawing.Size(222, 26);
             this.autoSizescrollbarToolStripMenuItem.Text = "AutoSize (scrollbar)";
             this.autoSizescrollbarToolStripMenuItem.Click += new System.EventHandler(this.autoSizescrollbarToolStripMenuItem_Click);
             // 
@@ -859,32 +822,85 @@ namespace Computer_Graphics_1
             this.ogPictureBox.TabStop = false;
             this.ogPictureBox.DoubleClick += new System.EventHandler(this.ogPictureBox_DoubleClick);
             // 
-            // medianFilterGroupBox
+            // octreeColorsPerChannelNumericUpDown
             // 
-            this.medianFilterGroupBox.Controls.Add(this.medianFilterButton);
-            this.medianFilterGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.medianFilterGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.medianFilterGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.medianFilterGroupBox.Location = new System.Drawing.Point(3, 338);
-            this.medianFilterGroupBox.Name = "medianFilterGroupBox";
-            this.medianFilterGroupBox.Size = new System.Drawing.Size(356, 100);
-            this.medianFilterGroupBox.TabIndex = 5;
-            this.medianFilterGroupBox.TabStop = false;
-            this.medianFilterGroupBox.Text = "Median Filter (Lab Part)";
+            this.octreeColorsPerChannelNumericUpDown.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.octreeColorsPerChannelNumericUpDown.Location = new System.Drawing.Point(175, 14);
+            this.octreeColorsPerChannelNumericUpDown.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.octreeColorsPerChannelNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.octreeColorsPerChannelNumericUpDown.Name = "octreeColorsPerChannelNumericUpDown";
+            this.octreeColorsPerChannelNumericUpDown.Size = new System.Drawing.Size(166, 22);
+            this.octreeColorsPerChannelNumericUpDown.TabIndex = 1;
+            this.octreeColorsPerChannelNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // medianFilterButton
+            // label2
             // 
-            this.medianFilterButton.AutoSize = true;
-            this.medianFilterButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.medianFilterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.medianFilterButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.medianFilterButton.Location = new System.Drawing.Point(3, 20);
-            this.medianFilterButton.Name = "medianFilterButton";
-            this.medianFilterButton.Size = new System.Drawing.Size(350, 27);
-            this.medianFilterButton.TabIndex = 6;
-            this.medianFilterButton.Text = "Median Filter";
-            this.medianFilterButton.UseVisualStyleBackColor = true;
-            this.medianFilterButton.Click += new System.EventHandler(this.medianFilterButtonClick);
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(166, 15);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Max unique colors";
+            // 
+            // octreeQuantizationButton
+            // 
+            this.octreeQuantizationButton.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.octreeQuantizationButton, 2);
+            this.octreeQuantizationButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.octreeQuantizationButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.octreeQuantizationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.octreeQuantizationButton.Location = new System.Drawing.Point(3, 42);
+            this.octreeQuantizationButton.Name = "octreeQuantizationButton";
+            this.octreeQuantizationButton.Size = new System.Drawing.Size(338, 33);
+            this.octreeQuantizationButton.TabIndex = 8;
+            this.octreeQuantizationButton.Text = "Octree Quantization (Avg+PerfIntnsv)";
+            this.octreeQuantizationButton.UseVisualStyleBackColor = true;
+            this.octreeQuantizationButton.Click += new System.EventHandler(this.octreeQuantizationButton_Click);
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.octreeQuantizationButton, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.octreeColorsPerChannelNumericUpDown, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 18);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(344, 79);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // popOctreeMemIntnsv_Button
+            // 
+            this.popOctreeMemIntnsv_Button.AutoSize = true;
+            this.popOctreeMemIntnsv_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.popOctreeMemIntnsv_Button.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.popOctreeMemIntnsv_Button.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.popOctreeMemIntnsv_Button.Location = new System.Drawing.Point(3, 53);
+            this.popOctreeMemIntnsv_Button.Name = "popOctreeMemIntnsv_Button";
+            this.popOctreeMemIntnsv_Button.Size = new System.Drawing.Size(350, 33);
+            this.popOctreeMemIntnsv_Button.TabIndex = 8;
+            this.popOctreeMemIntnsv_Button.Text = "Octree Quantization (Pop+MemIntnsv)";
+            this.popOctreeMemIntnsv_Button.UseVisualStyleBackColor = true;
+            this.popOctreeMemIntnsv_Button.Click += new System.EventHandler(this.popOctreeMemIntnsv_Button_Click);
             // 
             // MainForm
             // 
@@ -904,6 +920,8 @@ namespace Computer_Graphics_1
             this.labsTabControl.ResumeLayout(false);
             this.lab1TabPage.ResumeLayout(false);
             this.lab1TabPage.PerformLayout();
+            this.medianFilterGroupBox.ResumeLayout(false);
+            this.medianFilterGroupBox.PerformLayout();
             this.convultionFiltersGroupBox.ResumeLayout(false);
             this.convultionFiltersGroupBox.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -916,9 +934,6 @@ namespace Computer_Graphics_1
             this.miscGroupBox.PerformLayout();
             this.colorQuantizationGroupBox.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).EndInit();
             this.dithering_GroupBox.ResumeLayout(false);
             this.averageDitheringGroupBox.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -932,8 +947,9 @@ namespace Computer_Graphics_1
             this.contextMenuStrip1.ResumeLayout(false);
             this.panelOGPictureBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
-            this.medianFilterGroupBox.ResumeLayout(false);
-            this.medianFilterGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).EndInit();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -991,15 +1007,16 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown colorperchannelNumericUpDown;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button octreeQuantizationButton;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown octreeColorsPerChannelNumericUpDown;
         private System.Windows.Forms.Panel panelOGPictureBox;
         private System.Windows.Forms.PictureBox ogPictureBox;
         private System.Windows.Forms.ToolStripMenuItem autoSizescrollbarToolStripMenuItem;
         private System.Windows.Forms.GroupBox medianFilterGroupBox;
         private System.Windows.Forms.Button medianFilterButton;
+        private System.Windows.Forms.Button popOctreeMemIntnsv_Button;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button octreeQuantizationButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown octreeColorsPerChannelNumericUpDown;
     }
 }
 
