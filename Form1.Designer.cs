@@ -58,9 +58,14 @@ namespace Computer_Graphics_1
             this.inversionCheckBox = new System.Windows.Forms.CheckBox();
             this.lab2TabPage = new System.Windows.Forms.TabPage();
             this.miscGroupBox = new System.Windows.Forms.GroupBox();
+            this.popOctreeMemIntnsv_Button = new System.Windows.Forms.Button();
             this.cnvrtToGrayscaleButton = new System.Windows.Forms.Button();
             this.colorQuantizationGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.octreeQuantizationButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.octreeColorsPerChannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.dithering_GroupBox = new System.Windows.Forms.GroupBox();
             this.averageDitheringGroupBox = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -85,11 +90,6 @@ namespace Computer_Graphics_1
             this.autoSizescrollbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelOGPictureBox = new System.Windows.Forms.Panel();
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
-            this.octreeColorsPerChannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.octreeQuantizationButton = new System.Windows.Forms.Button();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.popOctreeMemIntnsv_Button = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -102,6 +102,8 @@ namespace Computer_Graphics_1
             this.miscGroupBox.SuspendLayout();
             this.colorQuantizationGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).BeginInit();
             this.dithering_GroupBox.SuspendLayout();
             this.averageDitheringGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -113,8 +115,6 @@ namespace Computer_Graphics_1
             this.contextMenuStrip1.SuspendLayout();
             this.panelOGPictureBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).BeginInit();
-            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -497,6 +497,20 @@ namespace Computer_Graphics_1
             this.miscGroupBox.TabStop = false;
             this.miscGroupBox.Text = "Miscellaneous";
             // 
+            // popOctreeMemIntnsv_Button
+            // 
+            this.popOctreeMemIntnsv_Button.AutoSize = true;
+            this.popOctreeMemIntnsv_Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.popOctreeMemIntnsv_Button.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.popOctreeMemIntnsv_Button.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.popOctreeMemIntnsv_Button.Location = new System.Drawing.Point(3, 53);
+            this.popOctreeMemIntnsv_Button.Name = "popOctreeMemIntnsv_Button";
+            this.popOctreeMemIntnsv_Button.Size = new System.Drawing.Size(350, 33);
+            this.popOctreeMemIntnsv_Button.TabIndex = 8;
+            this.popOctreeMemIntnsv_Button.Text = "Octree Quantization (Pop+MemIntnsv)";
+            this.popOctreeMemIntnsv_Button.UseVisualStyleBackColor = true;
+            this.popOctreeMemIntnsv_Button.Click += new System.EventHandler(this.popOctreeMemIntnsv_Button_Click);
+            // 
             // cnvrtToGrayscaleButton
             // 
             this.cnvrtToGrayscaleButton.AutoSize = true;
@@ -538,6 +552,72 @@ namespace Computer_Graphics_1
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Octree Quantization";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.octreeQuantizationButton, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.octreeColorsPerChannelNumericUpDown, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 18);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(344, 79);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // octreeQuantizationButton
+            // 
+            this.octreeQuantizationButton.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.octreeQuantizationButton, 2);
+            this.octreeQuantizationButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.octreeQuantizationButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.octreeQuantizationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.octreeQuantizationButton.Location = new System.Drawing.Point(3, 42);
+            this.octreeQuantizationButton.Name = "octreeQuantizationButton";
+            this.octreeQuantizationButton.Size = new System.Drawing.Size(338, 33);
+            this.octreeQuantizationButton.TabIndex = 8;
+            this.octreeQuantizationButton.Text = "Octree Quantization (Avg)";
+            this.octreeQuantizationButton.UseVisualStyleBackColor = true;
+            this.octreeQuantizationButton.Click += new System.EventHandler(this.octreeQuantizationButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(166, 15);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Max unique colors";
+            // 
+            // octreeColorsPerChannelNumericUpDown
+            // 
+            this.octreeColorsPerChannelNumericUpDown.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.octreeColorsPerChannelNumericUpDown.Location = new System.Drawing.Point(175, 14);
+            this.octreeColorsPerChannelNumericUpDown.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
+            this.octreeColorsPerChannelNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.octreeColorsPerChannelNumericUpDown.Name = "octreeColorsPerChannelNumericUpDown";
+            this.octreeColorsPerChannelNumericUpDown.Size = new System.Drawing.Size(166, 22);
+            this.octreeColorsPerChannelNumericUpDown.TabIndex = 1;
+            this.octreeColorsPerChannelNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // dithering_GroupBox
             // 
@@ -822,86 +902,6 @@ namespace Computer_Graphics_1
             this.ogPictureBox.TabStop = false;
             this.ogPictureBox.DoubleClick += new System.EventHandler(this.ogPictureBox_DoubleClick);
             // 
-            // octreeColorsPerChannelNumericUpDown
-            // 
-            this.octreeColorsPerChannelNumericUpDown.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.octreeColorsPerChannelNumericUpDown.Location = new System.Drawing.Point(175, 14);
-            this.octreeColorsPerChannelNumericUpDown.Maximum = new decimal(new int[] {
-            999999,
-            0,
-            0,
-            0});
-            this.octreeColorsPerChannelNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.octreeColorsPerChannelNumericUpDown.Name = "octreeColorsPerChannelNumericUpDown";
-            this.octreeColorsPerChannelNumericUpDown.Size = new System.Drawing.Size(166, 22);
-            this.octreeColorsPerChannelNumericUpDown.TabIndex = 1;
-            this.octreeColorsPerChannelNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 24);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(166, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Max unique colors";
-            // 
-            // octreeQuantizationButton
-            // 
-            this.octreeQuantizationButton.AutoSize = true;
-            this.tableLayoutPanel3.SetColumnSpan(this.octreeQuantizationButton, 2);
-            this.octreeQuantizationButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.octreeQuantizationButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.octreeQuantizationButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.octreeQuantizationButton.Location = new System.Drawing.Point(3, 42);
-            this.octreeQuantizationButton.Name = "octreeQuantizationButton";
-            this.octreeQuantizationButton.Size = new System.Drawing.Size(338, 33);
-            this.octreeQuantizationButton.TabIndex = 8;
-            this.octreeQuantizationButton.Text = "Octree Quantization (Avg+PerfIntnsv)";
-            this.octreeQuantizationButton.UseVisualStyleBackColor = true;
-            this.octreeQuantizationButton.Click += new System.EventHandler(this.octreeQuantizationButton_Click);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.octreeQuantizationButton, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.octreeColorsPerChannelNumericUpDown, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 18);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(344, 79);
-            this.tableLayoutPanel3.TabIndex = 0;
-            // 
-            // popOctreeMemIntnsv_Button
-            // 
-            this.popOctreeMemIntnsv_Button.AutoSize = true;
-            this.popOctreeMemIntnsv_Button.Dock = System.Windows.Forms.DockStyle.Top;
-            this.popOctreeMemIntnsv_Button.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.popOctreeMemIntnsv_Button.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.popOctreeMemIntnsv_Button.Location = new System.Drawing.Point(3, 53);
-            this.popOctreeMemIntnsv_Button.Name = "popOctreeMemIntnsv_Button";
-            this.popOctreeMemIntnsv_Button.Size = new System.Drawing.Size(350, 33);
-            this.popOctreeMemIntnsv_Button.TabIndex = 8;
-            this.popOctreeMemIntnsv_Button.Text = "Octree Quantization (Pop+MemIntnsv)";
-            this.popOctreeMemIntnsv_Button.UseVisualStyleBackColor = true;
-            this.popOctreeMemIntnsv_Button.Click += new System.EventHandler(this.popOctreeMemIntnsv_Button_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -934,6 +934,9 @@ namespace Computer_Graphics_1
             this.miscGroupBox.PerformLayout();
             this.colorQuantizationGroupBox.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).EndInit();
             this.dithering_GroupBox.ResumeLayout(false);
             this.averageDitheringGroupBox.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -947,9 +950,6 @@ namespace Computer_Graphics_1
             this.contextMenuStrip1.ResumeLayout(false);
             this.panelOGPictureBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.octreeColorsPerChannelNumericUpDown)).EndInit();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

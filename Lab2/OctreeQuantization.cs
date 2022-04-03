@@ -18,6 +18,7 @@ namespace Computer_Graphics_1.Lab2
         public static WriteableBitmap ApplyAverageBasedPerformanceIntensive(WriteableBitmap wbmp,int k=2)
         {
             OctreeAverageQuantization octAvg = new OctreeAverageQuantization();
+            OcAvgNode.resetUniqueColorsInTree();
             unsafe
             {
                 for (int y = 0; y < wbmp.PixelHeight; y++)
@@ -29,7 +30,7 @@ namespace Computer_Graphics_1.Lab2
                         int colors = octAvg.insert(colPix);
                         if (colors > k)
                         {
-                            octAvg.RemoveExtraColors(colors-k);
+                            octAvg.RemoveExtraColors(k);
                         }
 
                         ////if a new leaf is added and it EXCEEDS maximum color count,
@@ -39,7 +40,7 @@ namespace Computer_Graphics_1.Lab2
                     }
                 }
 
-                int uniqColors = octAvg.root.GetChildTreeUniqueColorCount();
+                int uniqColors = OcAvgNode.uniqueColorsInTree;//octAvg.root.GetChildTreeUniqueColorCount();
 
                 wbmp.Lock();
                 for (int y = 0; y < wbmp.PixelHeight; y++)
