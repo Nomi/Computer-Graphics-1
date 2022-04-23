@@ -214,8 +214,6 @@ namespace Computer_Graphics_1
             this.labsTabControl.SelectedIndex = 0;
             this.labsTabControl.Size = new System.Drawing.Size(370, 627);
             this.labsTabControl.TabIndex = 0;
-            this.labsTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.labsTabControl_Selecting);
-            this.labsTabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.labsTabControl_Deselecting);
             // 
             // lab1TabPage
             // 
@@ -772,8 +770,6 @@ namespace Computer_Graphics_1
             this.imagesTabControl.SelectedIndex = 0;
             this.imagesTabControl.Size = new System.Drawing.Size(871, 627);
             this.imagesTabControl.TabIndex = 1;
-            this.imagesTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.imagesTabControl_Selecting);
-            this.imagesTabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.imagesTabControl_Deselecting);
             // 
             // comparisontViewTabPage
             // 
@@ -918,7 +914,6 @@ namespace Computer_Graphics_1
             // 
             this.ogPictureBox.ContextMenuStrip = this.contextMenuStrip1;
             this.ogPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ogPictureBox.Image = global::Computer_Graphics_1.Properties.Resources._default;
             this.ogPictureBox.Location = new System.Drawing.Point(0, 0);
             this.ogPictureBox.Name = "ogPictureBox";
             this.ogPictureBox.Size = new System.Drawing.Size(851, 260);

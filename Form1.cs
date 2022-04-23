@@ -32,15 +32,32 @@ namespace Computer_Graphics_1
         public MainForm()
         {
             InitializeComponent();
-
+            setComparisonViewImage(global::Computer_Graphics_1.Properties.Resources._default);
+            if(ogPictureBox.Image!=null)
+            {
+                setApplicationInteractionEnabled(true);
+                zoomToolStripMenuItem_Click(null, null);
+            }
+            drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
             //labsTabControl.SelectedTab = lab2TabPage;
-            labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = lab3TabPage;
+            //labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = drawingViewTabPage;
 
             //foreach (Control cntrl in lab1TabPage.Controls)
             //{
             //    cntrl.Enabled = false;
             //}
             //ogPictureBox.Image=
+        }
+
+        private Bitmap DrawFilledRectangle(int x, int y)
+        {
+            Bitmap bmp = new Bitmap(x, y);
+            using (Graphics graph = Graphics.FromImage(bmp))
+            {
+                Rectangle ImageSize = new Rectangle(0, 0, x, y);
+                graph.FillRectangle(Brushes.White, ImageSize);
+            }
+            return bmp;
         }
 
         private void ogPictureBox_DoubleClick(object sender, EventArgs e)
@@ -63,24 +80,32 @@ namespace Computer_Graphics_1
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    ogBitmap = new Bitmap(openFileDialog.FileName);
-                    ogPictureBox.Image = ogBitmap;
-                    wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
-                    //wBmpToEdit = ImageUtil.GetWriteableBitmapFromAbsURI(openFileDialog.FileName);
-                    newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
-                    //foreach (Control cntrl in lab1TabPage.Controls)
-                    //{
-                    //    cntrl.Enabled = true;
-                    //}
-                    
-
-                    inversionCheckBox.Checked = false;
+                    setComparisonViewImage(new Bitmap(openFileDialog.FileName));
                 }
                 else
                 {
                     MessageBox.Show("No image selected.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void setComparisonViewImage(Bitmap img = null)
+        {
+            if (img != null)
+                ogBitmap = img;
+            if (ogBitmap == null)//was already null.
+                throw new Exception("Dunno why, should be simple. Will write later, since it doesn't hit.");
+            ogPictureBox.Image = ogBitmap;
+            wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
+            //wBmpToEdit = ImageUtil.GetWriteableBitmapFromAbsURI(openFileDialog.FileName);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+            //foreach (Control cntrl in lab1TabPage.Controls)
+            //{
+            //    cntrl.Enabled = true;
+            //}
+
+            setApplicationInteractionEnabled(true);
+            inversionCheckBox.Checked = false;
         }
 
         private void setApplicationInteractionEnabled(bool isEnabled)
@@ -422,28 +447,30 @@ namespace Computer_Graphics_1
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
 
-        private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (labsTabControl.SelectedTab == lab3TabPage)
-                imagesTabControl.SelectedTab = drawingViewTabPage;
-        }
+        //private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        //{
+        //    if (labsTabControl.SelectedTab == lab3TabPage && imagesTabControl.SelectedTab!=drawingViewTabPage)
+        //    {
+        //        imagesTabControl.SelectedTab = drawingViewTabPage;
+        //    }
+        //}
 
-        private void labsTabControl_Deselecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (labsTabControl.SelectedTab == lab3TabPage)
-                imagesTabControl.SelectedTab = comparisontViewTabPage;
-        }
+        //private void labsTabControl_Deselecting(object sender, TabControlCancelEventArgs e)
+        //{
+        //    if (labsTabControl.SelectedTab == lab3TabPage && imagesTabControl.SelectedTab == drawingViewTabPage)
+        //        imagesTabControl.SelectedTab = comparisontViewTabPage;
+        //}
 
-        private void imagesTabControl_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (imagesTabControl.SelectedTab == comparisontViewTabPage)
-                labsTabControl.SelectedTab = lab3TabPage;
-        }
+        //private void imagesTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        //{
+        //    if (imagesTabControl.SelectedTab == drawingViewTabPage && labsTabControl.SelectedTab!=lab3TabPage)
+        //        labsTabControl.SelectedTab = lab3TabPage;
+        //}
 
-        private void imagesTabControl_Deselecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (imagesTabControl.SelectedTab == comparisontViewTabPage)
-                labsTabControl.SelectedTab = lab1TabPage;
-        }
+        //private void imagesTabControl_Deselecting(object sender, TabControlCancelEventArgs e)
+        //{
+        //    if (imagesTabControl.SelectedTab == drawingViewTabPage && labsTabControl.SelectedTab == lab3TabPage )
+        //        labsTabControl.SelectedTab = lab1TabPage;
+        //}
     }
 }
