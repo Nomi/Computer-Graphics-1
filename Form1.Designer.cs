@@ -74,6 +74,7 @@ namespace Computer_Graphics_1
             this.label1 = new System.Windows.Forms.Label();
             this.colorperchannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.lab3TabPage = new System.Windows.Forms.TabPage();
+            this.selectShapeGroupBox = new System.Windows.Forms.GroupBox();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
             this.lab5TabPage = new System.Windows.Forms.TabPage();
             this.imagesTabControl = new System.Windows.Forms.TabControl();
@@ -93,6 +94,9 @@ namespace Computer_Graphics_1
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
+            this.lineRadioButton = new System.Windows.Forms.RadioButton();
+            this.polygonRadioButton = new System.Windows.Forms.RadioButton();
+            this.circleRadioButton = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -111,6 +115,8 @@ namespace Computer_Graphics_1
             this.averageDitheringGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).BeginInit();
+            this.lab3TabPage.SuspendLayout();
+            this.selectShapeGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
@@ -735,12 +741,28 @@ namespace Computer_Graphics_1
             // lab3TabPage
             // 
             this.lab3TabPage.BackColor = System.Drawing.Color.SeaGreen;
+            this.lab3TabPage.Controls.Add(this.selectShapeGroupBox);
             this.lab3TabPage.ForeColor = System.Drawing.SystemColors.ActiveBorder;
             this.lab3TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab3TabPage.Name = "lab3TabPage";
             this.lab3TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab3TabPage.TabIndex = 2;
             this.lab3TabPage.Text = "L3";
+            // 
+            // selectShapeGroupBox
+            // 
+            this.selectShapeGroupBox.Controls.Add(this.circleRadioButton);
+            this.selectShapeGroupBox.Controls.Add(this.polygonRadioButton);
+            this.selectShapeGroupBox.Controls.Add(this.lineRadioButton);
+            this.selectShapeGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectShapeGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectShapeGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.selectShapeGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.selectShapeGroupBox.Name = "selectShapeGroupBox";
+            this.selectShapeGroupBox.Size = new System.Drawing.Size(362, 100);
+            this.selectShapeGroupBox.TabIndex = 0;
+            this.selectShapeGroupBox.TabStop = false;
+            this.selectShapeGroupBox.Text = "Select Shape";
             // 
             // lab4TabPage
             // 
@@ -935,12 +957,52 @@ namespace Computer_Graphics_1
             // 
             // drawingCanvasPictureBox
             // 
+            this.drawingCanvasPictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
             this.drawingCanvasPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawingCanvasPictureBox.Location = new System.Drawing.Point(3, 3);
             this.drawingCanvasPictureBox.Name = "drawingCanvasPictureBox";
             this.drawingCanvasPictureBox.Size = new System.Drawing.Size(857, 592);
             this.drawingCanvasPictureBox.TabIndex = 0;
             this.drawingCanvasPictureBox.TabStop = false;
+            // 
+            // lineRadioButton
+            // 
+            this.lineRadioButton.AutoSize = true;
+            this.lineRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lineRadioButton.Location = new System.Drawing.Point(3, 20);
+            this.lineRadioButton.Name = "lineRadioButton";
+            this.lineRadioButton.Size = new System.Drawing.Size(356, 22);
+            this.lineRadioButton.TabIndex = 0;
+            this.lineRadioButton.TabStop = true;
+            this.lineRadioButton.Text = "Line";
+            this.lineRadioButton.UseVisualStyleBackColor = true;
+            this.lineRadioButton.CheckedChanged += new System.EventHandler(this.lineRadioButton_CheckedChanged);
+            // 
+            // polygonRadioButton
+            // 
+            this.polygonRadioButton.AutoSize = true;
+            this.polygonRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.polygonRadioButton.Location = new System.Drawing.Point(3, 42);
+            this.polygonRadioButton.Name = "polygonRadioButton";
+            this.polygonRadioButton.Size = new System.Drawing.Size(356, 22);
+            this.polygonRadioButton.TabIndex = 1;
+            this.polygonRadioButton.TabStop = true;
+            this.polygonRadioButton.Text = "Polygon";
+            this.polygonRadioButton.UseVisualStyleBackColor = true;
+            this.polygonRadioButton.CheckedChanged += new System.EventHandler(this.polygonRadioButton_CheckedChanged);
+            // 
+            // circleRadioButton
+            // 
+            this.circleRadioButton.AutoSize = true;
+            this.circleRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.circleRadioButton.Location = new System.Drawing.Point(3, 64);
+            this.circleRadioButton.Name = "circleRadioButton";
+            this.circleRadioButton.Size = new System.Drawing.Size(356, 22);
+            this.circleRadioButton.TabIndex = 2;
+            this.circleRadioButton.TabStop = true;
+            this.circleRadioButton.Text = "Circle";
+            this.circleRadioButton.UseVisualStyleBackColor = true;
+            this.circleRadioButton.CheckedChanged += new System.EventHandler(this.circleRadioButton_CheckedChanged);
             // 
             // MainForm
             // 
@@ -982,6 +1044,9 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).EndInit();
+            this.lab3TabPage.ResumeLayout(false);
+            this.selectShapeGroupBox.ResumeLayout(false);
+            this.selectShapeGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
@@ -1062,6 +1127,10 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabPage drawingViewTabPage;
         private System.Windows.Forms.PictureBox drawingCanvasPictureBox;
+        private System.Windows.Forms.GroupBox selectShapeGroupBox;
+        private System.Windows.Forms.RadioButton circleRadioButton;
+        private System.Windows.Forms.RadioButton polygonRadioButton;
+        private System.Windows.Forms.RadioButton lineRadioButton;
     }
 }
 

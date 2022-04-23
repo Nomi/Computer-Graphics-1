@@ -14,6 +14,14 @@ using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab1;
 using Computer_Graphics_1.Lab1.LabPart;
 using Computer_Graphics_1.Lab2;
+using Computer_Graphics_1.Lab3;
+
+enum SupportedShapes :int
+{
+    Line,
+    Polygon,
+    Circle
+}
 
 namespace Computer_Graphics_1
 {
@@ -21,6 +29,11 @@ namespace Computer_Graphics_1
     {
         private Bitmap ogBitmap = null;
         private WriteableBitmap wBmpToEdit = null;
+
+        SupportedShapes selecedShape = SupportedShapes.Line;
+
+        List<Shape> shapes = new List<Shape>();
+        
         public static class cnvFilt
         {
             public static bool convFilterParametersSet = false;
@@ -39,6 +52,8 @@ namespace Computer_Graphics_1
                 zoomToolStripMenuItem_Click(null, null);
             }
             drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
+
+            this.drawingCanvasPictureBox.Click += new System.EventHandler(this.temp_click);
             //labsTabControl.SelectedTab = lab2TabPage;
             //labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = drawingViewTabPage;
 
@@ -446,6 +461,38 @@ namespace Computer_Graphics_1
 
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
+
+        private void temp_click(object sender, EventArgs e)
+        {
+            Shape pointTry = new Shape();
+
+            MouseEventArgs mE = (MouseEventArgs) e;
+            
+            pointTry.points.Add(new Tuple<int, int>(mE.Location.Y, mE.Location.X));
+
+            if(selecedShape==SupportedShapes.Line)
+                drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(pointTry.draw(ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image))));
+        }
+
+        private void lineRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (lineRadioButton.Checked)
+                selecedShape = SupportedShapes.Line;
+        }
+
+        private void polygonRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (polygonRadioButton.Checked)
+                selecedShape = SupportedShapes.Polygon;
+        }
+
+        private void circleRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (circleRadioButton.Checked)
+                selecedShape = SupportedShapes.Circle;
+        }
+
+
 
         //private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
         //{
