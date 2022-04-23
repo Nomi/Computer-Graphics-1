@@ -15,6 +15,9 @@ namespace Computer_Graphics_1.Lab2
 {
     public static class OctreeQuantization
     {
+        /**
+         * @brief ApplyAverageBasedPerformanceIntensive may not work as intended maybe.
+         */
         public static WriteableBitmap ApplyAverageBasedPerformanceIntensive(WriteableBitmap wbmp,int k=2)
         {
             OctreeAverageQuantization octAvg = new OctreeAverageQuantization();

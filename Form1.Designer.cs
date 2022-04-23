@@ -57,6 +57,7 @@ namespace Computer_Graphics_1
             this.brightnessCorrection = new System.Windows.Forms.Button();
             this.inversionCheckBox = new System.Windows.Forms.CheckBox();
             this.lab2TabPage = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.miscGroupBox = new System.Windows.Forms.GroupBox();
             this.popOctreeMemIntnsv_Button = new System.Windows.Forms.Button();
             this.cnvrtToGrayscaleButton = new System.Windows.Forms.Button();
@@ -90,6 +91,8 @@ namespace Computer_Graphics_1
             this.autoSizescrollbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelOGPictureBox = new System.Windows.Forms.Panel();
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
+            this.drawingViewTabPage = new System.Windows.Forms.TabPage();
+            this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -115,6 +118,8 @@ namespace Computer_Graphics_1
             this.contextMenuStrip1.SuspendLayout();
             this.panelOGPictureBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
+            this.drawingViewTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -209,6 +214,8 @@ namespace Computer_Graphics_1
             this.labsTabControl.SelectedIndex = 0;
             this.labsTabControl.Size = new System.Drawing.Size(370, 627);
             this.labsTabControl.TabIndex = 0;
+            this.labsTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.labsTabControl_Selecting);
+            this.labsTabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.labsTabControl_Deselecting);
             // 
             // lab1TabPage
             // 
@@ -471,6 +478,7 @@ namespace Computer_Graphics_1
             // lab2TabPage
             // 
             this.lab2TabPage.BackColor = System.Drawing.Color.PaleVioletRed;
+            this.lab2TabPage.Controls.Add(this.button1);
             this.lab2TabPage.Controls.Add(this.miscGroupBox);
             this.lab2TabPage.Controls.Add(this.colorQuantizationGroupBox);
             this.lab2TabPage.Controls.Add(this.dithering_GroupBox);
@@ -480,6 +488,18 @@ namespace Computer_Graphics_1
             this.lab2TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab2TabPage.TabIndex = 1;
             this.lab2TabPage.Text = "L2";
+            // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button1.Location = new System.Drawing.Point(3, 338);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(356, 27);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Average Dithering YcBcR (Lab Part)";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // miscGroupBox
             // 
@@ -716,12 +736,13 @@ namespace Computer_Graphics_1
             // 
             // lab3TabPage
             // 
+            this.lab3TabPage.BackColor = System.Drawing.Color.SeaGreen;
+            this.lab3TabPage.ForeColor = System.Drawing.SystemColors.ActiveBorder;
             this.lab3TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab3TabPage.Name = "lab3TabPage";
             this.lab3TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab3TabPage.TabIndex = 2;
             this.lab3TabPage.Text = "L3";
-            this.lab3TabPage.UseVisualStyleBackColor = true;
             // 
             // lab4TabPage
             // 
@@ -744,12 +765,15 @@ namespace Computer_Graphics_1
             // imagesTabControl
             // 
             this.imagesTabControl.Controls.Add(this.comparisontViewTabPage);
+            this.imagesTabControl.Controls.Add(this.drawingViewTabPage);
             this.imagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imagesTabControl.Location = new System.Drawing.Point(6, 6);
             this.imagesTabControl.Name = "imagesTabControl";
             this.imagesTabControl.SelectedIndex = 0;
             this.imagesTabControl.Size = new System.Drawing.Size(871, 627);
             this.imagesTabControl.TabIndex = 1;
+            this.imagesTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.imagesTabControl_Selecting);
+            this.imagesTabControl.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.imagesTabControl_Deselecting);
             // 
             // comparisontViewTabPage
             // 
@@ -894,6 +918,7 @@ namespace Computer_Graphics_1
             // 
             this.ogPictureBox.ContextMenuStrip = this.contextMenuStrip1;
             this.ogPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ogPictureBox.Image = global::Computer_Graphics_1.Properties.Resources._default;
             this.ogPictureBox.Location = new System.Drawing.Point(0, 0);
             this.ogPictureBox.Name = "ogPictureBox";
             this.ogPictureBox.Size = new System.Drawing.Size(851, 260);
@@ -901,6 +926,26 @@ namespace Computer_Graphics_1
             this.ogPictureBox.TabIndex = 5;
             this.ogPictureBox.TabStop = false;
             this.ogPictureBox.DoubleClick += new System.EventHandler(this.ogPictureBox_DoubleClick);
+            // 
+            // drawingViewTabPage
+            // 
+            this.drawingViewTabPage.BackColor = System.Drawing.Color.Black;
+            this.drawingViewTabPage.Controls.Add(this.drawingCanvasPictureBox);
+            this.drawingViewTabPage.Location = new System.Drawing.Point(4, 25);
+            this.drawingViewTabPage.Name = "drawingViewTabPage";
+            this.drawingViewTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.drawingViewTabPage.Size = new System.Drawing.Size(863, 598);
+            this.drawingViewTabPage.TabIndex = 1;
+            this.drawingViewTabPage.Text = "Drawing View";
+            // 
+            // drawingCanvasPictureBox
+            // 
+            this.drawingCanvasPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawingCanvasPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.drawingCanvasPictureBox.Name = "drawingCanvasPictureBox";
+            this.drawingCanvasPictureBox.Size = new System.Drawing.Size(857, 592);
+            this.drawingCanvasPictureBox.TabIndex = 0;
+            this.drawingCanvasPictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -950,6 +995,8 @@ namespace Computer_Graphics_1
             this.contextMenuStrip1.ResumeLayout(false);
             this.panelOGPictureBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
+            this.drawingViewTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1017,6 +1064,9 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Button octreeQuantizationButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown octreeColorsPerChannelNumericUpDown;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage drawingViewTabPage;
+        private System.Windows.Forms.PictureBox drawingCanvasPictureBox;
     }
 }
 

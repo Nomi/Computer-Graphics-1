@@ -3,8 +3,6 @@ using Computer_Graphics_1.HelperClasses.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Computer_Graphics_1.Lab2
@@ -213,6 +211,202 @@ namespace Computer_Graphics_1.Lab2
             return wbmp;
         }
 
+        public static WriteableBitmap applyYCbCr(WriteableBitmap wbmp, int K = 2)
+        {
+            K = MathUtil.Clamp(K, 3, 254);
+            if (K % 2 != 0)
+            {
+                K--;
+            }
+            _pixel_YCbCr24[,] imgYCbCr = new _pixel_YCbCr24[wbmp.PixelHeight, wbmp.PixelWidth];
+            unsafe
+            {
+                wbmp.Lock();
+
+                int sumY = 0, sumCb = 0, sumCr = 0;
+                int numChannels = wbmp.GetPixelSizeBytes();
+                int totalPixels = wbmp.PixelWidth * wbmp.PixelHeight;
+                decimal decIntervalSize = (255 / (decimal)(K - 1)); //K-1 because for K values there are k-1 intervals.
+                int intervalSize = (int)Decimal.Ceiling(decIntervalSize);
+                List<int> levels = new List<int>(); //intervals are the levels.
+                List<_Interval> yIntervals = new List<_Interval>();
+                List<_Interval> CbIntervals = new List<_Interval>();
+                List<_Interval> CrIntervals = new List<_Interval>();
+                for (int i = 0; i <= K - 1; i++) //will occur k times, obviously.
+                {
+                    int lvl = i * intervalSize;
+                    if (lvl > 255) lvl = 255; //cuz intervalSize and intervals should've been floats as 255 is odd, and k is always even. and my division above makes intervalSize Greater than it is
+                    levels.Add(lvl); //notice content is already sorted in ascending order.
+                    yIntervals.Add(new _Interval()); //notice that this intervals array is aligned with the levels array,
+                                                        //that is: i-th interval goes from i-th level to i+1th interval.
+                                                        //This leaves us with one extra interval, which we will handle right after the for loop.
+                    CbIntervals.Add(new _Interval());
+                    CrIntervals.Add(new _Interval());
+                }
+                yIntervals.RemoveAt(K - 1); //indexed from 0, removing k-th element actually //there should only be k-1 intervals for k levels;
+                CbIntervals.RemoveAt(K - 1); //indexed from 0, removing k-th element actually //there should only be k-1 intervals for k levels;
+                CrIntervals.RemoveAt(K - 1); //indexed from 0, removing k-th element actually //there should only be k-1 intervals for k levels;
+
+
+                for (int i = 0; i < wbmp.PixelHeight; i++) //can convert to multithreaded using bytearray instead of _pixel.. struct.
+                {
+                    for (int j = 0; j < wbmp.PixelWidth; j++)
+                    {
+                        _pixel_bgr24_bgra32* ptrPX = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(i, j);
+                        _pixel_YCbCr24 ycbcrPX;
+                        ycbcrPX.Y = (byte)MathUtil.Clamp((int)(0.299 * ptrPX->red + 0.587 * ptrPX->green + 0.114 * ptrPX->blue), 0, 255);
+                        ycbcrPX.Cb= (byte)MathUtil.Clamp((int)(128 - 0.169 * ptrPX->red - 0.331 * ptrPX->green + 0.5 * ptrPX->blue), 0, 255);
+                        ycbcrPX.Cr = (byte)MathUtil.Clamp((int)(128 + 0.5 * ptrPX->red - 0.419 * ptrPX->green - 0.081 * ptrPX->blue), 0, 255);
+                        imgYCbCr[i, j] = ycbcrPX;
+
+                        int indx_lowerY = levels.FindLastIndex(x => x < ycbcrPX.Y);//Where(x=> x<ptrPX->blue).OrderBy(item => Math.Abs(ptrPX->blue - item)).First();
+                        if (indx_lowerY == -1)
+                        {
+                            if (ycbcrPX.Y == 0)
+                            {
+                                indx_lowerY = 0;
+                            }
+                            else //when it is 255
+                            {
+                                indx_lowerY = levels.Count - 2; //one -1 because indexed from 0, another because 255 belongs in the interval between the previous element and 255
+                            }
+                        }
+                        int lowerY = levels.ElementAt(indx_lowerY);
+                        int upperY = MathUtil.Clamp(lowerY + intervalSize, 0, 255);
+                        yIntervals.ElementAt(indx_lowerY).pixelCount++; //interval from lowerblue to upperblue.
+                        yIntervals.ElementAt(indx_lowerY).sumChannel += ycbcrPX.Y; //interval from lowerblue to upperblue.
+
+                        int indx_lowerCb = levels.FindLastIndex(x => x < ycbcrPX.Cb);
+                        if (indx_lowerCb == -1)
+                        {
+                            if (ycbcrPX.Cb == 0)
+                            {
+                                indx_lowerCb = 0;
+                            }
+                            else //when it is 255
+                            {
+                                indx_lowerCb = levels.Count - 2; //one -1 because indexed from 0, another because 255 belongs in the interval between the previous element and 255
+                            }
+                        }
+                        int lowerCb = levels.ElementAt(indx_lowerCb);
+                        int upperCb = MathUtil.Clamp(lowerCb + intervalSize, 0, 255);
+                        CbIntervals.ElementAt(indx_lowerCb).pixelCount++;
+                        CbIntervals.ElementAt(indx_lowerCb).sumChannel += ycbcrPX.Cb;
+
+                        int indx_lowerCr = levels.FindLastIndex(x => x < ycbcrPX.Cr);
+                        if (indx_lowerCr == -1)
+                        {
+                            if (ycbcrPX.Cr == 0)
+                            {
+                                indx_lowerCr = 0;
+                            }
+                            else //when it is 255
+                            {
+                                indx_lowerCr = levels.Count - 2; //one -1 because indexed from 0, another because 255 belongs in the interval between the previous element and 255
+                            }
+                        }
+                        int lowerCr = levels.ElementAt(indx_lowerCr);
+                        int upperCr = MathUtil.Clamp(lowerCr + intervalSize, 0, 255);
+                        CrIntervals.ElementAt(indx_lowerCr).pixelCount++;
+                        CrIntervals.ElementAt(indx_lowerCr).sumChannel += ycbcrPX.Cr;
+                    }
+                }
+
+
+
+                for (int r = 0; r < wbmp.PixelHeight; r++)
+                {
+                    for (int c = 0; c < wbmp.PixelWidth; c++)
+                    {
+                        _pixel_bgr24_bgra32* ptrPX = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(r, c);
+                        _pixel_YCbCr24 ycbcrPX = imgYCbCr[r, c];
+                        int indx_lowerY = levels.FindLastIndex(x => x < ycbcrPX.Y);
+                        if (indx_lowerY == -1)
+                        {
+                            if (ycbcrPX.Y == 0)
+                            {
+                                indx_lowerY = 0;
+                            }
+                            else //when it is 255
+                            {
+                                indx_lowerY = levels.Count - 2; //one -1 because indexed from 0, another because 255 belongs in the interval between the previous element and 255
+                            }
+                        }
+                        int lowerY = levels.ElementAt(indx_lowerY);
+                        int upperY = MathUtil.Clamp(lowerY + intervalSize, 0, 255);
+                        if (ycbcrPX.Y >= yIntervals.ElementAt(indx_lowerY).GetThreshold())
+                        {
+                            ycbcrPX.Y = (byte)upperY;
+                        }
+                        else
+                        {
+                            ycbcrPX.Y = (byte)lowerY;
+                        }
+
+
+
+                        int indx_lowerCb = levels.FindLastIndex(x => x < ycbcrPX.Cb);
+                        if (indx_lowerCb == -1)
+                        {
+                            if (ycbcrPX.Cb == 0)
+                            {
+                                indx_lowerCb = 0;
+                            }
+                            else //when it is 255
+                            {
+                                indx_lowerCb = levels.Count - 2; //one -1 because indexed from 0, another because 255 belongs in the interval between the previous element and 255
+                            }
+                        }
+                        int lowerCb = levels.ElementAt(indx_lowerCb);
+                        int upperCb = MathUtil.Clamp(lowerCb + intervalSize, 0, 255);
+                        if (ycbcrPX.Cb >= CbIntervals.ElementAt(indx_lowerCb).GetThreshold())
+                        {
+                            ycbcrPX.Cb = (byte)upperCb;
+                        }
+                        else
+                        {
+                            ycbcrPX.Cb = (byte)lowerCb;
+                        }
+
+
+
+
+                        int indx_lowerCr = levels.FindLastIndex(x => x < ycbcrPX.Cr);
+                        if (indx_lowerCr == -1)
+                        {
+                            if (ycbcrPX.Cr == 0)
+                            {
+                                indx_lowerCr = 0;
+                            }
+                            else //when it is 255
+                            {
+                                indx_lowerCr = levels.Count - 2; //one -1 because indexed from 0, another because 255 belongs in the interval between the previous element and 255
+                            }
+                        }
+                        int lowerCr = levels.ElementAt(indx_lowerCr);
+                        int upperCr = MathUtil.Clamp(lowerCr + intervalSize, 0, 255);
+                        if (ycbcrPX.Cr >= yIntervals.ElementAt(indx_lowerCr).GetThreshold())
+                        {
+                            ycbcrPX.Cr = (byte)upperCr;
+                        }
+                        else
+                        {
+                            ycbcrPX.Cr = (byte)lowerCr;
+                        }
+
+                        ptrPX->red = (byte)MathUtil.Clamp((int)(ycbcrPX.Y+1.402*(ycbcrPX.Cr-128)), 0, 255);
+                        int Y = ycbcrPX.Y, Cb = ycbcrPX.Cb, Cr = ycbcrPX.Cr;
+                        ptrPX->green = (byte)MathUtil.Clamp((int)(Y-0.344*(Cb-128)-0.714*(Cr-128)), 0, 255);
+                        ptrPX->blue = (byte)MathUtil.Clamp((int)(Y+1.772*(Cb-128)), 0, 255);
+                    }
+                }
+
+
+
+                wbmp.Unlock();
+            }
+            return wbmp;
+        }
 
         public static WriteableBitmap MyBadAttemptWhichTurnedIntoAverage_QUANTIZATION_instead(WriteableBitmap wbmp, int K = 2)
         {

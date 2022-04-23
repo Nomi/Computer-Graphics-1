@@ -33,12 +33,14 @@ namespace Computer_Graphics_1
         {
             InitializeComponent();
 
-            labsTabControl.SelectedTab = lab2TabPage;
+            //labsTabControl.SelectedTab = lab2TabPage;
+            labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = lab3TabPage;
 
             //foreach (Control cntrl in lab1TabPage.Controls)
             //{
             //    cntrl.Enabled = false;
             //}
+            //ogPictureBox.Image=
         }
 
         private void ogPictureBox_DoubleClick(object sender, EventArgs e)
@@ -70,8 +72,7 @@ namespace Computer_Graphics_1
                     //{
                     //    cntrl.Enabled = true;
                     //}
-                    labsTabControl.Enabled = true;
-                    undoAllProcessingMenuItem.Enabled = true;
+                    
 
                     inversionCheckBox.Checked = false;
                 }
@@ -80,6 +81,13 @@ namespace Computer_Graphics_1
                     MessageBox.Show("No image selected.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void setApplicationInteractionEnabled(bool isEnabled)
+        {
+            imagesTabControl.Enabled = isEnabled;
+            labsTabControl.Enabled = isEnabled;
+            undoAllProcessingMenuItem.Enabled = isEnabled;
         }
 
         //private void invertFilter_Click(object sender, EventArgs e)
@@ -405,6 +413,37 @@ namespace Computer_Graphics_1
         {
             OctreeQuantization.ApplyPopularityBasedMemoryIntensive(wBmpToEdit, Decimal.ToInt32(octreeColorsPerChannelNumericUpDown.Value));
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AverageDithering.applyYCbCr(wBmpToEdit, (int)colorperchannelNumericUpDown.Value);
+
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+
+        private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (labsTabControl.SelectedTab == lab3TabPage)
+                imagesTabControl.SelectedTab = drawingViewTabPage;
+        }
+
+        private void labsTabControl_Deselecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (labsTabControl.SelectedTab == lab3TabPage)
+                imagesTabControl.SelectedTab = comparisontViewTabPage;
+        }
+
+        private void imagesTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (imagesTabControl.SelectedTab == comparisontViewTabPage)
+                labsTabControl.SelectedTab = lab3TabPage;
+        }
+
+        private void imagesTabControl_Deselecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (imagesTabControl.SelectedTab == comparisontViewTabPage)
+                labsTabControl.SelectedTab = lab1TabPage;
         }
     }
 }

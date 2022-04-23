@@ -19,4 +19,11 @@ namespace Computer_Graphics_1.HelperClasses
         public int r;
         public int c;
     }
+
+    public struct _pixel_YCbCr24
+    {
+        public byte Y;
+        public byte Cb;
+        public byte Cr;
+    }
 }
