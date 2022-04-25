@@ -16,12 +16,6 @@ using Computer_Graphics_1.Lab1.LabPart;
 using Computer_Graphics_1.Lab2;
 using Computer_Graphics_1.Lab3;
 
-enum SupportedShapes :int
-{
-    Line,
-    Polygon,
-    Circle
-}
 
 namespace Computer_Graphics_1
 {
@@ -30,10 +24,14 @@ namespace Computer_Graphics_1
         private Bitmap ogBitmap = null;
         private WriteableBitmap wBmpToEdit = null;
 
-        SupportedShapes selecedShape = SupportedShapes.Line;
+        private bool drawingEnabled = false;
+        private SupportedShapes selectedShapeType = SupportedShapes.Line;
+
+        private Tuple<int, int> selectedPointShapeAndPointIndices = null;
 
         List<Shape> shapes = new List<Shape>();
-        
+        bool guptaSproulAntiAliasingEnabled = false;
+        bool drawPoints = true;
         public static class cnvFilt
         {
             public static bool convFilterParametersSet = false;
@@ -54,6 +52,9 @@ namespace Computer_Graphics_1
             drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
 
             this.drawingCanvasPictureBox.Click += new System.EventHandler(this.temp_click);
+
+            if(selectedShapeType==SupportedShapes.Line)
+                lineRadioButton.Checked = true;
             //labsTabControl.SelectedTab = lab2TabPage;
             //labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = drawingViewTabPage;
 
@@ -149,6 +150,16 @@ namespace Computer_Graphics_1
             wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
             inversionCheckBox.Checked = false;
+            if(drawingCanvasPictureBox.Image!=null)
+            {
+                drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
+                foreach(Shape shp in shapes)
+                {
+                    shp.points.Clear();
+                }
+                if (drawingEnabled)
+                    toggleDrawingButton_Click(null, null);
+            }
         }
 
         private void brightnessCorrection_Click(object sender, EventArgs e)
@@ -462,37 +473,214 @@ namespace Computer_Graphics_1
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
 
+        //Shape shp = new PolyLine();
         private void temp_click(object sender, EventArgs e)
         {
-            Shape pointTry = new Shape();
+
 
             MouseEventArgs mE = (MouseEventArgs) e;
-            
-            pointTry.points.Add(new Tuple<int, int>(mE.Location.Y, mE.Location.X));
 
-            if(selecedShape==SupportedShapes.Line)
-                drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(pointTry.draw(ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image))));
+            if(drawingEnabled)
+            {
+                resetAllShapes();
+                selectedPointShapeAndPointIndices = null;
+                shapes.Last().AddPoint(mE.Location.X, mE.Location.Y); //x is col, y is row
+                //if(selectedShapeType==SupportedShapes.Line)
+                //drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(((PolyLine)shp).draw(ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)),false));
+
+                drawAllShapes(drawPoints);
+                if (shapes.Last().points.Count() == 2 && shapes.Last().isShapeType(SupportedShapes.Circle))
+                {
+                    toggleDrawingButton_Click(null, null);
+                }
+            }
+            else
+            {
+                if(selectedPointShapeAndPointIndices==null)
+                {
+                    int detPixRadius = 6;
+                    for (int i = shapes.Count - 1; i >= 0 && selectedPointShapeAndPointIndices==null; i--)//the following two loops select the latest placed point which was in click radius.
+                    {
+                        for (int j = shapes[i].points.Count - 1; j >= 0 && selectedPointShapeAndPointIndices == null; j--)
+                        {
+                            //if ((1 / MathUtil.FastInverseSqRt((float)Math.Pow((mE.X - shapes[i].points[j].Item1), 2) + (float)Math.Pow((mE.Y - shapes[i].points[j].Item2), 2))) <= detPixRadius)
+                            if (Math.Sqrt((float)Math.Pow((mE.X - shapes[i].points[j].X), 2) + (float)Math.Pow((mE.Y - shapes[i].points[j].Y), 2)) <= detPixRadius)
+                            {
+                                drawingCanvasPictureBox.Cursor = Cursors.Hand;
+                                selectedPointShapeAndPointIndices = new Tuple<int, int>(i, j);
+                                break;
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    resetAllShapes();
+                    drawingCanvasPictureBox.Cursor = Cursors.Default;
+                    int i = selectedPointShapeAndPointIndices.Item1; int j = selectedPointShapeAndPointIndices.Item2;
+                    selectedPointShapeAndPointIndices = null;
+                    shapes[i].points[j] = new Point(mE.X, mE.Y);
+                    drawAllShapes(drawPoints);
+                }
+            }
+        }
+
+        private void resetAllShapes()
+        {
+            drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Image.Width, drawingCanvasPictureBox.Image.Height);
+        }
+        private void drawAllShapes(bool drawPoints)
+        {
+            foreach (Shape shp in shapes)
+            {
+                if (guptaSproulAntiAliasingEnabled && (shp.isShapeType(SupportedShapes.Line)))
+                {
+                    drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(shp.drawGSAA(ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)), drawPoints));
+                }
+                else
+                {
+                    drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(shp.draw(ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)), drawPoints));
+
+                }
+            }
         }
 
         private void lineRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (lineRadioButton.Checked)
-                selecedShape = SupportedShapes.Line;
+                selectedShapeType = SupportedShapes.Line;
         }
 
         private void polygonRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (polygonRadioButton.Checked)
-                selecedShape = SupportedShapes.Polygon;
+            {
+                selectedShapeType = SupportedShapes.Polygon;
+            }
         }
 
         private void circleRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (circleRadioButton.Checked)
-                selecedShape = SupportedShapes.Circle;
+                selectedShapeType = SupportedShapes.Circle;
         }
 
+        private void toggleDrawingButton_Click(object sender, EventArgs e)
+        {
+            drawingEnabled = !drawingEnabled;
+            if(drawingEnabled)
+            {
+                Shape shp = Shape.ConstructRequiredShape(selectedShapeType);
+                this.shapes.Add(shp);
+                shapes.Last().thickness = (int)thicknessNumericUpDown.Value ;
+                drawingCanvasPictureBox.Cursor = Cursors.Cross;
+                toggleDrawingButton.Text = "Stop Drawing";
+            }
+            else
+            {
+                drawingCanvasPictureBox.Cursor = Cursors.Default;
+                toggleDrawingButton.Text = "Start Drawing";
+            }
+        }
 
+        private void colorPickerButton_Click(object sender, EventArgs e)
+        {
+            if(shapes.Count==0)
+            {
+                MessageBox.Show("Start drawing a shape before choosing color.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (drawingColorPicker.ShowDialog() == DialogResult.OK)
+            {
+                resetAllShapes();
+                shapes.Last().color = drawingColorPicker.Color;
+                drawAllShapes(drawPoints);
+            }
+            else
+            {
+                MessageBox.Show("No color selected.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void thicknessNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (shapes.Count > 0)
+            {
+                resetAllShapes();
+                shapes.Last().thickness = (int)thicknessNumericUpDown.Value;
+                drawAllShapes(drawPoints);
+            }
+            //else
+            //{
+            //    thicknessNumericUpDown.Value = 1;
+            //    MessageBox.Show("Start drawing a shape before choosing thickness.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
+        }
+
+        private void deleteSelectedShapeButton_Click(object sender, EventArgs e)
+        {
+            if (selectedPointShapeAndPointIndices!=null)
+            {
+                resetAllShapes();
+                drawingCanvasPictureBox.Cursor = Cursors.Default;
+                shapes.RemoveAt(selectedPointShapeAndPointIndices.Item1);
+                selectedPointShapeAndPointIndices = null;
+                drawAllShapes(drawPoints);
+            }
+            else
+            {
+                MessageBox.Show("No shape selected.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void antiAliasingGuptaSproulCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            resetAllShapes();
+            guptaSproulAntiAliasingEnabled = antiAliasingGuptaSproulCheckBox.Checked;
+            drawAllShapes(drawPoints);
+        }
+
+        private void cleanShapesList()
+        {
+            if (drawingEnabled)
+                toggleDrawingButton_Click(null, null);
+
+            List<Shape> cleanedShapesList = new List<Shape>();
+            foreach (var shp in shapes)
+            {
+                if ((shp.isShapeType(SupportedShapes.Line) && shp.points.Count < 2)
+                    || (shp.isShapeType(SupportedShapes.Polygon) && shp.points.Count < 3)
+                    || (shp.isShapeType(SupportedShapes.Circle) && shp.points.Count != 2))
+                {
+                    continue;
+                }
+                cleanedShapesList.Add(shp);
+            }
+            shapes = cleanedShapesList;
+        }
+
+        private void saveAllShapesButton_Click(object sender, EventArgs e)
+        {
+            if (drawingEnabled)
+                toggleDrawingButton_Click(null, null);
+            cleanShapesList();
+            shapes.SerializeToXML("kek.xml");
+        }
+
+        private void loadNewShapesButton_Click(object sender, EventArgs e)
+        {
+            if (drawingEnabled)
+                toggleDrawingButton_Click(null, null);
+            resetAllShapes();
+            shapes.Deserialize("kek.xml");
+            drawAllShapes(drawPoints);
+        }
 
         //private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
         //{

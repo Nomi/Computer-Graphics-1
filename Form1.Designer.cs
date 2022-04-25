@@ -74,7 +74,17 @@ namespace Computer_Graphics_1
             this.label1 = new System.Windows.Forms.Label();
             this.colorperchannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.lab3TabPage = new System.Windows.Forms.TabPage();
+            this.antiAliasingGuptaSproulCheckBox = new System.Windows.Forms.CheckBox();
+            this.deleteSelectedShapeButton = new System.Windows.Forms.Button();
             this.selectShapeGroupBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.toggleDrawingButton = new System.Windows.Forms.Button();
+            this.colorPickerButton = new System.Windows.Forms.Button();
+            this.selectThicknessGroupbox = new System.Windows.Forms.GroupBox();
+            this.thicknessNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.circleRadioButton = new System.Windows.Forms.RadioButton();
+            this.polygonRadioButton = new System.Windows.Forms.RadioButton();
+            this.lineRadioButton = new System.Windows.Forms.RadioButton();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
             this.lab5TabPage = new System.Windows.Forms.TabPage();
             this.imagesTabControl = new System.Windows.Forms.TabControl();
@@ -94,9 +104,10 @@ namespace Computer_Graphics_1
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
-            this.lineRadioButton = new System.Windows.Forms.RadioButton();
-            this.polygonRadioButton = new System.Windows.Forms.RadioButton();
-            this.circleRadioButton = new System.Windows.Forms.RadioButton();
+            this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.saveAllShapesButton = new System.Windows.Forms.Button();
+            this.loadNewShapesButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -117,6 +128,9 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).BeginInit();
             this.lab3TabPage.SuspendLayout();
             this.selectShapeGroupBox.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.selectThicknessGroupbox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).BeginInit();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
@@ -126,6 +140,7 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
             this.drawingViewTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -741,6 +756,9 @@ namespace Computer_Graphics_1
             // lab3TabPage
             // 
             this.lab3TabPage.BackColor = System.Drawing.Color.SeaGreen;
+            this.lab3TabPage.Controls.Add(this.tableLayoutPanel5);
+            this.lab3TabPage.Controls.Add(this.antiAliasingGuptaSproulCheckBox);
+            this.lab3TabPage.Controls.Add(this.deleteSelectedShapeButton);
             this.lab3TabPage.Controls.Add(this.selectShapeGroupBox);
             this.lab3TabPage.ForeColor = System.Drawing.SystemColors.ActiveBorder;
             this.lab3TabPage.Location = new System.Drawing.Point(4, 25);
@@ -749,20 +767,168 @@ namespace Computer_Graphics_1
             this.lab3TabPage.TabIndex = 2;
             this.lab3TabPage.Text = "L3";
             // 
+            // antiAliasingGuptaSproulCheckBox
+            // 
+            this.antiAliasingGuptaSproulCheckBox.AutoSize = true;
+            this.antiAliasingGuptaSproulCheckBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.antiAliasingGuptaSproulCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.antiAliasingGuptaSproulCheckBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.antiAliasingGuptaSproulCheckBox.Location = new System.Drawing.Point(0, 216);
+            this.antiAliasingGuptaSproulCheckBox.Name = "antiAliasingGuptaSproulCheckBox";
+            this.antiAliasingGuptaSproulCheckBox.Size = new System.Drawing.Size(362, 22);
+            this.antiAliasingGuptaSproulCheckBox.TabIndex = 2;
+            this.antiAliasingGuptaSproulCheckBox.Text = "Anti-Aliasing (Lines only, Gupta-Sproul)";
+            this.antiAliasingGuptaSproulCheckBox.UseVisualStyleBackColor = true;
+            this.antiAliasingGuptaSproulCheckBox.CheckedChanged += new System.EventHandler(this.antiAliasingGuptaSproulCheckBox_CheckedChanged);
+            // 
+            // deleteSelectedShapeButton
+            // 
+            this.deleteSelectedShapeButton.AutoSize = true;
+            this.deleteSelectedShapeButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.deleteSelectedShapeButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.deleteSelectedShapeButton.Location = new System.Drawing.Point(0, 189);
+            this.deleteSelectedShapeButton.Name = "deleteSelectedShapeButton";
+            this.deleteSelectedShapeButton.Size = new System.Drawing.Size(362, 27);
+            this.deleteSelectedShapeButton.TabIndex = 1;
+            this.deleteSelectedShapeButton.Text = "Delete Selected Shape";
+            this.deleteSelectedShapeButton.UseVisualStyleBackColor = true;
+            this.deleteSelectedShapeButton.Click += new System.EventHandler(this.deleteSelectedShapeButton_Click);
+            // 
             // selectShapeGroupBox
             // 
+            this.selectShapeGroupBox.AutoSize = true;
+            this.selectShapeGroupBox.Controls.Add(this.tableLayoutPanel4);
             this.selectShapeGroupBox.Controls.Add(this.circleRadioButton);
             this.selectShapeGroupBox.Controls.Add(this.polygonRadioButton);
             this.selectShapeGroupBox.Controls.Add(this.lineRadioButton);
+            this.selectShapeGroupBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.selectShapeGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.selectShapeGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectShapeGroupBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.selectShapeGroupBox.Location = new System.Drawing.Point(0, 0);
             this.selectShapeGroupBox.Name = "selectShapeGroupBox";
-            this.selectShapeGroupBox.Size = new System.Drawing.Size(362, 100);
+            this.selectShapeGroupBox.Size = new System.Drawing.Size(362, 189);
             this.selectShapeGroupBox.TabIndex = 0;
             this.selectShapeGroupBox.TabStop = false;
             this.selectShapeGroupBox.Text = "Select Shape";
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.toggleDrawingButton, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.colorPickerButton, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.selectThicknessGroupbox, 1, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 86);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(356, 100);
+            this.tableLayoutPanel4.TabIndex = 3;
+            this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
+            // 
+            // toggleDrawingButton
+            // 
+            this.tableLayoutPanel4.SetColumnSpan(this.toggleDrawingButton, 2);
+            this.toggleDrawingButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toggleDrawingButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.toggleDrawingButton.Location = new System.Drawing.Point(15, 57);
+            this.toggleDrawingButton.Margin = new System.Windows.Forms.Padding(15, 7, 15, 7);
+            this.toggleDrawingButton.Name = "toggleDrawingButton";
+            this.toggleDrawingButton.Size = new System.Drawing.Size(326, 36);
+            this.toggleDrawingButton.TabIndex = 2;
+            this.toggleDrawingButton.Text = "Start Drawing";
+            this.toggleDrawingButton.UseVisualStyleBackColor = true;
+            this.toggleDrawingButton.Click += new System.EventHandler(this.toggleDrawingButton_Click);
+            // 
+            // colorPickerButton
+            // 
+            this.colorPickerButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colorPickerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colorPickerButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colorPickerButton.Location = new System.Drawing.Point(3, 10);
+            this.colorPickerButton.Margin = new System.Windows.Forms.Padding(3, 10, 3, 10);
+            this.colorPickerButton.Name = "colorPickerButton";
+            this.colorPickerButton.Size = new System.Drawing.Size(172, 30);
+            this.colorPickerButton.TabIndex = 0;
+            this.colorPickerButton.Text = "Pick Color";
+            this.colorPickerButton.UseVisualStyleBackColor = true;
+            this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
+            // 
+            // selectThicknessGroupbox
+            // 
+            this.selectThicknessGroupbox.Controls.Add(this.thicknessNumericUpDown);
+            this.selectThicknessGroupbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.selectThicknessGroupbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectThicknessGroupbox.Location = new System.Drawing.Point(181, 3);
+            this.selectThicknessGroupbox.Name = "selectThicknessGroupbox";
+            this.selectThicknessGroupbox.Size = new System.Drawing.Size(172, 44);
+            this.selectThicknessGroupbox.TabIndex = 3;
+            this.selectThicknessGroupbox.TabStop = false;
+            this.selectThicknessGroupbox.Text = "Select Thickness";
+            // 
+            // thicknessNumericUpDown
+            // 
+            this.thicknessNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.thicknessNumericUpDown.Location = new System.Drawing.Point(3, 18);
+            this.thicknessNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.thicknessNumericUpDown.Name = "thicknessNumericUpDown";
+            this.thicknessNumericUpDown.Size = new System.Drawing.Size(166, 22);
+            this.thicknessNumericUpDown.TabIndex = 0;
+            this.thicknessNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.thicknessNumericUpDown.UpDownAlign = System.Windows.Forms.LeftRightAlignment.Left;
+            this.thicknessNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.thicknessNumericUpDown.ValueChanged += new System.EventHandler(this.thicknessNumericUpDown_ValueChanged);
+            // 
+            // circleRadioButton
+            // 
+            this.circleRadioButton.AutoSize = true;
+            this.circleRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.circleRadioButton.Location = new System.Drawing.Point(3, 64);
+            this.circleRadioButton.Name = "circleRadioButton";
+            this.circleRadioButton.Size = new System.Drawing.Size(356, 22);
+            this.circleRadioButton.TabIndex = 2;
+            this.circleRadioButton.TabStop = true;
+            this.circleRadioButton.Text = "Circle";
+            this.circleRadioButton.UseVisualStyleBackColor = true;
+            this.circleRadioButton.CheckedChanged += new System.EventHandler(this.circleRadioButton_CheckedChanged);
+            // 
+            // polygonRadioButton
+            // 
+            this.polygonRadioButton.AutoSize = true;
+            this.polygonRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.polygonRadioButton.Location = new System.Drawing.Point(3, 42);
+            this.polygonRadioButton.Name = "polygonRadioButton";
+            this.polygonRadioButton.Size = new System.Drawing.Size(356, 22);
+            this.polygonRadioButton.TabIndex = 1;
+            this.polygonRadioButton.TabStop = true;
+            this.polygonRadioButton.Text = "Polygon";
+            this.polygonRadioButton.UseVisualStyleBackColor = true;
+            this.polygonRadioButton.CheckedChanged += new System.EventHandler(this.polygonRadioButton_CheckedChanged);
+            // 
+            // lineRadioButton
+            // 
+            this.lineRadioButton.AutoSize = true;
+            this.lineRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lineRadioButton.Location = new System.Drawing.Point(3, 20);
+            this.lineRadioButton.Name = "lineRadioButton";
+            this.lineRadioButton.Size = new System.Drawing.Size(356, 22);
+            this.lineRadioButton.TabIndex = 0;
+            this.lineRadioButton.TabStop = true;
+            this.lineRadioButton.Text = "Line";
+            this.lineRadioButton.UseVisualStyleBackColor = true;
+            this.lineRadioButton.CheckedChanged += new System.EventHandler(this.lineRadioButton_CheckedChanged);
             // 
             // lab4TabPage
             // 
@@ -957,7 +1123,7 @@ namespace Computer_Graphics_1
             // 
             // drawingCanvasPictureBox
             // 
-            this.drawingCanvasPictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.drawingCanvasPictureBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.drawingCanvasPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawingCanvasPictureBox.Location = new System.Drawing.Point(3, 3);
             this.drawingCanvasPictureBox.Name = "drawingCanvasPictureBox";
@@ -965,44 +1131,47 @@ namespace Computer_Graphics_1
             this.drawingCanvasPictureBox.TabIndex = 0;
             this.drawingCanvasPictureBox.TabStop = false;
             // 
-            // lineRadioButton
+            // tableLayoutPanel5
             // 
-            this.lineRadioButton.AutoSize = true;
-            this.lineRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lineRadioButton.Location = new System.Drawing.Point(3, 20);
-            this.lineRadioButton.Name = "lineRadioButton";
-            this.lineRadioButton.Size = new System.Drawing.Size(356, 22);
-            this.lineRadioButton.TabIndex = 0;
-            this.lineRadioButton.TabStop = true;
-            this.lineRadioButton.Text = "Line";
-            this.lineRadioButton.UseVisualStyleBackColor = true;
-            this.lineRadioButton.CheckedChanged += new System.EventHandler(this.lineRadioButton_CheckedChanged);
+            this.tableLayoutPanel5.AutoSize = true;
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.loadNewShapesButton, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.saveAllShapesButton, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 238);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(362, 33);
+            this.tableLayoutPanel5.TabIndex = 3;
             // 
-            // polygonRadioButton
+            // saveAllShapesButton
             // 
-            this.polygonRadioButton.AutoSize = true;
-            this.polygonRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.polygonRadioButton.Location = new System.Drawing.Point(3, 42);
-            this.polygonRadioButton.Name = "polygonRadioButton";
-            this.polygonRadioButton.Size = new System.Drawing.Size(356, 22);
-            this.polygonRadioButton.TabIndex = 1;
-            this.polygonRadioButton.TabStop = true;
-            this.polygonRadioButton.Text = "Polygon";
-            this.polygonRadioButton.UseVisualStyleBackColor = true;
-            this.polygonRadioButton.CheckedChanged += new System.EventHandler(this.polygonRadioButton_CheckedChanged);
+            this.saveAllShapesButton.AutoSize = true;
+            this.saveAllShapesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.saveAllShapesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.saveAllShapesButton.Location = new System.Drawing.Point(3, 3);
+            this.saveAllShapesButton.Name = "saveAllShapesButton";
+            this.saveAllShapesButton.Size = new System.Drawing.Size(175, 27);
+            this.saveAllShapesButton.TabIndex = 4;
+            this.saveAllShapesButton.Text = "Save All Shapes";
+            this.saveAllShapesButton.UseVisualStyleBackColor = true;
+            this.saveAllShapesButton.Click += new System.EventHandler(this.saveAllShapesButton_Click);
             // 
-            // circleRadioButton
+            // loadNewShapesButton
             // 
-            this.circleRadioButton.AutoSize = true;
-            this.circleRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.circleRadioButton.Location = new System.Drawing.Point(3, 64);
-            this.circleRadioButton.Name = "circleRadioButton";
-            this.circleRadioButton.Size = new System.Drawing.Size(356, 22);
-            this.circleRadioButton.TabIndex = 2;
-            this.circleRadioButton.TabStop = true;
-            this.circleRadioButton.Text = "Circle";
-            this.circleRadioButton.UseVisualStyleBackColor = true;
-            this.circleRadioButton.CheckedChanged += new System.EventHandler(this.circleRadioButton_CheckedChanged);
+            this.loadNewShapesButton.AutoSize = true;
+            this.loadNewShapesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.loadNewShapesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.loadNewShapesButton.Location = new System.Drawing.Point(184, 3);
+            this.loadNewShapesButton.Name = "loadNewShapesButton";
+            this.loadNewShapesButton.Size = new System.Drawing.Size(175, 27);
+            this.loadNewShapesButton.TabIndex = 5;
+            this.loadNewShapesButton.Text = "Load New Shapes";
+            this.loadNewShapesButton.UseVisualStyleBackColor = true;
+            this.loadNewShapesButton.Click += new System.EventHandler(this.loadNewShapesButton_Click);
             // 
             // MainForm
             // 
@@ -1045,8 +1214,12 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).EndInit();
             this.lab3TabPage.ResumeLayout(false);
+            this.lab3TabPage.PerformLayout();
             this.selectShapeGroupBox.ResumeLayout(false);
             this.selectShapeGroupBox.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.selectThicknessGroupbox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).EndInit();
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
@@ -1057,6 +1230,8 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
             this.drawingViewTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).EndInit();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1131,6 +1306,17 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.RadioButton circleRadioButton;
         private System.Windows.Forms.RadioButton polygonRadioButton;
         private System.Windows.Forms.RadioButton lineRadioButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Button toggleDrawingButton;
+        private System.Windows.Forms.Button colorPickerButton;
+        private System.Windows.Forms.ColorDialog drawingColorPicker;
+        private System.Windows.Forms.GroupBox selectThicknessGroupbox;
+        private System.Windows.Forms.NumericUpDown thicknessNumericUpDown;
+        private System.Windows.Forms.Button deleteSelectedShapeButton;
+        private System.Windows.Forms.CheckBox antiAliasingGuptaSproulCheckBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.Button loadNewShapesButton;
+        private System.Windows.Forms.Button saveAllShapesButton;
     }
 }
 

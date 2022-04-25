@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,17 @@ namespace Computer_Graphics_1.HelperClasses.Extensions
                     }
                 }
                 wbmp.Unlock();
+            }
+        }
+
+        public static void PutPixel(this WriteableBitmap wbmp, int x, int y, Color color)
+        {
+            unsafe
+            {
+                _pixel_bgr24_bgra32* ptrPX = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(y,x); //x is column, y is row
+                ptrPX->blue = color.B;
+                ptrPX->green = color.G;
+                ptrPX->red = color.R;
             }
         }
     }
