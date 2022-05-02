@@ -1,7 +1,13 @@
-﻿using Computer_Graphics_1.HelperClasses;
+﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+ /*
+ * To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
+ * Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
+ */
+using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,23 +22,26 @@ namespace Computer_Graphics_1.Lab3
         {
             if (showPoints)
                 wbmp = drawPoints(wbmp);
-            if(points.Count>=2)
+            if(vertices.Count>=2)
             {
                 if (_thickness < 1)
                 {
                     thickness = 1;
                 }
-                for (int i=1;i<points.Count;i++)//we start from i=1 because we'll be drawing from previous index to current one
+                for (int i=1;i<vertices.Count;i++)//we start from i=1 because we'll be drawing from previous index to current one
                 {
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+                    List<Point> drawnPixels = new List<Point>();
+#endif
                     //For points, x is column, y is row ( and item1 is x, item2 is y)
 
                     //the following only handles lines with angles between 0 to 45 degrees (inclusive of 0 and 45).
-                    int x1 = points[i - 1].X;
-                    int x2 = points[i].X;
+                    int x1 = vertices[i - 1].X;
+                    int x2 = vertices[i].X;
 
                     int yOffset = wbmp.PixelHeight; int yMultiplier = -1;
-                    int y1 = yOffset + yMultiplier*points[i - 1].Y;
-                    int y2 = yOffset + yMultiplier * points[i].Y;
+                    int y1 = yOffset + yMultiplier*vertices[i - 1].Y;
+                    int y2 = yOffset + yMultiplier * vertices[i].Y;
 
                     bool isVerticalSoXYFlipped = false;
                     if(Math.Abs(y2-y1)>Math.Abs(x2-x1))
@@ -94,13 +103,23 @@ namespace Computer_Graphics_1.Lab3
 
                     if(isVerticalSoXYFlipped)
                     {
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+                        wbmp.pxlCpyPutPixel_TrackPixelsInList(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+                        wbmp.pxlCpyPutPixel_TrackPixelsInList(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+#else
                         wbmp.pxlCpyPutPixel(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped);
                         wbmp.pxlCpyPutPixel(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped);
+#endif
                     }
                     else
                     {
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+                        wbmp.pxlCpyPutPixel_TrackPixelsInList(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+                        wbmp.pxlCpyPutPixel_TrackPixelsInList(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+#else
                         wbmp.pxlCpyPutPixel(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped);
                         wbmp.pxlCpyPutPixel(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped);
+#endif
                     }
                     while (xf < xb)
                     {
@@ -115,15 +134,28 @@ namespace Computer_Graphics_1.Lab3
                         }
                         if (isVerticalSoXYFlipped)
                         {
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+                            wbmp.pxlCpyPutPixel_TrackPixelsInList(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+                            wbmp.pxlCpyPutPixel_TrackPixelsInList(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+#else
                             wbmp.pxlCpyPutPixel(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped);
                             wbmp.pxlCpyPutPixel(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped);
+#endif
                         }
                         else
                         {
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+                            wbmp.pxlCpyPutPixel_TrackPixelsInList(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+                            wbmp.pxlCpyPutPixel_TrackPixelsInList(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
+#else
                             wbmp.pxlCpyPutPixel(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped);
                             wbmp.pxlCpyPutPixel(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped);
+#endif
                         }
                     }
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+                    pixelsDrawnByTwoVertices[i - 1] = drawnPixels; //stores edges or curves
+#endif
                 }
             }
             return wbmp;

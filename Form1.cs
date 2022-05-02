@@ -1,4 +1,10 @@
-﻿using System;
+﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+ /*
+ * To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
+ * Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
+ */
+ #define Lab3
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,6 +37,7 @@ namespace Computer_Graphics_1
 
         List<Shape> shapes = new List<Shape>();
         bool guptaSproulAntiAliasingEnabled = false;
+        bool superSamplingEnabled = false;
         bool drawPoints = true;
         public static class cnvFilt
         {
@@ -43,18 +50,21 @@ namespace Computer_Graphics_1
         public MainForm()
         {
             InitializeComponent();
+
             setComparisonViewImage(global::Computer_Graphics_1.Properties.Resources._default);
             if(ogPictureBox.Image!=null)
             {
                 setApplicationInteractionEnabled(true);
                 zoomToolStripMenuItem_Click(null, null);
             }
+
+#if Lab3
             drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
-
-            this.drawingCanvasPictureBox.Click += new System.EventHandler(this.temp_click);
-
-            if(selectedShapeType==SupportedShapes.Line)
+            if (selectedShapeType==SupportedShapes.Line)
                 lineRadioButton.Checked = true;
+            labsTabControl.SelectedTab = lab3TabPage;
+            imagesTabControl.SelectedTab = drawingViewTabPage;
+#endif
             //labsTabControl.SelectedTab = lab2TabPage;
             //labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = drawingViewTabPage;
 
@@ -65,15 +75,50 @@ namespace Computer_Graphics_1
             //ogPictureBox.Image=
         }
 
-        private Bitmap DrawFilledRectangle(int x, int y)
+        private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
         {
+            if (ogBitmap == null)
+                return;
+            wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+            inversionCheckBox.Checked = false;
+            if (drawingCanvasPictureBox.Image != null)
+            {
+                drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
+                foreach (Shape shp in shapes)
+                {
+                    shp.vertices.Clear();
+                }
+                if (drawingEnabled)
+                    toggleDrawingButton_Click(null, null);
+            }
+        }
+
+
+        private Bitmap DrawFilledRectangle(int x, int y, Brush brush=null)
+        {
+            if(brush==null)
+            {
+                brush = Brushes.White;
+            }
             Bitmap bmp = new Bitmap(x, y);
             using (Graphics graph = Graphics.FromImage(bmp))
             {
                 Rectangle ImageSize = new Rectangle(0, 0, x, y);
-                graph.FillRectangle(Brushes.White, ImageSize);
+                graph.FillRectangle(brush, ImageSize);
             }
             return bmp;
+        }
+#region testing if sub regions work!
+#region do they?
+        //Turns out they do!
+#endregion
+#endregion
+        private void setApplicationInteractionEnabled(bool isEnabled)
+        {
+            imagesTabControl.Enabled = isEnabled;
+            labsTabControl.Enabled = isEnabled;
+            undoAllProcessingMenuItem.Enabled = isEnabled;
         }
 
         private void ogPictureBox_DoubleClick(object sender, EventArgs e)
@@ -124,13 +169,8 @@ namespace Computer_Graphics_1
             inversionCheckBox.Checked = false;
         }
 
-        private void setApplicationInteractionEnabled(bool isEnabled)
-        {
-            imagesTabControl.Enabled = isEnabled;
-            labsTabControl.Enabled = isEnabled;
-            undoAllProcessingMenuItem.Enabled = isEnabled;
-        }
 
+#region LAB1-SPECIFIC-REGION
         //private void invertFilter_Click(object sender, EventArgs e)
         //{
         //    ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
@@ -143,24 +183,6 @@ namespace Computer_Graphics_1
         //        invertFilterButton.ForeColor = Color.Black;
         //}
 
-        private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ogBitmap == null)
-                return;
-            wBmpToEdit = ImgUtil.GetWritableBitmapFromBitmap(ogBitmap);
-            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
-            inversionCheckBox.Checked = false;
-            if(drawingCanvasPictureBox.Image!=null)
-            {
-                drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
-                foreach(Shape shp in shapes)
-                {
-                    shp.points.Clear();
-                }
-                if (drawingEnabled)
-                    toggleDrawingButton_Click(null, null);
-            }
-        }
 
         private void brightnessCorrection_Click(object sender, EventArgs e)
         {
@@ -238,11 +260,6 @@ namespace Computer_Graphics_1
 
         }
 
-        private void saveAsResultpngToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            wBmpToEdit.SaveAsPNG("result.png");
-        }
-
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -250,7 +267,7 @@ namespace Computer_Graphics_1
 
         private void edgeDetRadioButton_SelectIndexChanged(object sender, EventArgs e)
         {
-            if(edgeDetRadioButton.Checked)
+            if (edgeDetRadioButton.Checked)
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
@@ -267,7 +284,7 @@ namespace Computer_Graphics_1
 
         private void blurRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(blurRadioButton.Checked)
+            if (blurRadioButton.Checked)
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
@@ -287,7 +304,7 @@ namespace Computer_Graphics_1
 
         private void gaussSmoothRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(gaussSmoothRadioButton.Checked)
+            if (gaussSmoothRadioButton.Checked)
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
@@ -304,7 +321,7 @@ namespace Computer_Graphics_1
 
         private void sharpenRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(sharpenRadioButton.Checked)
+            if (sharpenRadioButton.Checked)
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
@@ -321,7 +338,7 @@ namespace Computer_Graphics_1
 
         private void meanRemSharpRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(meanRemSharpRadioButton.Checked)
+            if (meanRemSharpRadioButton.Checked)
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
@@ -338,7 +355,7 @@ namespace Computer_Graphics_1
 
         private void embossRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(embossRadioButton.Checked)
+            if (embossRadioButton.Checked)
             {
                 cnvFilt.Mat = new int[3, 3];
                 cnvFilt.divisor = -99999;
@@ -355,14 +372,14 @@ namespace Computer_Graphics_1
 
         private void customizeConvFilterButton_Click(object sender, EventArgs e)
         {
-            if(!cnvFilt.convFilterParametersSet)
+            if (!cnvFilt.convFilterParametersSet)
             {
                 MessageBox.Show("Select a base Convolution Filter to customize first.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             using (ConvFiltCustomizer cFCD = new ConvFiltCustomizer(cnvFilt.Mat, cnvFilt.anchorCoords, cnvFilt.divisor, cnvFilt.offset))
             {
-                if(cFCD.ShowDialog()==DialogResult.OK)
+                if (cFCD.ShowDialog() == DialogResult.OK)
                 {
                     //ConvolutionFilters.Apply(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
                     ConvolutionFilters.ConvFilCleanCode(cFCD.sqrCnvMat, cFCD.anchorKernel, wBmpToEdit, cFCD.divisor, cFCD.offset);
@@ -373,6 +390,23 @@ namespace Computer_Graphics_1
                     MessageBox.Show("Custom filter not applied.", "Action cancelled", MessageBoxButtons.OK);
                 }
             }
+        }
+
+        private void medianFilterButtonClick(object sender, EventArgs e)
+        {
+            MedianFilter.MedianFilter3x3(wBmpToEdit); //passed by reference by default.
+            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
+        }
+        private void lab1TabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+#endregion
+
+
+        private void saveAsResultpngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            wBmpToEdit.SaveAsPNG("result.png");
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -410,17 +444,7 @@ namespace Computer_Graphics_1
             autoSizescrollbarToolStripMenuItem.Checked = false;
         }
 
-        private void medianFilterButtonClick(object sender, EventArgs e)
-        {
-            MedianFilter.MedianFilter3x3(wBmpToEdit); //passed by reference by default.
-            newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
-        }
-
-        private void lab1TabPage_Click(object sender, EventArgs e)
-        {
-
-        }
-
+#region LAB2-SPECIFIC-REGION
         private void averageDitheringButton_Click(object sender, EventArgs e)
         {
             AverageDithering.apply(wBmpToEdit, (int)colorperchannelNumericUpDown.Value);
@@ -472,9 +496,11 @@ namespace Computer_Graphics_1
 
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
+#endregion
 
+#region LAB3-SPECIFIC-REGION
         //Shape shp = new PolyLine();
-        private void temp_click(object sender, EventArgs e)
+        private void drawingCanvasPictureBox_Click(object sender, EventArgs e)
         {
 
 
@@ -484,27 +510,37 @@ namespace Computer_Graphics_1
             {
                 resetAllShapes();
                 selectedPointShapeAndPointIndices = null;
-                shapes.Last().AddPoint(mE.Location.X, mE.Location.Y); //x is col, y is row
+                shapes.Last().AddVertices(mE.Location.X, mE.Location.Y); //x is col, y is row
                 //if(selectedShapeType==SupportedShapes.Line)
                 //drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(((PolyLine)shp).draw(ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)),false));
 
                 drawAllShapes(drawPoints);
-                if (shapes.Last().points.Count() == 2 && shapes.Last().isShapeType(SupportedShapes.Circle))
+                if (shapes.Last().vertices.Count() == 2 && shapes.Last().isShapeType(SupportedShapes.Circle))
                 {
                     toggleDrawingButton_Click(null, null);
                 }
             }
             else
             {
-                if(selectedPointShapeAndPointIndices==null)
+                if(selectedPointShapeAndPointIndices==null || Form.ModifierKeys == Keys.Control || emulateHoldControlCheckbox.Checked)
                 {
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+                    throw new NotImplementedException("Need to implement the selection logic for multiselection, edge selection, and selecting a previous shape in order to change it's color still"); //just got reminded that innerexceptions exist, they're nice. Keep in mind for future, will help somewhere in nested exception-ing.
+                    // neeed to make selectedPointShapeAndPointIndices a list of tuples or points.
+                    int currentSelectedPointsCount = 1;
+                    if(selectedPointShapeAndPointIndices!=null)
+                    {
+                        currentSelectedPointsCount=selectedPointShapeAndPointIndices.Count();
+                        ...
+                    }
+#endif
                     int detPixRadius = 6;
                     for (int i = shapes.Count - 1; i >= 0 && selectedPointShapeAndPointIndices==null; i--)//the following two loops select the latest placed point which was in click radius.
                     {
-                        for (int j = shapes[i].points.Count - 1; j >= 0 && selectedPointShapeAndPointIndices == null; j--)
+                        for (int j = shapes[i].vertices.Count - 1; j >= 0 && selectedPointShapeAndPointIndices == null; j--)
                         {
                             //if ((1 / MathUtil.FastInverseSqRt((float)Math.Pow((mE.X - shapes[i].points[j].Item1), 2) + (float)Math.Pow((mE.Y - shapes[i].points[j].Item2), 2))) <= detPixRadius)
-                            if (Math.Sqrt((float)Math.Pow((mE.X - shapes[i].points[j].X), 2) + (float)Math.Pow((mE.Y - shapes[i].points[j].Y), 2)) <= detPixRadius)
+                            if (Math.Sqrt((float)Math.Pow((mE.X - shapes[i].vertices[j].X), 2) + (float)Math.Pow((mE.Y - shapes[i].vertices[j].Y), 2)) <= detPixRadius)
                             {
                                 drawingCanvasPictureBox.Cursor = Cursors.Hand;
                                 selectedPointShapeAndPointIndices = new Tuple<int, int>(i, j);
@@ -520,7 +556,7 @@ namespace Computer_Graphics_1
                     drawingCanvasPictureBox.Cursor = Cursors.Default;
                     int i = selectedPointShapeAndPointIndices.Item1; int j = selectedPointShapeAndPointIndices.Item2;
                     selectedPointShapeAndPointIndices = null;
-                    shapes[i].points[j] = new Point(mE.X, mE.Y);
+                    shapes[i].vertices[j] = new Point(mE.X, mE.Y);
                     drawAllShapes(drawPoints);
                 }
             }
@@ -532,6 +568,33 @@ namespace Computer_Graphics_1
         }
         private void drawAllShapes(bool drawPoints)
         {
+            if (superSamplingEnabled)
+            {
+                resetAllShapes();
+                WriteableBitmap downSampled = null;
+
+                Size superSampledSize = new Size(2 * drawingCanvasPictureBox.Image.Width, 2 * drawingCanvasPictureBox.Image.Height);
+                Bitmap superSampledImage = new Bitmap(drawingCanvasPictureBox.Image, superSampledSize);
+                foreach (Shape shp in shapes)
+                {
+                    shp.thickness = shp.thickness * 2;
+                    for (int i=0;i<shp.vertices.Count();i++)
+                    {
+                        shp.vertices[i] = new Point(2 * shp.vertices[i].X, 2 * shp.vertices[i].Y);
+                    }
+                    superSampledImage = ImgUtil.GetBitmapFromWriteableBitmap(shp.draw(ImgUtil.GetWritableBitmapFromBitmap(superSampledImage), drawPoints));
+                    shp.thickness = shp.thickness / 2;
+                    for (int i = 0; i < shp.vertices.Count(); i++)
+                    {
+                        shp.vertices[i] = new Point(shp.vertices[i].X / 2, shp.vertices[i].Y / 2);
+                    }
+                }
+                downSampled = downSampling2x(ImgUtil.GetWritableBitmapFromBitmap(superSampledImage));
+                drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(downSampled);
+                if (downSampled != null)
+                    drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(downSampled);
+                return;
+            }
             foreach (Shape shp in shapes)
             {
                 if (guptaSproulAntiAliasingEnabled && (shp.isShapeType(SupportedShapes.Line)))
@@ -544,6 +607,44 @@ namespace Computer_Graphics_1
 
                 }
             }
+        }
+
+        private WriteableBitmap downSampling2x(WriteableBitmap upsampledWbmp)//,int scalingFactor=2
+        {
+            Size resultSize = new Size(upsampledWbmp.PixelWidth/2, upsampledWbmp.PixelHeight/2);
+            //Bitmap tempBMP = new Bitmap(drawingCanvasPictureBox.Image, resultSize);
+            Bitmap tempBMP = new Bitmap(drawingCanvasPictureBox.Image,resultSize);
+
+            WriteableBitmap result = ImgUtil.GetWritableBitmapFromBitmap(tempBMP);
+            for (int r=0;r<upsampledWbmp.PixelHeight;r+=2)
+            {
+                for(int c=0;c<upsampledWbmp.PixelWidth;c+=2)
+                {
+                    unsafe
+                    {
+                        int redAvg = 0; int blueAvg = 0; int greenAvg = 0;
+                        for(int i=r;i<=r+1;i++)
+                        {
+                            for(int j=c;j<=c+1;j++)
+                            {
+                                _pixel_bgr24_bgra32* ptrPx = (_pixel_bgr24_bgra32*)upsampledWbmp.GetPixelIntPtrAt(i, j);
+                                blueAvg += ptrPx->blue;
+                                greenAvg += ptrPx->green;
+                                redAvg += ptrPx->red;
+                            }
+                        }
+                        blueAvg = blueAvg / 4;
+                        greenAvg = greenAvg / 4;
+                        redAvg = redAvg / 4;
+
+                        _pixel_bgr24_bgra32* ptrResPx = (_pixel_bgr24_bgra32*)result.GetPixelIntPtrAt(r/2,c/2);
+                        ptrResPx->blue = (byte)blueAvg;
+                        ptrResPx->green = (byte)greenAvg;
+                        ptrResPx->red = (byte)redAvg;
+                    }
+                }
+            }
+            return result;
         }
 
         private void lineRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -654,9 +755,9 @@ namespace Computer_Graphics_1
             List<Shape> cleanedShapesList = new List<Shape>();
             foreach (var shp in shapes)
             {
-                if ((shp.isShapeType(SupportedShapes.Line) && shp.points.Count < 2)
-                    || (shp.isShapeType(SupportedShapes.Polygon) && shp.points.Count < 3)
-                    || (shp.isShapeType(SupportedShapes.Circle) && shp.points.Count != 2))
+                if ((shp.isShapeType(SupportedShapes.Line) && shp.vertices.Count < 2)
+                    || (shp.isShapeType(SupportedShapes.Polygon) && shp.vertices.Count < 3)
+                    || (shp.isShapeType(SupportedShapes.Circle) && shp.vertices.Count != 2))
                 {
                     continue;
                 }
@@ -680,6 +781,50 @@ namespace Computer_Graphics_1
             resetAllShapes();
             shapes.Deserialize("kek.xml");
             drawAllShapes(drawPoints);
+        }
+
+        private void superSamplingAntiAliasingCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            superSamplingEnabled = superSamplingAntiAliasingCheckBox.Checked;
+            resetAllShapes();
+            drawAllShapes(drawPoints);
+        }
+        #endregion
+
+        private void labsTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (labsTabControl.SelectedTab == lab3TabPage) //can add ||s to let other pages behave the same way.
+            {
+                if (imagesTabControl.SelectedTab != drawingViewTabPage)
+                {
+                    imagesTabControl.SelectedTab = drawingViewTabPage;
+                }
+            }
+            else
+            {
+                if (imagesTabControl.SelectedTab == drawingViewTabPage)
+                {
+                    imagesTabControl.SelectedTab = comparisontViewTabPage;
+                }
+            }
+        }
+        private void imagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(imagesTabControl.SelectedTab==drawingViewTabPage)
+            {
+                if(labsTabControl.SelectedTab!=lab3TabPage) //can add ||s to let accomadate any other labs that might use the same.
+                {
+                    labsTabControl.SelectedTab = lab3TabPage;
+                }
+            }
+            else
+            {
+                if(labsTabControl.SelectedTab==lab3TabPage) //can add ||s to let accomadate any other labs that might not use the view like lab3TabPage here.
+                {
+                    labsTabControl.SelectedTab = lab1TabPage;
+                }
+
+            }
         }
 
         //private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)

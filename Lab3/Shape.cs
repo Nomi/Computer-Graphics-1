@@ -1,4 +1,9 @@
-﻿using Computer_Graphics_1.HelperClasses;
+﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+/*
+* To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
+* Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
+*/
+using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using System;
 using System.Collections.Generic;
@@ -23,7 +28,11 @@ namespace Computer_Graphics_1.Lab3
     [XmlInclude(typeof(Circle))]
     public class Shape //will make it abstract later..
     {
-        public List<Point> points = new List<Point>();
+        public List<Point> vertices = new List<Point>();
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+        [XmlIgnore] //it will be populated by drawing again anyway, so no reason to bloat our storage file.
+        public List<List<Point>> pixelsDrawnByTwoVertices = new List<List<Point>>(); //Can use this list to draw points instead of calculating again and again in order to save performance btw, but I'm just going to calculate and render everything anew for now because I don't have the time, energy, or incentive to improve this.
+#endif
         [XmlIgnore]
         public Color color = Color.Black;
 
@@ -36,9 +45,9 @@ namespace Computer_Graphics_1.Lab3
         public int thickness = 1;
         //when moving, only change the latest point (via sorting?)?
 
-        public void AddPoint(int x, int y) //doesn't draw. Need to draw after this manually.
+        public void AddVertices(int x, int y) //doesn't draw. Need to draw after this manually.
         {
-            points.Add(new Point(x, y)); //x is column, y is row ( and item1 is x, item2 is y)
+            vertices.Add(new Point(x, y)); //x is column, y is row ( and item1 is x, item2 is y)
         }
         public virtual WriteableBitmap drawPoints(WriteableBitmap wbmp)
         {
@@ -49,7 +58,7 @@ namespace Computer_Graphics_1.Lab3
             int borderTh = 3;
             unsafe
             {
-                foreach (var point in points)
+                foreach (var point in vertices)
                 {
                     if (point.X >= 0 && point.X <= wbmp.PixelWidth)
                     {

@@ -1,4 +1,9 @@
-﻿using Computer_Graphics_1.HelperClasses;
+﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+/*
+* To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
+* Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
+*/
+using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using System;
 using System.Collections.Generic;
@@ -62,33 +67,37 @@ namespace Computer_Graphics_1.Lab3
         private static void CopyPixelsAA(ref WriteableBitmap wbmp,int x, int y, double thickness, Color c, double d_invDenom, double v_d, int dx, int dy)
         {
             wbmp.PutPixel(x, y, c);
+            //IntensifyPixel()
             for (int i = 1; IntensifyPixel(ref wbmp, x + i * dx, y + i * dy, thickness, i * d_invDenom - v_d, c) > 0; ++i) ;
             for (int i = 1; IntensifyPixel(ref wbmp, x - i * dx, y - i * dy, thickness, i * d_invDenom + v_d, c) > 0; ++i) ;
         }
 
         public static WriteableBitmap drawGSAA(this Shape shp, WriteableBitmap wbmp, bool showPoints=true)
         {
+#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+        throw new NotImplementedException("Need to implement the Gupta-Sproul part's pixel tracking logic by modifying everywhere you put pixels to also store pixels in the relevant array provided in Shape class."); //just got reminded that innerexceptions exist, they're nice. Keep in mind for future, will help somewhere in nested exception-ing.
+#endif
             if (!(shp.isShapeType(SupportedShapes.Line)))
                 throw new NotSupportedException("GuptaSproul only works for lines");
             if (showPoints)
                 wbmp = shp.drawPoints(wbmp);
-            if (shp.points.Count >= 2)
+            if (shp.vertices.Count >= 2)
             {
                 int thickness = shp.thickness;
                 if ( thickness < 1)
                 {
                     thickness = 1;
                 }
-                for (int i = 1; i < shp.points.Count; i++)//we start from i=1 because we'll be drawing from previous index to current one (initially from 0th to 1th)
+                for (int i = 1; i < shp.vertices.Count; i++)//we start from i=1 because we'll be drawing from previous index to current one (initially from 0th to 1th)
                 {
                     //For points, x is column, y is row ( and item1 is x, item2 is y)
 
                     //the following only handles lines with angles between 0 to 45 degrees (inclusive of 0 and 45).
-                    int x1 = shp.points[i - 1].X;
-                    int x2 = shp.points[i].X;
+                    int x1 = shp.vertices[i - 1].X;
+                    int x2 = shp.vertices[i].X;
 
-                    int y1 = shp.points[i - 1].Y;
-                    int y2 = shp.points[i].Y;
+                    int y1 = shp.vertices[i - 1].Y;
+                    int y2 = shp.vertices[i].Y;
                     wbmp = GuptaSproull(shp, wbmp, x1, y1, x2, y2, shp.color, thickness);
                 }
             }

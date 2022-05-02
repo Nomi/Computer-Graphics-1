@@ -30,6 +30,7 @@ namespace Computer_Graphics_1
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +75,16 @@ namespace Computer_Graphics_1
             this.label1 = new System.Windows.Forms.Label();
             this.colorperchannelNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.lab3TabPage = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.l3AccesibilityGroupBox = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.emulateHoldingControlAltCheckbox = new System.Windows.Forms.CheckBox();
+            this.emulateHoldControlCheckbox = new System.Windows.Forms.CheckBox();
+            this.superSamplingAntiAliasingCheckBox = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.loadNewShapesButton = new System.Windows.Forms.Button();
+            this.saveAllShapesButton = new System.Windows.Forms.Button();
             this.antiAliasingGuptaSproulCheckBox = new System.Windows.Forms.CheckBox();
             this.deleteSelectedShapeButton = new System.Windows.Forms.Button();
             this.selectShapeGroupBox = new System.Windows.Forms.GroupBox();
@@ -105,9 +116,6 @@ namespace Computer_Graphics_1
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.saveAllShapesButton = new System.Windows.Forms.Button();
-            this.loadNewShapesButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -127,6 +135,8 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).BeginInit();
             this.lab3TabPage.SuspendLayout();
+            this.l3AccesibilityGroupBox.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.selectShapeGroupBox.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.selectThicknessGroupbox.SuspendLayout();
@@ -140,7 +150,6 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
             this.drawingViewTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).BeginInit();
-            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -235,6 +244,7 @@ namespace Computer_Graphics_1
             this.labsTabControl.SelectedIndex = 0;
             this.labsTabControl.Size = new System.Drawing.Size(370, 627);
             this.labsTabControl.TabIndex = 0;
+            this.labsTabControl.SelectedIndexChanged += new System.EventHandler(this.labsTabControl_SelectedIndexChanged);
             // 
             // lab1TabPage
             // 
@@ -756,6 +766,9 @@ namespace Computer_Graphics_1
             // lab3TabPage
             // 
             this.lab3TabPage.BackColor = System.Drawing.Color.SeaGreen;
+            this.lab3TabPage.Controls.Add(this.label5);
+            this.lab3TabPage.Controls.Add(this.l3AccesibilityGroupBox);
+            this.lab3TabPage.Controls.Add(this.superSamplingAntiAliasingCheckBox);
             this.lab3TabPage.Controls.Add(this.tableLayoutPanel5);
             this.lab3TabPage.Controls.Add(this.antiAliasingGuptaSproulCheckBox);
             this.lab3TabPage.Controls.Add(this.deleteSelectedShapeButton);
@@ -766,6 +779,128 @@ namespace Computer_Graphics_1
             this.lab3TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab3TabPage.TabIndex = 2;
             this.lab3TabPage.Text = "L3";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(31, 296);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(334, 102);
+            this.label5.TabIndex = 6;
+            this.label5.Text = resources.GetString("label5.Text");
+            // 
+            // l3AccesibilityGroupBox
+            // 
+            this.l3AccesibilityGroupBox.Controls.Add(this.label4);
+            this.l3AccesibilityGroupBox.Controls.Add(this.label3);
+            this.l3AccesibilityGroupBox.Controls.Add(this.emulateHoldingControlAltCheckbox);
+            this.l3AccesibilityGroupBox.Controls.Add(this.emulateHoldControlCheckbox);
+            this.l3AccesibilityGroupBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.l3AccesibilityGroupBox.Location = new System.Drawing.Point(0, 477);
+            this.l3AccesibilityGroupBox.Name = "l3AccesibilityGroupBox";
+            this.l3AccesibilityGroupBox.Size = new System.Drawing.Size(362, 121);
+            this.l3AccesibilityGroupBox.TabIndex = 5;
+            this.l3AccesibilityGroupBox.TabStop = false;
+            this.l3AccesibilityGroupBox.Text = "Accesibility (Work-In-Progress)";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label4.Location = new System.Drawing.Point(3, 77);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(327, 34);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Note: that currently, to use delete selected shape, \r\nyou select a point to delet" +
+    "e it";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Location = new System.Drawing.Point(3, 60);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(373, 17);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Note: that you need to enable Muli-Select to select edges.";
+            // 
+            // emulateHoldingControlAltCheckbox
+            // 
+            this.emulateHoldingControlAltCheckbox.AutoSize = true;
+            this.emulateHoldingControlAltCheckbox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.emulateHoldingControlAltCheckbox.Location = new System.Drawing.Point(3, 39);
+            this.emulateHoldingControlAltCheckbox.Name = "emulateHoldingControlAltCheckbox";
+            this.emulateHoldingControlAltCheckbox.Size = new System.Drawing.Size(356, 21);
+            this.emulateHoldingControlAltCheckbox.TabIndex = 1;
+            this.emulateHoldingControlAltCheckbox.Text = "Emulate holding Control-Alt keys to select a Shape whole";
+            this.emulateHoldingControlAltCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // emulateHoldControlCheckbox
+            // 
+            this.emulateHoldControlCheckbox.AutoSize = true;
+            this.emulateHoldControlCheckbox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.emulateHoldControlCheckbox.Location = new System.Drawing.Point(3, 18);
+            this.emulateHoldControlCheckbox.Name = "emulateHoldControlCheckbox";
+            this.emulateHoldControlCheckbox.Size = new System.Drawing.Size(356, 21);
+            this.emulateHoldControlCheckbox.TabIndex = 0;
+            this.emulateHoldControlCheckbox.Text = "Emulate holding Control button for Multi-Select points";
+            this.emulateHoldControlCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // superSamplingAntiAliasingCheckBox
+            // 
+            this.superSamplingAntiAliasingCheckBox.AutoSize = true;
+            this.superSamplingAntiAliasingCheckBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.superSamplingAntiAliasingCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.superSamplingAntiAliasingCheckBox.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.superSamplingAntiAliasingCheckBox.Location = new System.Drawing.Point(0, 271);
+            this.superSamplingAntiAliasingCheckBox.Name = "superSamplingAntiAliasingCheckBox";
+            this.superSamplingAntiAliasingCheckBox.Size = new System.Drawing.Size(362, 22);
+            this.superSamplingAntiAliasingCheckBox.TabIndex = 4;
+            this.superSamplingAntiAliasingCheckBox.Text = "2x SuperSampling (Anti-Aliasing)";
+            this.superSamplingAntiAliasingCheckBox.UseVisualStyleBackColor = true;
+            this.superSamplingAntiAliasingCheckBox.CheckedChanged += new System.EventHandler(this.superSamplingAntiAliasingCheckBox_CheckedChanged);
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.AutoSize = true;
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Controls.Add(this.loadNewShapesButton, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.saveAllShapesButton, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 238);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(362, 33);
+            this.tableLayoutPanel5.TabIndex = 3;
+            // 
+            // loadNewShapesButton
+            // 
+            this.loadNewShapesButton.AutoSize = true;
+            this.loadNewShapesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.loadNewShapesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.loadNewShapesButton.Location = new System.Drawing.Point(184, 3);
+            this.loadNewShapesButton.Name = "loadNewShapesButton";
+            this.loadNewShapesButton.Size = new System.Drawing.Size(175, 27);
+            this.loadNewShapesButton.TabIndex = 5;
+            this.loadNewShapesButton.Text = "Load New Shapes";
+            this.loadNewShapesButton.UseVisualStyleBackColor = true;
+            this.loadNewShapesButton.Click += new System.EventHandler(this.loadNewShapesButton_Click);
+            // 
+            // saveAllShapesButton
+            // 
+            this.saveAllShapesButton.AutoSize = true;
+            this.saveAllShapesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.saveAllShapesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.saveAllShapesButton.Location = new System.Drawing.Point(3, 3);
+            this.saveAllShapesButton.Name = "saveAllShapesButton";
+            this.saveAllShapesButton.Size = new System.Drawing.Size(175, 27);
+            this.saveAllShapesButton.TabIndex = 4;
+            this.saveAllShapesButton.Text = "Save All Shapes";
+            this.saveAllShapesButton.UseVisualStyleBackColor = true;
+            this.saveAllShapesButton.Click += new System.EventHandler(this.saveAllShapesButton_Click);
             // 
             // antiAliasingGuptaSproulCheckBox
             // 
@@ -958,6 +1093,7 @@ namespace Computer_Graphics_1
             this.imagesTabControl.SelectedIndex = 0;
             this.imagesTabControl.Size = new System.Drawing.Size(871, 627);
             this.imagesTabControl.TabIndex = 1;
+            this.imagesTabControl.SelectedIndexChanged += new System.EventHandler(this.imagesTabControl_SelectedIndexChanged);
             // 
             // comparisontViewTabPage
             // 
@@ -1130,48 +1266,7 @@ namespace Computer_Graphics_1
             this.drawingCanvasPictureBox.Size = new System.Drawing.Size(857, 592);
             this.drawingCanvasPictureBox.TabIndex = 0;
             this.drawingCanvasPictureBox.TabStop = false;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.AutoSize = true;
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.loadNewShapesButton, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.saveAllShapesButton, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 238);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(362, 33);
-            this.tableLayoutPanel5.TabIndex = 3;
-            // 
-            // saveAllShapesButton
-            // 
-            this.saveAllShapesButton.AutoSize = true;
-            this.saveAllShapesButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.saveAllShapesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.saveAllShapesButton.Location = new System.Drawing.Point(3, 3);
-            this.saveAllShapesButton.Name = "saveAllShapesButton";
-            this.saveAllShapesButton.Size = new System.Drawing.Size(175, 27);
-            this.saveAllShapesButton.TabIndex = 4;
-            this.saveAllShapesButton.Text = "Save All Shapes";
-            this.saveAllShapesButton.UseVisualStyleBackColor = true;
-            this.saveAllShapesButton.Click += new System.EventHandler(this.saveAllShapesButton_Click);
-            // 
-            // loadNewShapesButton
-            // 
-            this.loadNewShapesButton.AutoSize = true;
-            this.loadNewShapesButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.loadNewShapesButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.loadNewShapesButton.Location = new System.Drawing.Point(184, 3);
-            this.loadNewShapesButton.Name = "loadNewShapesButton";
-            this.loadNewShapesButton.Size = new System.Drawing.Size(175, 27);
-            this.loadNewShapesButton.TabIndex = 5;
-            this.loadNewShapesButton.Text = "Load New Shapes";
-            this.loadNewShapesButton.UseVisualStyleBackColor = true;
-            this.loadNewShapesButton.Click += new System.EventHandler(this.loadNewShapesButton_Click);
+            this.drawingCanvasPictureBox.Click += new System.EventHandler(this.drawingCanvasPictureBox_Click);
             // 
             // MainForm
             // 
@@ -1215,6 +1310,10 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.colorperchannelNumericUpDown)).EndInit();
             this.lab3TabPage.ResumeLayout(false);
             this.lab3TabPage.PerformLayout();
+            this.l3AccesibilityGroupBox.ResumeLayout(false);
+            this.l3AccesibilityGroupBox.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.selectShapeGroupBox.ResumeLayout(false);
             this.selectShapeGroupBox.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
@@ -1230,8 +1329,6 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
             this.drawingViewTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).EndInit();
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1317,6 +1414,13 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button loadNewShapesButton;
         private System.Windows.Forms.Button saveAllShapesButton;
+        private System.Windows.Forms.CheckBox superSamplingAntiAliasingCheckBox;
+        private System.Windows.Forms.GroupBox l3AccesibilityGroupBox;
+        private System.Windows.Forms.CheckBox emulateHoldControlCheckbox;
+        private System.Windows.Forms.CheckBox emulateHoldingControlAltCheckbox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
