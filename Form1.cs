@@ -52,14 +52,14 @@ namespace Computer_Graphics_1
             InitializeComponent();
 
             setComparisonViewImage(global::Computer_Graphics_1.Properties.Resources._default);
-            if(ogPictureBox.Image!=null)
+            drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
+            if (ogPictureBox.Image!=null)
             {
                 setApplicationInteractionEnabled(true);
                 zoomToolStripMenuItem_Click(null, null);
             }
 
 #if Lab3
-            drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
             if (selectedShapeType==SupportedShapes.Line)
                 lineRadioButton.Checked = true;
             labsTabControl.SelectedTab = lab3TabPage;
