@@ -1,9 +1,4 @@
-﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
-/*
-* To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
-* Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
-*/
-using Computer_Graphics_1.HelperClasses;
+﻿using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using System;
 using System.Collections.Generic;
@@ -141,9 +136,7 @@ namespace Computer_Graphics_1.Lab3
                 polygonConvertedToLine.color = color;
                 polygonConvertedToLine.thickness = thickness;
                 wbmp=polygonConvertedToLine.draw(wbmp, showPoints, _thickness);
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
                 pixelsDrawnByTwoVertices = polygonConvertedToLine.pixelsDrawnByTwoVertices;
-#endif
                 vertices.RemoveAt(vertices.Count - 1);
             }
             return wbmp;

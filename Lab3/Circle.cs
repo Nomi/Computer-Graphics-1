@@ -1,9 +1,4 @@
-﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
-/*
-* To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
-* Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
-*/
-using Computer_Graphics_1.HelperClasses;
+﻿using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using System;
 using System.Collections.Generic;
@@ -19,9 +14,7 @@ namespace Computer_Graphics_1.Lab3
     {
         public override WriteableBitmap draw(WriteableBitmap wbmp, bool showPoints = true, int _thickness= 1) //uses Midpoint Circle (v2 with additions only) as per lecture notes.
         {
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
             List<Point> drawnPixels = new List<Point>();
-#endif
             //y might need to be reversed like in line, and pixelcopy needs to be used everywhere
             if (showPoints)
                 wbmp=drawPoints(wbmp);
@@ -43,17 +36,10 @@ namespace Computer_Graphics_1.Lab3
             int d = 1 - radius;
             int x = 0;
             int y = radius;
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
             wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X, center.Y + y, color, thickness, true, ref drawnPixels);
             wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X, center.Y - y, color, thickness, true, ref drawnPixels);
             wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X + y, center.Y, color, thickness, false, ref drawnPixels);
             wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X - y, center.Y, color, thickness, false, ref drawnPixels);
-#else
-            wbmp.pxlCpyPutPixel(center.X, center.Y + y, color, thickness, true);
-            wbmp.pxlCpyPutPixel(center.X, center.Y - y, color, thickness, true);
-            wbmp.pxlCpyPutPixel(center.X + y, center.Y, color, thickness, false);
-            wbmp.pxlCpyPutPixel(center.X - y, center.Y, color, thickness, false);
-#endif
 
             while (y > x)
             {
@@ -71,7 +57,7 @@ namespace Computer_Graphics_1.Lab3
                     --y;
                 }
                 ++x;
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+
                 wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X + x, center.Y + y, color, thickness, true, ref drawnPixels);
                 wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X - x, center.Y + y, color, thickness, true, ref drawnPixels);
                 wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X + x, center.Y - y, color, thickness, true, ref drawnPixels);
@@ -80,21 +66,9 @@ namespace Computer_Graphics_1.Lab3
                 wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X - y, center.Y + x, color, thickness, false, ref drawnPixels);
                 wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X + y, center.Y - x, color, thickness, false, ref drawnPixels);
                 wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X - y, center.Y - x, color, thickness, false, ref drawnPixels);
-#else
-                wbmp.pxlCpyPutPixel(center.X + x, center.Y + y, color, thickness, true);
-                wbmp.pxlCpyPutPixel(center.X - x, center.Y + y, color, thickness, true);
-                wbmp.pxlCpyPutPixel(center.X + x, center.Y - y, color, thickness, true);
-                wbmp.pxlCpyPutPixel(center.X - x, center.Y - y, color, thickness, true);
-                wbmp.pxlCpyPutPixel(center.X + y, center.Y + x, color, thickness, false);
-                wbmp.pxlCpyPutPixel(center.X - y, center.Y + x, color, thickness, false);
-                wbmp.pxlCpyPutPixel(center.X + y, center.Y - x, color, thickness, false);
-                wbmp.pxlCpyPutPixel(center.X - y, center.Y - x, color, thickness, false);
-#endif
 
             }
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
             pixelsDrawnByTwoVertices[0] = drawnPixels;  //in a circle, there's only one set of points.
-#endif
             return wbmp;
         }
 

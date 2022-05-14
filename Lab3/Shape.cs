@@ -1,9 +1,4 @@
-﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
-/*
-* To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
-* Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
-*/
-using Computer_Graphics_1.HelperClasses;
+﻿using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using System;
 using System.Collections.Generic;
@@ -29,10 +24,10 @@ namespace Computer_Graphics_1.Lab3
     public class Shape //will make it abstract later..
     {
         public List<Point> vertices = new List<Point>();
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+
         [XmlIgnore] //it will be populated by drawing again anyway, so no reason to bloat our storage file.
         public List<List<Point>> pixelsDrawnByTwoVertices = new List<List<Point>>(); //Can use this list to draw points instead of calculating again and again in order to save performance btw, but I'm just going to calculate and render everything anew for now because I don't have the time, energy, or incentive to improve this.
-#endif
+
         [XmlIgnore]
         public Color color = Color.Black;
 
