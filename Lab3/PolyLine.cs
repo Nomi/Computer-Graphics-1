@@ -30,9 +30,7 @@ namespace Computer_Graphics_1.Lab3
                 }
                 for (int i=1;i<vertices.Count;i++)//we start from i=1 because we'll be drawing from previous index to current one
                 {
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
                     List<Point> drawnPixels = new List<Point>();
-#endif
                     //For points, x is column, y is row ( and item1 is x, item2 is y)
 
                     //the following only handles lines with angles between 0 to 45 degrees (inclusive of 0 and 45).
@@ -103,23 +101,14 @@ namespace Computer_Graphics_1.Lab3
 
                     if(isVerticalSoXYFlipped)
                     {
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
+
                         wbmp.pxlCpyPutPixel_TrackPixelsInList(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
                         wbmp.pxlCpyPutPixel_TrackPixelsInList(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
-#else
-                        wbmp.pxlCpyPutPixel(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped);
-                        wbmp.pxlCpyPutPixel(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped);
-#endif
                     }
                     else
                     {
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
-                        wbmp.pxlCpyPutPixel_TrackPixelsInList(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
-                        wbmp.pxlCpyPutPixel_TrackPixelsInList(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
-#else
                         wbmp.pxlCpyPutPixel(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped);
                         wbmp.pxlCpyPutPixel(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped);
-#endif
                     }
                     while (xf < xb)
                     {
@@ -134,28 +123,17 @@ namespace Computer_Graphics_1.Lab3
                         }
                         if (isVerticalSoXYFlipped)
                         {
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
                             wbmp.pxlCpyPutPixel_TrackPixelsInList(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
                             wbmp.pxlCpyPutPixel_TrackPixelsInList(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
-#else
-                            wbmp.pxlCpyPutPixel(yf, yOffset + yMultiplier * xf, color, thickness, !isVerticalSoXYFlipped);
-                            wbmp.pxlCpyPutPixel(yb, yOffset + yMultiplier * xb, color, thickness, !isVerticalSoXYFlipped);
-#endif
                         }
                         else
                         {
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
                             wbmp.pxlCpyPutPixel_TrackPixelsInList(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
                             wbmp.pxlCpyPutPixel_TrackPixelsInList(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped, ref drawnPixels);
-#else
-                            wbmp.pxlCpyPutPixel(xf, yOffset + yMultiplier * yf, color, thickness, !isVerticalSoXYFlipped);
-                            wbmp.pxlCpyPutPixel(xb, yOffset + yMultiplier * yb, color, thickness, !isVerticalSoXYFlipped);
-#endif
                         }
                     }
-#if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
-                    pixelsDrawnByTwoVertices[i - 1] = drawnPixels; //stores edges or curves
-#endif
+                    //pixelsDrawnByTwoVertices[i - 1] = drawnPixels; //stores edges or curves
+                    pixelsDrawnByTwoVertices.Add(drawnPixels);
                 }
             }
             return wbmp;

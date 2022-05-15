@@ -13,13 +13,21 @@ namespace Computer_Graphics_1.Lab3
 {
     public class Polygon : Shape
     {
+        public override void AddVertices(int x, int y) //doesn't draw. Need to draw after this manually.
+        {
+            if (vertices.Count >= 4)
+                vertices.RemoveAt(vertices.Count - 1);
+            vertices.Add(new Point(x, y)); //x is column, y is row ( and item1 is x, item2 is y)
+            if (vertices.Count >= 3)
+                vertices.Add(vertices.First());
+        }
         public override WriteableBitmap draw(WriteableBitmap wbmp, bool showPoints = true, int _thickness = 1) //uses Symmetric Midpoint Line Algorithm
         {
             if (showPoints)
                 wbmp = drawPoints(wbmp);
             if (vertices.Count >= 3)
             {
-                vertices.Add(vertices.First());
+                
                 #region OLD_COMMENTED_OUT_CODE_REPLACED_BY_THE_CODE_BELOW_THIS_REGION
                 //    if (_thickness < 1)
                 //    {
@@ -135,9 +143,10 @@ namespace Computer_Graphics_1.Lab3
                 polygonConvertedToLine.vertices = vertices;
                 polygonConvertedToLine.color = color;
                 polygonConvertedToLine.thickness = thickness;
+                //polygonConvertedToLine.vertices.Add(polygonConvertedToLine.vertices.First());
                 wbmp=polygonConvertedToLine.draw(wbmp, showPoints, _thickness);
+                //polygonConvertedToLine.vertices.RemoveAt(polygonConvertedToLine.vertices.Count() - 1);
                 pixelsDrawnByTwoVertices = polygonConvertedToLine.pixelsDrawnByTwoVertices;
-                vertices.RemoveAt(vertices.Count - 1);
             }
             return wbmp;
         }

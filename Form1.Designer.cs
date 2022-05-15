@@ -116,6 +116,7 @@ namespace Computer_Graphics_1
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
+            this.testButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -141,6 +142,7 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel4.SuspendLayout();
             this.selectThicknessGroupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).BeginInit();
+            this.lab4TabPage.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
@@ -1067,6 +1069,7 @@ namespace Computer_Graphics_1
             // 
             // lab4TabPage
             // 
+            this.lab4TabPage.Controls.Add(this.testButton);
             this.lab4TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab4TabPage.Name = "lab4TabPage";
             this.lab4TabPage.Size = new System.Drawing.Size(362, 598);
@@ -1268,6 +1271,17 @@ namespace Computer_Graphics_1
             this.drawingCanvasPictureBox.TabStop = false;
             this.drawingCanvasPictureBox.Click += new System.EventHandler(this.drawingCanvasPictureBox_Click);
             // 
+            // testButton
+            // 
+            this.testButton.BackColor = System.Drawing.Color.DarkRed;
+            this.testButton.Location = new System.Drawing.Point(177, 68);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(75, 61);
+            this.testButton.TabIndex = 0;
+            this.testButton.Text = "test";
+            this.testButton.UseVisualStyleBackColor = false;
+            this.testButton.Click += new System.EventHandler(this.toggleDrawClippingPolygon);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1319,6 +1333,7 @@ namespace Computer_Graphics_1
             this.tableLayoutPanel4.ResumeLayout(false);
             this.selectThicknessGroupbox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).EndInit();
+            this.lab4TabPage.ResumeLayout(false);
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
@@ -1421,6 +1436,7 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button testButton;
     }
 }
 

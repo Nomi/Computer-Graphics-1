@@ -68,7 +68,11 @@ namespace Computer_Graphics_1.Lab3
                 wbmp.pxlCpyPutPixel_TrackPixelsInList(center.X - y, center.Y - x, color, thickness, false, ref drawnPixels);
 
             }
-            pixelsDrawnByTwoVertices[0] = drawnPixels;  //in a circle, there's only one set of points.
+            if(pixelsDrawnByTwoVertices.Count>=1)
+            {
+                pixelsDrawnByTwoVertices.Clear();
+            }
+            pixelsDrawnByTwoVertices.Add(drawnPixels); //in a circle, there's only one set of two points.
             return wbmp;
         }
 

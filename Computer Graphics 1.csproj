@@ -138,6 +138,7 @@
     <Compile Include="Lab3\PolyLine.cs" />
     <Compile Include="Lab3\SerializationEx.cs" />
     <Compile Include="Lab3\Shape.cs" />
+    <Compile Include="Lab4\ClippingPolygon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Lab1\ConvFiltCustomizer.resx">

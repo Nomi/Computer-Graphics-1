@@ -33,9 +33,11 @@ namespace Computer_Graphics_1
         private bool drawingEnabled = false;
         private SupportedShapes selectedShapeType = SupportedShapes.Line;
 
-        private Tuple<int, int> selectedPointShapeAndPointIndices = null;
+        private Tuple<int, List<int>> selectedPointsShapeAndPointIndices = null;
 
         List<Shape> shapes = new List<Shape>();
+        //List<ClippingPolygon> clippingPolygons = new List<ClippingPolygon>();
+
         bool guptaSproulAntiAliasingEnabled = false;
         bool superSamplingEnabled = false;
         bool drawPoints = true;
@@ -503,13 +505,12 @@ namespace Computer_Graphics_1
         private void drawingCanvasPictureBox_Click(object sender, EventArgs e)
         {
 
-
             MouseEventArgs mE = (MouseEventArgs) e;
 
             if(drawingEnabled)
             {
                 resetAllShapes();
-                selectedPointShapeAndPointIndices = null;
+                selectedPointsShapeAndPointIndices = null;
                 shapes.Last().AddVertices(mE.Location.X, mE.Location.Y); //x is col, y is row
                 //if(selectedShapeType==SupportedShapes.Line)
                 //drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(((PolyLine)shp).draw(ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)),false));
@@ -522,11 +523,11 @@ namespace Computer_Graphics_1
             }
             else
             {
-                if(selectedPointShapeAndPointIndices==null || Form.ModifierKeys == Keys.Control || emulateHoldControlCheckbox.Checked)
+                if(selectedPointsShapeAndPointIndices==null || Form.ModifierKeys == Keys.Control || emulateHoldControlCheckbox.Checked)
                 {
 #if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
                     throw new NotImplementedException("Need to implement the selection logic for multiselection, edge selection, and selecting a previous shape in order to change it's color still"); //just got reminded that innerexceptions exist, they're nice. Keep in mind for future, will help somewhere in nested exception-ing.
-                    // neeed to make selectedPointShapeAndPointIndices a list of tuples or points.
+                     neeed to make selectedPointShapeAndPointIndices a list of tuples or points.
                     int currentSelectedPointsCount = 1;
                     if(selectedPointShapeAndPointIndices!=null)
                     {
@@ -535,18 +536,26 @@ namespace Computer_Graphics_1
                     }
 #endif
                     int detPixRadius = 6;
-                    for (int i = shapes.Count - 1; i >= 0 && selectedPointShapeAndPointIndices==null; i--)//the following two loops select the latest placed point which was in click radius.
+                    bool gotPoint = false;
+                    for (int i = shapes.Count - 1; i >= 0; i--)//the following two loops select the latest placed point which was in click radius.
                     {
-                        for (int j = shapes[i].vertices.Count - 1; j >= 0 && selectedPointShapeAndPointIndices == null; j--)
+                        for (int j = shapes[i].vertices.Count - 1; j >= 0; j--)
                         {
                             //if ((1 / MathUtil.FastInverseSqRt((float)Math.Pow((mE.X - shapes[i].points[j].Item1), 2) + (float)Math.Pow((mE.Y - shapes[i].points[j].Item2), 2))) <= detPixRadius)
                             if (Math.Sqrt((float)Math.Pow((mE.X - shapes[i].vertices[j].X), 2) + (float)Math.Pow((mE.Y - shapes[i].vertices[j].Y), 2)) <= detPixRadius)
                             {
-                                drawingCanvasPictureBox.Cursor = Cursors.Hand;
-                                selectedPointShapeAndPointIndices = new Tuple<int, int>(i, j);
+                                if (selectedPointsShapeAndPointIndices == null)
+                                {
+                                    selectedPointsShapeAndPointIndices = new Tuple<int, List<int>>(i, new List<int>());
+                                    drawingCanvasPictureBox.Cursor = Cursors.Hand;
+                                }
+                                selectedPointsShapeAndPointIndices.Item2.Add(j);
+                                gotPoint = true;
                                 break;
                             }
                         }
+                        if (gotPoint)
+                            break;
                     }
 
                 }
@@ -554,9 +563,28 @@ namespace Computer_Graphics_1
                 {
                     resetAllShapes();
                     drawingCanvasPictureBox.Cursor = Cursors.Default;
-                    int i = selectedPointShapeAndPointIndices.Item1; int j = selectedPointShapeAndPointIndices.Item2;
-                    selectedPointShapeAndPointIndices = null;
+                    int i = selectedPointsShapeAndPointIndices.Item1; 
+                    int j = selectedPointsShapeAndPointIndices.Item2[0];
+
+                    //we move according to the change in the first clicked point!
+                    int deltaX = mE.X - shapes[i].vertices[j].X;
+                    int deltaY = mE.Y - shapes[i].vertices[j].Y;
                     shapes[i].vertices[j] = new Point(mE.X, mE.Y);
+                    //bool firstRun = true;//to skip the first vertice selected because we already moved it.
+                    foreach (int k in selectedPointsShapeAndPointIndices.Item2)
+                    {
+                        //if(firstRun)
+                        //{
+                        //    firstRun = false;
+                        //    continue;
+                        //}
+                        if (k == j)
+                            continue;
+                        int currX = shapes[i].vertices[k].X;
+                        int currY = shapes[i].vertices[k].Y;
+                        shapes[i].vertices[k] = new Point(currX + deltaX, currY + deltaY);
+                    }
+                    selectedPointsShapeAndPointIndices = null;
                     drawAllShapes(drawPoints);
                 }
             }
@@ -670,6 +698,10 @@ namespace Computer_Graphics_1
         private void toggleDrawingButton_Click(object sender, EventArgs e)
         {
             drawingEnabled = !drawingEnabled;
+            //if(clippingEnabled)
+            //{
+            //    toggleDrawClippingPolygon(null, null);
+            //}
             if(drawingEnabled)
             {
                 Shape shp = Shape.ConstructRequiredShape(selectedShapeType);
@@ -726,12 +758,12 @@ namespace Computer_Graphics_1
 
         private void deleteSelectedShapeButton_Click(object sender, EventArgs e)
         {
-            if (selectedPointShapeAndPointIndices!=null)
+            if (selectedPointsShapeAndPointIndices!=null)
             {
                 resetAllShapes();
                 drawingCanvasPictureBox.Cursor = Cursors.Default;
-                shapes.RemoveAt(selectedPointShapeAndPointIndices.Item1);
-                selectedPointShapeAndPointIndices = null;
+                shapes.RemoveAt(selectedPointsShapeAndPointIndices.Item1);
+                selectedPointsShapeAndPointIndices = null;
                 drawAllShapes(drawPoints);
             }
             else
@@ -793,7 +825,7 @@ namespace Computer_Graphics_1
 
         private void labsTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (labsTabControl.SelectedTab == lab3TabPage) //can add ||s to let other pages behave the same way.
+            if (labsTabControl.SelectedTab == lab3TabPage || labsTabControl.SelectedTab==lab4TabPage) //can add ||s to let other pages behave the same way.
             {
                 if (imagesTabControl.SelectedTab != drawingViewTabPage)
                 {
@@ -812,19 +844,65 @@ namespace Computer_Graphics_1
         {
             if(imagesTabControl.SelectedTab==drawingViewTabPage)
             {
-                if(labsTabControl.SelectedTab!=lab3TabPage) //can add ||s to let accomadate any other labs that might use the same.
+                if(labsTabControl.SelectedTab!=lab3TabPage || labsTabControl.SelectedTab!=lab4TabPage) //can add ||s to let accomadate any other labs that might use the same.
                 {
                     labsTabControl.SelectedTab = lab3TabPage;
                 }
             }
             else
             {
-                if(labsTabControl.SelectedTab==lab3TabPage) //can add ||s to let accomadate any other labs that might not use the view like lab3TabPage here.
+                if(labsTabControl.SelectedTab==lab3TabPage||labsTabControl.SelectedTab==lab4TabPage) //can add ||s to let accomadate any other labs that might not use the view like lab3TabPage here.
                 {
                     labsTabControl.SelectedTab = lab1TabPage;
                 }
 
             }
+        }
+
+
+        bool clippingEnabled = false;
+        Polygon shpToEdit = null;
+        int indxShpToEdit = -1;
+        private void toggleDrawClippingPolygon(object sender, EventArgs e)
+        {
+            if(clippingEnabled)
+            {
+                drawingEnabled = false;
+                clippingEnabled = false;
+                //might need to disabled clipping again here.
+                ClippingPolygon clipper = (ClippingPolygon)shapes.Last();
+                if (!clipper.isShapeType(SupportedShapes.ClippingPolygon))
+                    throw new Exception("lool");
+                clipper.clip(wBmpToEdit, ref shpToEdit);
+                shapes[indxShpToEdit] = shpToEdit;
+                resetAllShapes();
+                drawAllShapes(true);
+                shpToEdit = null;
+                lineRadioButton.Checked = true;
+                testButton.Text = "Test";
+                return;
+            }
+            //MessageBox here: Select polygon/shape to be clipped first!
+            //Actually, the button needs to be disabled unless the correct shape is selected.
+
+            //if (drawingEnabled)
+            //{
+                //toggleDrawingButton_Click(null, null);
+            //}
+            clippingEnabled = true;
+            if (shpToEdit == null)
+            {
+                shpToEdit = shapes[selectedPointsShapeAndPointIndices.Item1] as Polygon; //try catch to detect invalid shape?
+                indxShpToEdit = selectedPointsShapeAndPointIndices.Item1;
+            }
+            polygonRadioButton.Checked = false;
+            lineRadioButton.Checked = false;
+            circleRadioButton.Checked = false;
+            selectedShapeType = SupportedShapes.ClippingPolygon;
+
+            toggleDrawingButton_Click(null, null);
+
+            testButton.Text = "stopTest";
         }
 
         //private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)

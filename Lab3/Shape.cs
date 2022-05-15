@@ -15,7 +15,8 @@ namespace Computer_Graphics_1.Lab3
     {
         Line,
         Polygon,
-        Circle
+        Circle,
+        ClippingPolygon
     }
 
     [XmlInclude(typeof(PolyLine))]
@@ -40,7 +41,7 @@ namespace Computer_Graphics_1.Lab3
         public int thickness = 1;
         //when moving, only change the latest point (via sorting?)?
 
-        public void AddVertices(int x, int y) //doesn't draw. Need to draw after this manually.
+        public virtual void AddVertices(int x, int y) //doesn't draw. Need to draw after this manually.
         {
             vertices.Add(new Point(x, y)); //x is column, y is row ( and item1 is x, item2 is y)
         }
@@ -107,7 +108,9 @@ namespace Computer_Graphics_1.Lab3
                     //break;
                 case SupportedShapes.Circle:
                     return new Circle();
-                    //break;
+                //break;
+                case SupportedShapes.ClippingPolygon:
+                    return new ClippingPolygon();
                 default:
                     throw new ArgumentOutOfRangeException(null);
             }
