@@ -1,9 +1,13 @@
 ﻿using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
+using Computer_Graphics_1.Lab4;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -21,13 +25,58 @@ namespace Computer_Graphics_1.Lab3
         //    if (vertices.Count >= 3)
         //        vertices.Add(vertices.First());
         //}
+
+        public Polygon() { }
+        public Polygon(Polygon toCopy)
+        {
+            this.colorAsRGB = toCopy.colorAsRGB;
+            this.fillColorAsRGB = toCopy.fillColorAsRGB;
+
+            this.thickness = toCopy.thickness;
+
+            if (toCopy.fillPattern!=null)
+                this.fillPattern = new Bitmap(toCopy.fillPattern);
+
+            this.vertices = new List<Point>(toCopy.vertices);
+            this.filledPixels = new List<Point>(toCopy.filledPixels);
+
+            this.pixelsDrawnByTwoVertices = new List<List<Point>>();
+            for (int i = 0; i < toCopy.pixelsDrawnByTwoVertices.Count(); i++)
+            {
+                pixelsDrawnByTwoVertices.Add(new List<Point>(toCopy.pixelsDrawnByTwoVertices[i]));
+            }
+        }
         public override WriteableBitmap draw(WriteableBitmap wbmp, bool showPoints = true, int _thickness = 1) //uses Symmetric Midpoint Line Algorithm
         {
             if (showPoints)
                 wbmp = drawPoints(wbmp);
             if (vertices.Count >= 3)
             {
-                
+                if(fillPattern!=null)
+                {
+                    filledPixels.Clear();
+                    Polygon poly = this;
+                    if (fillPattern != null)
+                    {
+                        PolygonFiller.FillPolygon(ref poly, ref wbmp, fillPattern);
+                    }
+                }
+                else if(fillColor!=Color.Empty)
+                {
+                    filledPixels.Clear();
+                    Polygon poly = this;
+                    PolygonFiller.FillPolygon(ref poly,this.fillColor);
+                    this.filledPixels = poly.filledPixels;
+                    this.fillColor = poly.fillColor;
+                    unsafe
+                    {
+                        foreach(Point pxPt in filledPixels)
+                        {
+                            wbmp.PutPixel(pxPt.X, pxPt.Y, fillColor);
+                        }
+                    }
+                }
+
                 #region OLD_COMMENTED_OUT_CODE_REPLACED_BY_THE_CODE_BELOW_THIS_REGION
                 //    if (_thickness < 1)
                 //    {
@@ -155,6 +204,55 @@ namespace Computer_Graphics_1.Lab3
             if (givenShape == SupportedShapes.Polygon)
                 return true;
             return false;
+        }
+        /// <summary>
+        /// This method checks wheter the instance of the Polygon it is called from is a Convex Polygon (All angles < 180 Degrees).
+        /// This can be useful in determining whethere a Polygon can be used as a ClippingPolygon or not.
+        /// </summary>
+        /// <returns>True if is convex; False if not.</returns>
+        public bool isConvex()
+        {
+            int vertexCount = this.vertices.Count();
+            if (vertexCount < 3)
+                return false; //not even a full polygon.
+            //using vrtx= this.vertices;
+            int prev_zcrossproduct=0;//needed to be initialized, but this value won't be used.
+            for (int i = 0; i < vertexCount; i++) //Check if the sign of cross product of every two consecutive edges is the same as last one.
+            {
+                int dx1 = vertices[i + 1].X - vertices[i].X;
+                int dy1 = vertices[i + 1].Y - vertices[i].Y;
+                int dx2 = vertices[(i + 2) % vertexCount].X - vertices[(i + 1) % vertexCount].X;
+                int dy2 = vertices[(i + 2) % vertexCount].Y - vertices[(i + 1) % vertexCount].Y;
+                int zcrossproduct = dx1 * dy2 - dy1 * dx2;
+                if(i!=0)
+                {
+                    if (zcrossproduct >= 0 && prev_zcrossproduct >= 0)
+                        break;
+                    if (zcrossproduct <= 0 && prev_zcrossproduct <= 0)
+                        break;
+                    return false;
+                }
+                prev_zcrossproduct = zcrossproduct;
+            }
+            return true;
+        }
+
+        private double signedAreaByShoeLaceFormula() //Used for determining clockwise or not. //From: https://stackoverflow.com/a/14506549 
+        {
+            double area = 0;
+            int n = vertices.Count();
+            for (int i = 0; i < n; i++)
+            {
+                int j = (i + 1) % n;
+                area += vertices[i].X * vertices[j].Y;
+                area -= vertices[j].X * vertices[i].Y;
+            }
+            return area / 2;
+        }
+
+        public bool isClockwise() //checks if drawin in clockwise order.
+        {
+            return (signedAreaByShoeLaceFormula() > 0);
         }
     }
 }

@@ -28,9 +28,16 @@ namespace Computer_Graphics_1.Lab3
 
         [XmlIgnore] //it will be populated by drawing again anyway, so no reason to bloat our storage file.
         public List<List<Point>> pixelsDrawnByTwoVertices = new List<List<Point>>(); //Can use this list to draw points instead of calculating again and again in order to save performance btw, but I'm just going to calculate and render everything anew for now because I don't have the time, energy, or incentive to improve this.
+        [XmlIgnore]
+        public List<Point> filledPixels=new List<Point>();
 
         [XmlIgnore]
         public Color color = Color.Black;
+        [XmlIgnore]
+        public Color fillColor = Color.Empty;
+
+        [XmlIgnore]
+        public Bitmap fillPattern = null;
 
         [XmlElement("color")]
         public int colorAsRGB //Surrogate property for XML serialization of Color. There are better ways (not neccessarily for all scenarios): https://stackoverflow.com/questions/3280362/most-elegant-xml-serialization-of-color-structure
@@ -38,6 +45,13 @@ namespace Computer_Graphics_1.Lab3
             get { return color.ToArgb(); }
             set { color = Color.FromArgb(value); }
         }
+        [XmlElement("fillColor")]
+        public int fillColorAsRGB //Surrogate property for XML serialization of Color. There are better ways (not neccessarily for all scenarios): https://stackoverflow.com/questions/3280362/most-elegant-xml-serialization-of-color-structure
+        {
+            get { return fillColor.ToArgb(); }
+            set { fillColor = Color.FromArgb(value); }
+        }
+
         public int thickness = 1;
         //when moving, only change the latest point (via sorting?)?
 
@@ -110,7 +124,8 @@ namespace Computer_Graphics_1.Lab3
                     return new Circle();
                 //break;
                 case SupportedShapes.ClippingPolygon:
-                    return new ClippingPolygon();
+                    //or just throw not supported exception? I haven't realy tried the following expression :P
+                    return new ClippingPolygon(new Polygon());
                 default:
                     throw new ArgumentOutOfRangeException(null);
             }

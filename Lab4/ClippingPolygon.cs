@@ -11,24 +11,31 @@ using System.Windows.Media.Imaging;
 
 namespace Computer_Graphics_1.Lab3
 {
-    public class ClippingPolygon : Shape
+    public class ClippingPolygon : Polygon
     {
-        public override WriteableBitmap draw(WriteableBitmap wbmp, bool showPoints = true, int _thickness = 1)
+        //public override WriteableBitmap draw(WriteableBitmap wbmp, bool showPoints = true, int _thickness = 1)
+        //{
+        //    if (showPoints)
+        //        wbmp = drawPoints(wbmp);
+        //    if (vertices.Count >= 3)
+        //    {
+        //        vertices.Add(vertices.First());
+        //        PolyLine polygonConvertedToLine = new PolyLine();
+        //        polygonConvertedToLine.vertices = vertices;
+        //        polygonConvertedToLine.color = color;
+        //        polygonConvertedToLine.thickness = 1;
+        //        wbmp = polygonConvertedToLine.draw(wbmp, showPoints, 1);
+        //        pixelsDrawnByTwoVertices = polygonConvertedToLine.pixelsDrawnByTwoVertices;
+        //        vertices.RemoveAt(vertices.Count - 1);
+        //    }
+        //    return wbmp;
+        //}
+        public ClippingPolygon(Polygon EquivalentPolygon): base(EquivalentPolygon) 
         {
-            if (showPoints)
-                wbmp = drawPoints(wbmp);
-            if (vertices.Count >= 3)
-            {
-                vertices.Add(vertices.First());
-                PolyLine polygonConvertedToLine = new PolyLine();
-                polygonConvertedToLine.vertices = vertices;
-                polygonConvertedToLine.color = color;
-                polygonConvertedToLine.thickness = 1;
-                wbmp = polygonConvertedToLine.draw(wbmp, showPoints, 1);
-                pixelsDrawnByTwoVertices = polygonConvertedToLine.pixelsDrawnByTwoVertices;
-                vertices.RemoveAt(vertices.Count - 1);
-            }
-            return wbmp;
+            //Can only be created using the Equivalent Polygon representation.
+            //This only has extra methods than that. Probably didn't need this class as a whole but I had misunderstood the task :/.
+            //Well, I understood it in a bit more complicated manner than I had to.
+            //I guess this subject has pros and cons for having experience with Photoshop beforehand :O.
         }
         public override bool isShapeType(SupportedShapes givenShape)
         {
@@ -37,8 +44,18 @@ namespace Computer_Graphics_1.Lab3
             return false;
         }
 
+        public Polygon getClippedPolygon(WriteableBitmap wbmp, Polygon polygonToClip)
+        {
+            Polygon clippedPolygon = new Polygon(polygonToClip);
+            this.clip(wbmp, ref clippedPolygon);
+            return clippedPolygon;
+        }
         public WriteableBitmap clip(WriteableBitmap wbmp, ref Polygon polygonToClip)
         {
+            //this.draw(wbmp); //Somehow the polyygon drawing doesn't work?
+            if (!this.isConvex())
+                throw new Exception("Not convex.");
+            #region old_commented_out_code
             //int newIndex = -1;
             //int newX = -1;
             //int oldY = -1;
@@ -76,19 +93,49 @@ namespace Computer_Graphics_1.Lab3
             //return wbmp; //no changes to it anyway. Wasn't even used!
 
 
-            ///NEWEST:
-            //polygonToClip.vertices = polygonToClip.vertices.OrderBy(x => Math.Atan2(x.X, x.Y)).ToList();
-            float sum = 0;
-            int n = polygonToClip.vertices.Count();
-            for (int i=1;i<n+1;i++)
+            /////NEWEST:
+            ////polygonToClip.vertices = polygonToClip.vertices.OrderBy(x => Math.Atan2(x.X, x.Y)).ToList();
+            //float sum = 0;
+            //int n = polygonToClip.vertices.Count();
+            //for (int i = 1; i < n + 1; i++)
+            //{
+            //    int deltaX = polygonToClip.vertices[i % n].X - polygonToClip.vertices[(i - 1) % n].X;
+            //    int deltay = (polygonToClip.vertices[i % n].Y - wbmp.PixelHeight) - (polygonToClip.vertices[(i - 1) % n].Y - wbmp.PixelHeight);
+            //    sum += deltaX / (float)deltay;
+            //}
+            //if (sum < 0)
+            //    //throw new Exception("Given Polygon is not drawn clockwise!");
+            //    polygonToClip.vertices.Reverse();
+            //// the other polygon is supposed to be clockwise and convex, not this!
+
+
+            //n = this.vertices.Count();
+            //sum=0; //this reset was missing earlier lol.
+            #endregion
+            #region newer_old_commented_out_code
+            //int n = this.vertices.Count();
+            //float sum = 0;
+            //bool wasReversed = false;
+            //for (int i = 0; i < n; i++)
+            //{
+            //    int deltaX = this.vertices[(i+1) % n].X - this.vertices[i].X;
+            //    int deltaY = this.vertices[(i+1) % n].Y - this.vertices[i].Y;
+            //    sum += deltaX / (float)deltaY;
+            //}
+            //if (sum > 0)
+            //{
+            //    this.vertices.Reverse();
+            //    wasReversed = true;
+            //}
+            #endregion
+
+            bool wasReversed = false;
+            if(!this.isClockwise())
             {
-                int deltaX = polygonToClip.vertices[i%n].X - polygonToClip.vertices[(i - 1)%n].X;
-                int deltay = (polygonToClip.vertices[i%n].Y-wbmp.PixelHeight) - (polygonToClip.vertices[(i - 1) % n].Y-wbmp.PixelHeight);
-                sum += deltaX / (float)deltay;
+                this.vertices.Reverse();
+                wasReversed = true;
             }
-            if (sum < 0)
-                //throw new Exception("Given Polygon is not drawn clockwise!");
-                polygonToClip.vertices.Reverse();
+
             this.newClipping(ref polygonToClip);
             foreach (Point pt in polygonToClip.vertices)
             {
@@ -97,6 +144,11 @@ namespace Computer_Graphics_1.Lab3
             }
             //polygonToClip.vertices.Add(polygonToClip.vertices.First());
             //delete in Form1.cs if vertices == 0?
+
+            if(wasReversed)
+            {
+                this.vertices.Reverse();
+            }
             return wbmp;
         }
 
@@ -147,7 +199,7 @@ namespace Computer_Graphics_1.Lab3
         {
             int vertexPosRelativeToClipLine = ((clipEnd.X - clipStart.X) * (vertex.Y - clipStart.Y))
                 - ((clipEnd.Y - clipStart.Y) * (vertex.X - clipStart.X));
-            return vertexPosRelativeToClipLine >0; //<= for Convex?
+            return vertexPosRelativeToClipLine > 0; //<= for Convex?
             //Point v2 = clipEnd;
             //Point v1 = clipStart;
             //Point point = vertex;

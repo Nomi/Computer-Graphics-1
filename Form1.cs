@@ -21,12 +21,14 @@ using Computer_Graphics_1.Lab1;
 using Computer_Graphics_1.Lab1.LabPart;
 using Computer_Graphics_1.Lab2;
 using Computer_Graphics_1.Lab3;
-
+using Computer_Graphics_1.Lab4;
 
 namespace Computer_Graphics_1
 {
     public partial class MainForm : Form
     {
+        private Color selectedFillColor = Color.MediumVioletRed;
+        private Bitmap selectedFillPattern = Computer_Graphics_1.Properties.Resources.chessPatternImperfectCrop;
         private Bitmap ogBitmap = null;
         private WriteableBitmap wBmpToEdit = null;
 
@@ -67,14 +69,19 @@ namespace Computer_Graphics_1
             labsTabControl.SelectedTab = lab3TabPage;
             imagesTabControl.SelectedTab = drawingViewTabPage;
 #endif
-            //labsTabControl.SelectedTab = lab2TabPage;
-            //labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = drawingViewTabPage;
 
-            //foreach (Control cntrl in lab1TabPage.Controls)
-            //{
-            //    cntrl.Enabled = false;
-            //}
-            //ogPictureBox.Image=
+            //selectedFillPictureBox.Image = selectedFillPattern;
+            selectedFillPictureBox.BackColor = selectedFillColor;
+            selectedFillPictureBox.Image = null;
+
+            ////labsTabControl.SelectedTab = lab2TabPage;
+            ////labsTabControl.SelectedTab = lab3TabPage; imagesTabControl.SelectedTab = drawingViewTabPage;
+
+            ////foreach (Control cntrl in lab1TabPage.Controls)
+            ////{
+            ////    cntrl.Enabled = false;
+            ////}
+            ////ogPictureBox.Image=
         }
 
         private void undoAllProcessingMenuItem_Click(object sender, EventArgs e)
@@ -498,16 +505,18 @@ namespace Computer_Graphics_1
 
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);
         }
-#endregion
+        #endregion
 
-#region LAB3-SPECIFIC-REGION
+        #region LAB3-SPECIFIC-REGION
         //Shape shp = new PolyLine();
+        int indexLastSelectedShape = -1;
         private void drawingCanvasPictureBox_Click(object sender, EventArgs e)
         {
 
-            MouseEventArgs mE = (MouseEventArgs) e;
+            MouseEventArgs mE = (MouseEventArgs)e;
+            bool enableClippingButton = false;
 
-            if(drawingEnabled)
+            if (drawingEnabled)
             {
                 resetAllShapes();
                 selectedPointsShapeAndPointIndices = null;
@@ -523,7 +532,7 @@ namespace Computer_Graphics_1
             }
             else
             {
-                if(selectedPointsShapeAndPointIndices==null || Form.ModifierKeys == Keys.Control || emulateHoldControlCheckbox.Checked)
+                if (selectedPointsShapeAndPointIndices == null || Form.ModifierKeys == Keys.Control || emulateHoldControlCheckbox.Checked || emulateHoldingControlAltCheckbox.Checked)
                 {
 #if _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
                     throw new NotImplementedException("Need to implement the selection logic for multiselection, edge selection, and selecting a previous shape in order to change it's color still"); //just got reminded that innerexceptions exist, they're nice. Keep in mind for future, will help somewhere in nested exception-ing.
@@ -549,6 +558,12 @@ namespace Computer_Graphics_1
                                     selectedPointsShapeAndPointIndices = new Tuple<int, List<int>>(i, new List<int>());
                                     drawingCanvasPictureBox.Cursor = Cursors.Hand;
                                 }
+                                else
+                                {
+                                    indexLastSelectedShape = selectedPointsShapeAndPointIndices.Item1;
+                                    selectedPointsShapeAndPointIndices = new Tuple<int, List<int>>(i, new List<int>());
+                                    drawingCanvasPictureBox.Cursor = Cursors.Hand;
+                                }
                                 selectedPointsShapeAndPointIndices.Item2.Add(j);
                                 gotPoint = true;
                                 break;
@@ -557,13 +572,44 @@ namespace Computer_Graphics_1
                         if (gotPoint)
                             break;
                     }
+                    if (gotPoint)
+                    {
 
+                        Shape lastSelectedShape = null;
+                        if(indexLastSelectedShape!=-1)
+                        {
+                            lastSelectedShape = shapes[indexLastSelectedShape];
+                        }
+                        Shape currentSelectedShape = shapes[selectedPointsShapeAndPointIndices.Item1];
+                        if (selectedPointsShapeAndPointIndices == null)
+                        {
+                            lastSelectedShape = null;
+                            indexLastSelectedShape = -1;
+                        }
+                        if (lastSelectedShape != null) //this is dependent on the if above.
+                        {
+                            currentSelectedShape = shapes[selectedPointsShapeAndPointIndices.Item1];
+                            if (lastSelectedShape.isShapeType(SupportedShapes.Polygon) && currentSelectedShape.isShapeType(SupportedShapes.Polygon))
+                            {
+                                if ((currentSelectedShape as Polygon).isConvex())
+                                {
+                                    enableClippingButton = true;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        indexLastSelectedShape = -1;
+                        drawingCanvasPictureBox.Cursor = Cursors.Default;
+                    }
                 }
                 else
                 {
+                    indexLastSelectedShape = -1;
                     resetAllShapes();
                     drawingCanvasPictureBox.Cursor = Cursors.Default;
-                    int i = selectedPointsShapeAndPointIndices.Item1; 
+                    int i = selectedPointsShapeAndPointIndices.Item1;
                     int j = selectedPointsShapeAndPointIndices.Item2[0];
 
                     //we move according to the change in the first clicked point!
@@ -587,6 +633,22 @@ namespace Computer_Graphics_1
                     selectedPointsShapeAndPointIndices = null;
                     drawAllShapes(drawPoints);
                 }
+            }
+
+            enableOrDisableClippingButton(enableClippingButton);
+        }
+
+        private void enableOrDisableClippingButton(bool enableClippingButton)
+        {
+            if (enableClippingButton)
+            {
+                clipButton.Enabled = true;
+                clipButton.ForeColor = Color.Black;
+            }
+            else
+            {
+                clipButton.Enabled = false;
+                clipButton.ForeColor = Color.Gray;
             }
         }
 
@@ -860,49 +922,216 @@ namespace Computer_Graphics_1
         }
 
 
-        bool clippingEnabled = false;
-        Polygon shpToEdit = null;
-        int indxShpToEdit = -1;
-        private void toggleDrawClippingPolygon(object sender, EventArgs e)
+        //bool clippingEnabled = false;
+        //Polygon shpToEdit = null;
+        //int indxShpToEdit = -1;
+        //private void clipPolygons(object sender, EventArgs e)
+        //{
+        //    if(clippingEnabled)
+        //    {
+        //        drawingEnabled = false;
+        //        clippingEnabled = false;
+        //        //might need to disabled clipping again here.
+        //        ClippingPolygon clipper = (ClippingPolygon)shapes.Last();
+        //        if (!clipper.isShapeType(SupportedShapes.ClippingPolygon))
+        //            throw new Exception("lool");
+        //        //clipper.clip(wBmpToEdit, ref shpToEdit);
+        //        //shapes[indxShpToEdit] = shpToEdit;
+        //        shapes.Count();
+        //        WriteableBitmap canvasWbmp = ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)); //probably inefficient.
+        //        Polygon clippedShape = clipper.getClippedPolygon(canvasWbmp, shpToEdit);
+        //        ref Color col = ref clippedShape.color;
+        //        int red = 255 - col.R;
+        //        int green = 255 - col.G;
+        //        int blue = 255 - col.B;
+        //        if (red > 230 && green > 230 && blue > 230)//to avoid having too light pixels on the white background.
+        //        {
+        //            red = 210;
+        //            green = 230;
+        //            blue = 220;
+        //        }
+        //        col = Color.FromArgb(red, green, blue);
+        //        shapes.Add(clippedShape);
+        //        shapes.Count();
+        //        resetAllShapes();
+        //        drawAllShapes(true);
+        //        shapes.Count();
+        //        //shpToEdit = null;
+        //        lineRadioButton.Checked = true;
+        //        //testButton.Text = "Test";
+        //        return;
+        //    }
+        //    //MessageBox here: Select polygon/shape to be clipped first!
+        //    //Actually, the button needs to be disabled unless the correct shape is selected.
+
+        //    //if (drawingEnabled)
+        //    //{
+        //        //toggleDrawingButton_Click(null, null);
+        //    //}
+        //    clippingEnabled = true;
+        //    if (shpToEdit == null)
+        //    {
+        //        shpToEdit = shapes[selectedPointsShapeAndPointIndices.Item1] as Polygon; //try catch to detect invalid shape?
+        //        indxShpToEdit = selectedPointsShapeAndPointIndices.Item1;
+        //    }
+        //    polygonRadioButton.Checked = false;
+        //    lineRadioButton.Checked = false;
+        //    circleRadioButton.Checked = false;
+        //    selectedShapeType = SupportedShapes.ClippingPolygon;
+
+        //    toggleDrawingButton_Click(null, null);
+
+        //    //testButton.Text = "stopTest";
+        //}
+
+        private void test2_Click(object sender, EventArgs e)
         {
-            if(clippingEnabled)
-            {
-                drawingEnabled = false;
-                clippingEnabled = false;
-                //might need to disabled clipping again here.
-                ClippingPolygon clipper = (ClippingPolygon)shapes.Last();
-                if (!clipper.isShapeType(SupportedShapes.ClippingPolygon))
-                    throw new Exception("lool");
-                clipper.clip(wBmpToEdit, ref shpToEdit);
-                shapes[indxShpToEdit] = shpToEdit;
-                resetAllShapes();
-                drawAllShapes(true);
-                shpToEdit = null;
-                lineRadioButton.Checked = true;
-                testButton.Text = "Test";
+            if (selectedPointsShapeAndPointIndices == null)
                 return;
-            }
-            //MessageBox here: Select polygon/shape to be clipped first!
-            //Actually, the button needs to be disabled unless the correct shape is selected.
-
-            //if (drawingEnabled)
+            //Polygon poly = shapes[selectedPointsShapeAndPointIndices.Item1] as Polygon;
+            ////shift to calculate FillPolygon everytime or a similar solution.
+            //PolygonFiller.FillPolygon(ref poly, Color.Red);
+            //WriteableBitmap wb= ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image));
+            //unsafe
             //{
-                //toggleDrawingButton_Click(null, null);
+            //    foreach (Point pix in poly.filledPixels)
+            //    {
+            //            wb.PutPixel(pix.X, pix.Y, poly.fillColor);
+            //    }
             //}
-            clippingEnabled = true;
-            if (shpToEdit == null)
+            //drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wb);
+            //shapes[selectedPointsShapeAndPointIndices.Item1] = poly;
+            resetAllShapes();
+            shapes[selectedPointsShapeAndPointIndices.Item1].fillPattern = Computer_Graphics_1.Properties.Resources._convFilterTest;
+            drawAllShapes(true);
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clipButton_Click(object sender, EventArgs e)
+        {
+            enableOrDisableClippingButton(false);
+
+            Shape lastSelectedShape = shapes[indexLastSelectedShape];
+            Shape currentSelectedShape = shapes[selectedPointsShapeAndPointIndices.Item1];
+
+            //validation is done when clicking\selecting shapes, so no further validation will be here (because the button is enabled only after validation and disabled after failing validation).
+            ClippingPolygon clipper = new ClippingPolygon((Polygon)currentSelectedShape);
+            Polygon toBeClipped = (Polygon)lastSelectedShape; //probably automatically assigned as a reference from my experience so far. That's why the above has "new" to call copy constructor instead.
+
+            WriteableBitmap canvasWbmp = ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)); //might be a little inefficient.
+
+            Polygon clippedShape = clipper.getClippedPolygon(canvasWbmp, toBeClipped);
+
+            clippedShape.color = pseudoClampedInvertColor(clippedShape.color);
+
+            shapes.Add(clippedShape);
+
+            resetAllShapes();
+            drawAllShapes(true);
+
+            lineRadioButton.Checked = true;
+            return;
+        }
+
+        private static Color pseudoClampedInvertColor(Color col)
+        {
+            int red = 255 - col.R;
+            int green = 255 - col.G;
+            int blue = 255 - col.B;
+            if (red > 200 && green > 200 && blue > 200)//to avoid having too light pixels on the white background.
             {
-                shpToEdit = shapes[selectedPointsShapeAndPointIndices.Item1] as Polygon; //try catch to detect invalid shape?
-                indxShpToEdit = selectedPointsShapeAndPointIndices.Item1;
+                red = 200;
+                green = 180;
+                blue = 190;
             }
-            polygonRadioButton.Checked = false;
-            lineRadioButton.Checked = false;
-            circleRadioButton.Checked = false;
-            selectedShapeType = SupportedShapes.ClippingPolygon;
+            return Color.FromArgb(red, green, blue);
+        }
 
-            toggleDrawingButton_Click(null, null);
+        private void selectFillButton_Click(object sender, EventArgs e)
+        {
+            if(fillColorRadioButton.Checked)
+            {
+                if (drawingColorPicker.ShowDialog() == DialogResult.OK)
+                {
+                    selectedFillColor = drawingColorPicker.Color;
+                    selectedFillPictureBox.BackColor = selectedFillColor;
+                }
+                else
+                {
+                    MessageBox.Show("No color selected. Retaining previous color.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
-            testButton.Text = "stopTest";
+            }
+            else if(fillPatternRadioButton.Checked) //could've just used 
+            {
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                    openFileDialog.Filter = "Image files (*.bmp,*.jpg,*.png)|*.bmp;*.jpg;*.png|Bitmap image file (*.bmp)|*.bmp;|All files|*.*";
+                    openFileDialog.FilterIndex = 1;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        selectedFillPattern = new Bitmap(openFileDialog.FileName);
+                        selectedFillPictureBox.Image = selectedFillPattern;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No image selected. Retaining previous image.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        private void fillColorRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (fillColorRadioButton.Checked)
+            {
+                //int width = selectedFillPictureBox.Width;
+                //int height = selectedFillPictureBox.Height;
+                //selectedFillPictureBox.Image = new Bitmap(width,height);
+                selectedFillPictureBox.Image = null;
+                selectedFillPictureBox.BackColor = selectedFillColor;
+            }
+        }
+
+        private void fillPatternRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (fillPatternRadioButton.Checked)
+            {
+                selectedFillPictureBox.Image = selectedFillPattern;
+                selectedFillPictureBox.BackColor = Color.Transparent;
+            }
+        }
+
+        private void fillButton_Click(object sender, EventArgs e)
+        {
+            if (selectedPointsShapeAndPointIndices == null)
+                return;
+
+            resetAllShapes();
+
+            ////testing empty color serialization: //conclusion: it works! No need to worry about serialization of shapes' colors. Well, I don't serialize pattern (I could've used file paths to serialize but I have more important stuff to do right now.)
+            //int col = Color.Empty.ToArgb();
+            //Color cololo = Color.FromArgb(col);
+
+            if (fillColorRadioButton.Checked)
+            {
+                shapes[selectedPointsShapeAndPointIndices.Item1].fillColor = selectedFillColor;
+                shapes[selectedPointsShapeAndPointIndices.Item1].fillPattern = null;
+            }
+            else if (fillPatternRadioButton.Checked)
+            {
+                shapes[selectedPointsShapeAndPointIndices.Item1].fillPattern = selectedFillPattern;
+                shapes[selectedPointsShapeAndPointIndices.Item1].fillColor = Color.Empty;
+            }
+
+            drawAllShapes(true);
         }
 
         //private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)

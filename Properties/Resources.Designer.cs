@@ -63,9 +63,29 @@ namespace Computer_Graphics_1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _convFilterTest {
+            get {
+                object obj = ResourceManager.GetObject("_convFilterTest", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _default {
             get {
                 object obj = ResourceManager.GetObject("default", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap chessPatternImperfectCrop {
+            get {
+                object obj = ResourceManager.GetObject("chessPatternImperfectCrop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

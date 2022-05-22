@@ -97,6 +97,16 @@ namespace Computer_Graphics_1
             this.polygonRadioButton = new System.Windows.Forms.RadioButton();
             this.lineRadioButton = new System.Windows.Forms.RadioButton();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
+            this.fillingGroupBox = new System.Windows.Forms.GroupBox();
+            this.fillButton = new System.Windows.Forms.Button();
+            this.selectFillButton = new System.Windows.Forms.Button();
+            this.selectedFillPictureBox = new System.Windows.Forms.PictureBox();
+            this.selectedFillLabel = new System.Windows.Forms.Label();
+            this.fillPatternRadioButton = new System.Windows.Forms.RadioButton();
+            this.fillColorRadioButton = new System.Windows.Forms.RadioButton();
+            this.clippingGroupBox = new System.Windows.Forms.GroupBox();
+            this.clipButton = new System.Windows.Forms.Button();
+            this.labelClipping = new System.Windows.Forms.Label();
             this.lab5TabPage = new System.Windows.Forms.TabPage();
             this.imagesTabControl = new System.Windows.Forms.TabControl();
             this.comparisontViewTabPage = new System.Windows.Forms.TabPage();
@@ -116,7 +126,6 @@ namespace Computer_Graphics_1
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
-            this.testButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -143,6 +152,9 @@ namespace Computer_Graphics_1
             this.selectThicknessGroupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).BeginInit();
             this.lab4TabPage.SuspendLayout();
+            this.fillingGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).BeginInit();
+            this.clippingGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
@@ -798,9 +810,9 @@ namespace Computer_Graphics_1
             this.l3AccesibilityGroupBox.Controls.Add(this.emulateHoldingControlAltCheckbox);
             this.l3AccesibilityGroupBox.Controls.Add(this.emulateHoldControlCheckbox);
             this.l3AccesibilityGroupBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.l3AccesibilityGroupBox.Location = new System.Drawing.Point(0, 477);
+            this.l3AccesibilityGroupBox.Location = new System.Drawing.Point(0, 468);
             this.l3AccesibilityGroupBox.Name = "l3AccesibilityGroupBox";
-            this.l3AccesibilityGroupBox.Size = new System.Drawing.Size(362, 121);
+            this.l3AccesibilityGroupBox.Size = new System.Drawing.Size(362, 130);
             this.l3AccesibilityGroupBox.TabIndex = 5;
             this.l3AccesibilityGroupBox.TabStop = false;
             this.l3AccesibilityGroupBox.Text = "Accesibility (Work-In-Progress)";
@@ -1069,13 +1081,150 @@ namespace Computer_Graphics_1
             // 
             // lab4TabPage
             // 
-            this.lab4TabPage.Controls.Add(this.testButton);
+            this.lab4TabPage.BackColor = System.Drawing.Color.Yellow;
+            this.lab4TabPage.Controls.Add(this.fillingGroupBox);
+            this.lab4TabPage.Controls.Add(this.clippingGroupBox);
+            this.lab4TabPage.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lab4TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab4TabPage.Name = "lab4TabPage";
             this.lab4TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab4TabPage.TabIndex = 3;
             this.lab4TabPage.Text = "L4";
-            this.lab4TabPage.UseVisualStyleBackColor = true;
+            // 
+            // fillingGroupBox
+            // 
+            this.fillingGroupBox.Controls.Add(this.fillButton);
+            this.fillingGroupBox.Controls.Add(this.selectFillButton);
+            this.fillingGroupBox.Controls.Add(this.selectedFillPictureBox);
+            this.fillingGroupBox.Controls.Add(this.selectedFillLabel);
+            this.fillingGroupBox.Controls.Add(this.fillPatternRadioButton);
+            this.fillingGroupBox.Controls.Add(this.fillColorRadioButton);
+            this.fillingGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.fillingGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fillingGroupBox.Location = new System.Drawing.Point(0, 153);
+            this.fillingGroupBox.Name = "fillingGroupBox";
+            this.fillingGroupBox.Size = new System.Drawing.Size(362, 208);
+            this.fillingGroupBox.TabIndex = 1;
+            this.fillingGroupBox.TabStop = false;
+            this.fillingGroupBox.Text = "Filling";
+            // 
+            // fillButton
+            // 
+            this.fillButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.fillButton.Location = new System.Drawing.Point(3, 142);
+            this.fillButton.MinimumSize = new System.Drawing.Size(0, 50);
+            this.fillButton.Name = "fillButton";
+            this.fillButton.Size = new System.Drawing.Size(356, 50);
+            this.fillButton.TabIndex = 5;
+            this.fillButton.Text = "Fill";
+            this.fillButton.UseVisualStyleBackColor = true;
+            this.fillButton.Click += new System.EventHandler(this.fillButton_Click);
+            // 
+            // selectFillButton
+            // 
+            this.selectFillButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectFillButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectFillButton.Location = new System.Drawing.Point(3, 117);
+            this.selectFillButton.MaximumSize = new System.Drawing.Size(150, 25);
+            this.selectFillButton.MinimumSize = new System.Drawing.Size(150, 25);
+            this.selectFillButton.Name = "selectFillButton";
+            this.selectFillButton.Size = new System.Drawing.Size(150, 25);
+            this.selectFillButton.TabIndex = 4;
+            this.selectFillButton.Text = "Select Fill";
+            this.selectFillButton.UseVisualStyleBackColor = true;
+            this.selectFillButton.Click += new System.EventHandler(this.selectFillButton_Click);
+            // 
+            // selectedFillPictureBox
+            // 
+            this.selectedFillPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.selectedFillPictureBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectedFillPictureBox.InitialImage = null;
+            this.selectedFillPictureBox.Location = new System.Drawing.Point(3, 77);
+            this.selectedFillPictureBox.MaximumSize = new System.Drawing.Size(40, 40);
+            this.selectedFillPictureBox.MinimumSize = new System.Drawing.Size(40, 40);
+            this.selectedFillPictureBox.Name = "selectedFillPictureBox";
+            this.selectedFillPictureBox.Size = new System.Drawing.Size(40, 40);
+            this.selectedFillPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.selectedFillPictureBox.TabIndex = 3;
+            this.selectedFillPictureBox.TabStop = false;
+            // 
+            // selectedFillLabel
+            // 
+            this.selectedFillLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectedFillLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectedFillLabel.Location = new System.Drawing.Point(3, 60);
+            this.selectedFillLabel.Name = "selectedFillLabel";
+            this.selectedFillLabel.Size = new System.Drawing.Size(356, 17);
+            this.selectedFillLabel.TabIndex = 2;
+            this.selectedFillLabel.Text = "Selected Fill:";
+            // 
+            // fillPatternRadioButton
+            // 
+            this.fillPatternRadioButton.AutoSize = true;
+            this.fillPatternRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.fillPatternRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fillPatternRadioButton.Location = new System.Drawing.Point(3, 39);
+            this.fillPatternRadioButton.Name = "fillPatternRadioButton";
+            this.fillPatternRadioButton.Size = new System.Drawing.Size(356, 21);
+            this.fillPatternRadioButton.TabIndex = 1;
+            this.fillPatternRadioButton.Text = "Fill Pattern";
+            this.fillPatternRadioButton.UseVisualStyleBackColor = true;
+            this.fillPatternRadioButton.CheckedChanged += new System.EventHandler(this.fillPatternRadioButton_CheckedChanged);
+            // 
+            // fillColorRadioButton
+            // 
+            this.fillColorRadioButton.AutoSize = true;
+            this.fillColorRadioButton.Checked = true;
+            this.fillColorRadioButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.fillColorRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fillColorRadioButton.Location = new System.Drawing.Point(3, 18);
+            this.fillColorRadioButton.Name = "fillColorRadioButton";
+            this.fillColorRadioButton.Size = new System.Drawing.Size(356, 21);
+            this.fillColorRadioButton.TabIndex = 0;
+            this.fillColorRadioButton.TabStop = true;
+            this.fillColorRadioButton.Text = "Fill Color";
+            this.fillColorRadioButton.UseVisualStyleBackColor = true;
+            this.fillColorRadioButton.CheckedChanged += new System.EventHandler(this.fillColorRadioButton_CheckedChanged);
+            // 
+            // clippingGroupBox
+            // 
+            this.clippingGroupBox.AutoSize = true;
+            this.clippingGroupBox.Controls.Add(this.clipButton);
+            this.clippingGroupBox.Controls.Add(this.labelClipping);
+            this.clippingGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.clippingGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clippingGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.clippingGroupBox.Name = "clippingGroupBox";
+            this.clippingGroupBox.Size = new System.Drawing.Size(362, 153);
+            this.clippingGroupBox.TabIndex = 0;
+            this.clippingGroupBox.TabStop = false;
+            this.clippingGroupBox.Text = "Polygon Clipping";
+            // 
+            // clipButton
+            // 
+            this.clipButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.clipButton.Enabled = false;
+            this.clipButton.ForeColor = System.Drawing.Color.Gray;
+            this.clipButton.Location = new System.Drawing.Point(3, 100);
+            this.clipButton.MinimumSize = new System.Drawing.Size(0, 50);
+            this.clipButton.Name = "clipButton";
+            this.clipButton.Size = new System.Drawing.Size(356, 50);
+            this.clipButton.TabIndex = 1;
+            this.clipButton.Text = "Clip";
+            this.clipButton.UseVisualStyleBackColor = true;
+            this.clipButton.Click += new System.EventHandler(this.clipButton_Click);
+            // 
+            // labelClipping
+            // 
+            this.labelClipping.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelClipping.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelClipping.Location = new System.Drawing.Point(3, 18);
+            this.labelClipping.Name = "labelClipping";
+            this.labelClipping.Size = new System.Drawing.Size(356, 82);
+            this.labelClipping.TabIndex = 0;
+            this.labelClipping.Text = "Clip previously selected against the currently selected:\r\nThe first Polygon is th" +
+    "e one to be clipped.\r\nThe second is the one clipped against.\r\n(The second needs " +
+    "to be a Convex Polygon)";
             // 
             // lab5TabPage
             // 
@@ -1271,17 +1420,6 @@ namespace Computer_Graphics_1
             this.drawingCanvasPictureBox.TabStop = false;
             this.drawingCanvasPictureBox.Click += new System.EventHandler(this.drawingCanvasPictureBox_Click);
             // 
-            // testButton
-            // 
-            this.testButton.BackColor = System.Drawing.Color.DarkRed;
-            this.testButton.Location = new System.Drawing.Point(177, 68);
-            this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(75, 61);
-            this.testButton.TabIndex = 0;
-            this.testButton.Text = "test";
-            this.testButton.UseVisualStyleBackColor = false;
-            this.testButton.Click += new System.EventHandler(this.toggleDrawClippingPolygon);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1334,6 +1472,11 @@ namespace Computer_Graphics_1
             this.selectThicknessGroupbox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).EndInit();
             this.lab4TabPage.ResumeLayout(false);
+            this.lab4TabPage.PerformLayout();
+            this.fillingGroupBox.ResumeLayout(false);
+            this.fillingGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).EndInit();
+            this.clippingGroupBox.ResumeLayout(false);
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
@@ -1433,10 +1576,19 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.GroupBox l3AccesibilityGroupBox;
         private System.Windows.Forms.CheckBox emulateHoldControlCheckbox;
         private System.Windows.Forms.CheckBox emulateHoldingControlAltCheckbox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button testButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox fillingGroupBox;
+        private System.Windows.Forms.GroupBox clippingGroupBox;
+        private System.Windows.Forms.Button clipButton;
+        private System.Windows.Forms.Label labelClipping;
+        private System.Windows.Forms.Button selectFillButton;
+        private System.Windows.Forms.PictureBox selectedFillPictureBox;
+        private System.Windows.Forms.Label selectedFillLabel;
+        private System.Windows.Forms.RadioButton fillPatternRadioButton;
+        private System.Windows.Forms.RadioButton fillColorRadioButton;
+        private System.Windows.Forms.Button fillButton;
     }
 }
 
