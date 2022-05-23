@@ -22,7 +22,7 @@ namespace Computer_Graphics_1.Lab4
                 result = 0;
             return (byte)result;
         }
-        private static Point LowwerY(Point p1, Point p2)
+        private static Point LowerY(Point p1, Point p2)
         {
             if (p1.Y <= p2.Y) return p1;
             return p2;
@@ -43,7 +43,9 @@ namespace Computer_Graphics_1.Lab4
             var P1 = P.OrderBy(p => p.Y).ToList();
             int[] indices = new int[N];
             for (int j = 0; j < N; j++)
-                indices[j] = P.IndexOf(P.Find(x => x == P1[j]));
+                indices[j] = j;
+                //indices[j] = P.IndexOf(P.Find(x => x == P1[j]));
+            indices=indices.OrderBy(indx => P[indx].Y).ToArray();
             int k = 0;
             int i = indices[k];
             int y, ymin, ymax;
@@ -57,7 +59,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[i - 1].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[i - 1], P[i]);
+                            var l = LowerY(P[i - 1], P[i]);
                             var u = UpperY(P[i - 1], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[i - 1].X - P[i].X) / (P[i - 1].Y - P[i].Y)));
                         }
@@ -66,7 +68,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[N - 1].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[N - 1], P[i]);
+                            var l = LowerY(P[N - 1], P[i]);
                             var u = UpperY(P[N - 1], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[N - 1].X - P[i].X) / (P[N - 1].Y - P[i].Y)));
                         }
@@ -75,7 +77,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[i + 1].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[i + 1], P[i]);
+                            var l = LowerY(P[i + 1], P[i]);
                             var u = UpperY(P[i + 1], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[i + 1].X - P[i].X) / (P[i + 1].Y - P[i].Y)));
                         }
@@ -84,7 +86,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[0].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[0], P[i]);
+                            var l = LowerY(P[0], P[i]);
                             var u = UpperY(P[0], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[0].X - P[i].X) / (P[0].Y - P[i].Y)));
                         }
@@ -124,7 +126,9 @@ namespace Computer_Graphics_1.Lab4
             var P1 = P.OrderBy(p => p.Y).ToList();
             int[] indices = new int[N];
             for (int j = 0; j < N; j++)
-                indices[j] = P.IndexOf(P.Find(x => x == P1[j]));
+                indices[j] = j;
+                //indices[j] = P.IndexOf(P.Find(x => x == P1[j]));
+            indices = indices.OrderBy(indx => P[indx].Y).ToArray();
             int k = 0;
             int i = indices[k];
             int y, ymin, ymax, xmin;
@@ -144,7 +148,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[i - 1].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[i - 1], P[i]);
+                            var l = LowerY(P[i - 1], P[i]);
                             var u = UpperY(P[i - 1], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[i - 1].X - P[i].X) / (P[i - 1].Y - P[i].Y)));
                         }
@@ -153,7 +157,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[N - 1].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[N - 1], P[i]);
+                            var l = LowerY(P[N - 1], P[i]);
                             var u = UpperY(P[N - 1], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[N - 1].X - P[i].X) / (P[N - 1].Y - P[i].Y)));
                         }
@@ -162,7 +166,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[i + 1].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[i + 1], P[i]);
+                            var l = LowerY(P[i + 1], P[i]);
                             var u = UpperY(P[i + 1], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[i + 1].X - P[i].X) / (P[i + 1].Y - P[i].Y)));
                         }
@@ -171,7 +175,7 @@ namespace Computer_Graphics_1.Lab4
                     {
                         if (P[0].Y > P[i].Y)
                         {
-                            var l = LowwerY(P[0], P[i]);
+                            var l = LowerY(P[0], P[i]);
                             var u = UpperY(P[0], P[i]);
                             AET.Add((u.Y, l.X, (double)(P[0].X - P[i].X) / (P[0].Y - P[i].Y)));
                         }

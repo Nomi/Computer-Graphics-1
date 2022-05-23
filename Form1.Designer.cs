@@ -97,6 +97,10 @@ namespace Computer_Graphics_1
             this.polygonRadioButton = new System.Windows.Forms.RadioButton();
             this.lineRadioButton = new System.Windows.Forms.RadioButton();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
+            this.boundaryFillGroupBox = new System.Windows.Forms.GroupBox();
+            this.boundaryFill8Button = new System.Windows.Forms.Button();
+            this.boundaryFill4Button = new System.Windows.Forms.Button();
+            this.selectBFBoundaryColor = new System.Windows.Forms.Button();
             this.fillingGroupBox = new System.Windows.Forms.GroupBox();
             this.fillButton = new System.Windows.Forms.Button();
             this.selectFillButton = new System.Windows.Forms.Button();
@@ -126,6 +130,7 @@ namespace Computer_Graphics_1
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
+            this.label6 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -152,6 +157,7 @@ namespace Computer_Graphics_1
             this.selectThicknessGroupbox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).BeginInit();
             this.lab4TabPage.SuspendLayout();
+            this.boundaryFillGroupBox.SuspendLayout();
             this.fillingGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).BeginInit();
             this.clippingGroupBox.SuspendLayout();
@@ -1082,6 +1088,7 @@ namespace Computer_Graphics_1
             // lab4TabPage
             // 
             this.lab4TabPage.BackColor = System.Drawing.Color.Yellow;
+            this.lab4TabPage.Controls.Add(this.boundaryFillGroupBox);
             this.lab4TabPage.Controls.Add(this.fillingGroupBox);
             this.lab4TabPage.Controls.Add(this.clippingGroupBox);
             this.lab4TabPage.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -1090,6 +1097,61 @@ namespace Computer_Graphics_1
             this.lab4TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab4TabPage.TabIndex = 3;
             this.lab4TabPage.Text = "L4";
+            // 
+            // boundaryFillGroupBox
+            // 
+            this.boundaryFillGroupBox.AutoSize = true;
+            this.boundaryFillGroupBox.Controls.Add(this.label6);
+            this.boundaryFillGroupBox.Controls.Add(this.boundaryFill8Button);
+            this.boundaryFillGroupBox.Controls.Add(this.boundaryFill4Button);
+            this.boundaryFillGroupBox.Controls.Add(this.selectBFBoundaryColor);
+            this.boundaryFillGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.boundaryFillGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.boundaryFillGroupBox.Location = new System.Drawing.Point(0, 361);
+            this.boundaryFillGroupBox.Name = "boundaryFillGroupBox";
+            this.boundaryFillGroupBox.Size = new System.Drawing.Size(362, 170);
+            this.boundaryFillGroupBox.TabIndex = 5;
+            this.boundaryFillGroupBox.TabStop = false;
+            this.boundaryFillGroupBox.Text = "Boundary Filling (Lab Part) ";
+            // 
+            // boundaryFill8Button
+            // 
+            this.boundaryFill8Button.AutoSize = true;
+            this.boundaryFill8Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.boundaryFill8Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.boundaryFill8Button.Location = new System.Drawing.Point(3, 72);
+            this.boundaryFill8Button.Name = "boundaryFill8Button";
+            this.boundaryFill8Button.Size = new System.Drawing.Size(356, 27);
+            this.boundaryFill8Button.TabIndex = 6;
+            this.boundaryFill8Button.Text = "Boundary Fill (8-connected variant)";
+            this.boundaryFill8Button.UseVisualStyleBackColor = true;
+            this.boundaryFill8Button.Click += new System.EventHandler(this.boundaryFill8Button_Click);
+            // 
+            // boundaryFill4Button
+            // 
+            this.boundaryFill4Button.AutoSize = true;
+            this.boundaryFill4Button.Dock = System.Windows.Forms.DockStyle.Top;
+            this.boundaryFill4Button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.boundaryFill4Button.Location = new System.Drawing.Point(3, 45);
+            this.boundaryFill4Button.Name = "boundaryFill4Button";
+            this.boundaryFill4Button.Size = new System.Drawing.Size(356, 27);
+            this.boundaryFill4Button.TabIndex = 5;
+            this.boundaryFill4Button.Text = "Boundary Fill (4-connected variant)";
+            this.boundaryFill4Button.UseVisualStyleBackColor = true;
+            this.boundaryFill4Button.Click += new System.EventHandler(this.boundaryFill4Button_Click);
+            // 
+            // selectBFBoundaryColor
+            // 
+            this.selectBFBoundaryColor.AutoSize = true;
+            this.selectBFBoundaryColor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectBFBoundaryColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectBFBoundaryColor.Location = new System.Drawing.Point(3, 18);
+            this.selectBFBoundaryColor.Name = "selectBFBoundaryColor";
+            this.selectBFBoundaryColor.Size = new System.Drawing.Size(356, 27);
+            this.selectBFBoundaryColor.TabIndex = 4;
+            this.selectBFBoundaryColor.Text = "Select Boundary Color";
+            this.selectBFBoundaryColor.UseVisualStyleBackColor = true;
+            this.selectBFBoundaryColor.Click += new System.EventHandler(this.selectBFBoundaryColor_Click);
             // 
             // fillingGroupBox
             // 
@@ -1420,6 +1482,19 @@ namespace Computer_Graphics_1
             this.drawingCanvasPictureBox.TabStop = false;
             this.drawingCanvasPictureBox.Click += new System.EventHandler(this.drawingCanvasPictureBox_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(3, 99);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(298, 68);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Note: in the current version, the Boundary Fill \r\ngets removed after drawing some" +
+    "thing else, \r\nmoving the shape, etc. This isn\'t hard to fix, \r\nbut I\'ll fix it s" +
+    "ome other time.";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1473,6 +1548,8 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.thicknessNumericUpDown)).EndInit();
             this.lab4TabPage.ResumeLayout(false);
             this.lab4TabPage.PerformLayout();
+            this.boundaryFillGroupBox.ResumeLayout(false);
+            this.boundaryFillGroupBox.PerformLayout();
             this.fillingGroupBox.ResumeLayout(false);
             this.fillingGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).EndInit();
@@ -1589,6 +1666,11 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.RadioButton fillPatternRadioButton;
         private System.Windows.Forms.RadioButton fillColorRadioButton;
         private System.Windows.Forms.Button fillButton;
+        private System.Windows.Forms.Button selectBFBoundaryColor;
+        private System.Windows.Forms.GroupBox boundaryFillGroupBox;
+        private System.Windows.Forms.Button boundaryFill8Button;
+        private System.Windows.Forms.Button boundaryFill4Button;
+        private System.Windows.Forms.Label label6;
     }
 }
 

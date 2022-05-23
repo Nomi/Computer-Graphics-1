@@ -43,6 +43,8 @@ namespace Computer_Graphics_1
         bool guptaSproulAntiAliasingEnabled = false;
         bool superSamplingEnabled = false;
         bool drawPoints = true;
+
+        Point lastClickLocation = Point.Empty;
         public static class cnvFilt
         {
             public static bool convFilterParametersSet = false;
@@ -515,7 +517,7 @@ namespace Computer_Graphics_1
 
             MouseEventArgs mE = (MouseEventArgs)e;
             bool enableClippingButton = false;
-
+            lastClickLocation = mE.Location;
             if (drawingEnabled)
             {
                 resetAllShapes();
@@ -1112,7 +1114,10 @@ namespace Computer_Graphics_1
         private void fillButton_Click(object sender, EventArgs e)
         {
             if (selectedPointsShapeAndPointIndices == null)
+            {
+                MessageBox.Show("Select a shape before filling!", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
+            }
 
             resetAllShapes();
 
@@ -1134,6 +1139,64 @@ namespace Computer_Graphics_1
             drawAllShapes(true);
         }
 
+        private void boundaryFill4Button_Click(object sender, EventArgs e)
+        {
+            if (lastClickLocation != Point.Empty && Color.Empty != selectedFillColor)
+            {
+
+                WriteableBitmap canvasWbmp = ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)); //might be a little inefficient.
+
+                BoundaryFiller.BoundaryFill4(canvasWbmp, lastClickLocation.X, lastClickLocation.Y, bfBoundaryColor, selectedFillColor);//selectedShape.color, selectedFillColor);
+
+                drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(canvasWbmp);
+            }
+            else
+            {
+                if (lastClickLocation == Point.Empty)
+                {
+                    MessageBox.Show("Click on the canvas to indicate where to fill first!", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+        }
+
+        private void boundaryFill8Button_Click(object sender, EventArgs e)
+        {
+            if (lastClickLocation != Point.Empty && Color.Empty != selectedFillColor)
+            {
+
+                WriteableBitmap canvasWbmp = ImgUtil.GetWritableBitmapFromBitmap(new Bitmap(drawingCanvasPictureBox.Image)); //might be a little inefficient.
+
+                BoundaryFiller.BoundaryFill8(canvasWbmp, lastClickLocation.X, lastClickLocation.Y, bfBoundaryColor, selectedFillColor);//selectedShape.color, selectedFillColor);
+
+                drawingCanvasPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(canvasWbmp);
+            }
+            else
+            {
+                if (lastClickLocation == Point.Empty)
+                {
+                    MessageBox.Show("Click on the canvas to indicate where to fill first!", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+        }
+
+        Color bfBoundaryColor = Color.Black;
+        private void selectBFBoundaryColor_Click(object sender, EventArgs e)
+        {
+            //resetAllShapes();
+            //drawAllShapes(false);
+            if (drawingColorPicker.ShowDialog() == DialogResult.OK)
+            {
+                bfBoundaryColor = drawingColorPicker.Color;
+            }
+            else
+            {
+                MessageBox.Show("No color selected. Retaining previous color.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        #region old_commented_out_code
         //private void labsTabControl_Selecting(object sender, TabControlCancelEventArgs e)
         //{
         //    if (labsTabControl.SelectedTab == lab3TabPage && imagesTabControl.SelectedTab!=drawingViewTabPage)
@@ -1159,5 +1222,6 @@ namespace Computer_Graphics_1
         //    if (imagesTabControl.SelectedTab == drawingViewTabPage && labsTabControl.SelectedTab == lab3TabPage )
         //        labsTabControl.SelectedTab = lab1TabPage;
         //}
+        #endregion
     }
 }
