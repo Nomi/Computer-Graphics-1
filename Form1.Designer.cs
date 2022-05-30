@@ -98,6 +98,7 @@ namespace Computer_Graphics_1
             this.lineRadioButton = new System.Windows.Forms.RadioButton();
             this.lab4TabPage = new System.Windows.Forms.TabPage();
             this.boundaryFillGroupBox = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.boundaryFill8Button = new System.Windows.Forms.Button();
             this.boundaryFill4Button = new System.Windows.Forms.Button();
             this.selectBFBoundaryColor = new System.Windows.Forms.Button();
@@ -130,7 +131,8 @@ namespace Computer_Graphics_1
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
-            this.label6 = new System.Windows.Forms.Label();
+            this.graphics3DTabPage = new System.Windows.Forms.TabPage();
+            this.graphics3DPictureBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -170,6 +172,8 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).BeginInit();
             this.drawingViewTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).BeginInit();
+            this.graphics3DTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.graphics3DPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -1114,6 +1118,19 @@ namespace Computer_Graphics_1
             this.boundaryFillGroupBox.TabStop = false;
             this.boundaryFillGroupBox.Text = "Boundary Filling (Lab Part) ";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(3, 99);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(298, 68);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Note: in the current version, the Boundary Fill \r\ngets removed after drawing some" +
+    "thing else, \r\nmoving the shape, etc. This isn\'t hard to fix, \r\nbut I\'ll fix it s" +
+    "ome other time.";
+            // 
             // boundaryFill8Button
             // 
             this.boundaryFill8Button.AutoSize = true;
@@ -1290,17 +1307,18 @@ namespace Computer_Graphics_1
             // 
             // lab5TabPage
             // 
+            this.lab5TabPage.BackColor = System.Drawing.Color.Cyan;
             this.lab5TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab5TabPage.Name = "lab5TabPage";
             this.lab5TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab5TabPage.TabIndex = 4;
             this.lab5TabPage.Text = "L5";
-            this.lab5TabPage.UseVisualStyleBackColor = true;
             // 
             // imagesTabControl
             // 
             this.imagesTabControl.Controls.Add(this.comparisontViewTabPage);
             this.imagesTabControl.Controls.Add(this.drawingViewTabPage);
+            this.imagesTabControl.Controls.Add(this.graphics3DTabPage);
             this.imagesTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imagesTabControl.Location = new System.Drawing.Point(6, 6);
             this.imagesTabControl.Name = "imagesTabControl";
@@ -1482,18 +1500,26 @@ namespace Computer_Graphics_1
             this.drawingCanvasPictureBox.TabStop = false;
             this.drawingCanvasPictureBox.Click += new System.EventHandler(this.drawingCanvasPictureBox_Click);
             // 
-            // label6
+            // graphics3DTabPage
             // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(3, 99);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(298, 68);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Note: in the current version, the Boundary Fill \r\ngets removed after drawing some" +
-    "thing else, \r\nmoving the shape, etc. This isn\'t hard to fix, \r\nbut I\'ll fix it s" +
-    "ome other time.";
+            this.graphics3DTabPage.BackColor = System.Drawing.Color.Black;
+            this.graphics3DTabPage.Controls.Add(this.graphics3DPictureBox);
+            this.graphics3DTabPage.Location = new System.Drawing.Point(4, 25);
+            this.graphics3DTabPage.Name = "graphics3DTabPage";
+            this.graphics3DTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.graphics3DTabPage.Size = new System.Drawing.Size(863, 598);
+            this.graphics3DTabPage.TabIndex = 2;
+            this.graphics3DTabPage.Text = "3D Graphics";
+            // 
+            // graphics3DPictureBox
+            // 
+            this.graphics3DPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.graphics3DPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graphics3DPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.graphics3DPictureBox.Name = "graphics3DPictureBox";
+            this.graphics3DPictureBox.Size = new System.Drawing.Size(857, 592);
+            this.graphics3DPictureBox.TabIndex = 0;
+            this.graphics3DPictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -1564,6 +1590,8 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.ogPictureBox)).EndInit();
             this.drawingViewTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).EndInit();
+            this.graphics3DTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.graphics3DPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1671,6 +1699,8 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Button boundaryFill8Button;
         private System.Windows.Forms.Button boundaryFill4Button;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TabPage graphics3DTabPage;
+        private System.Windows.Forms.PictureBox graphics3DPictureBox;
     }
 }
 

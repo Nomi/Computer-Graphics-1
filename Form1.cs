@@ -1,20 +1,9 @@
 ﻿//#define _ENABLE_LAB3_MULTISELECT_EDGESELECT_CHANGEANYSHAPECOLORTHICKNESS
- /*
- * To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
- * Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
- */
- #define Lab3
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Media.Imaging;
+/*
+* To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
+* Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
+*/
+#define Lab3
 using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab1;
@@ -22,6 +11,14 @@ using Computer_Graphics_1.Lab1.LabPart;
 using Computer_Graphics_1.Lab2;
 using Computer_Graphics_1.Lab3;
 using Computer_Graphics_1.Lab4;
+using Computer_Graphics_1.Lab5.LabPart;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 namespace Computer_Graphics_1
 {
@@ -59,14 +56,14 @@ namespace Computer_Graphics_1
 
             setComparisonViewImage(global::Computer_Graphics_1.Properties.Resources._default);
             drawingCanvasPictureBox.Image = DrawFilledRectangle(drawingCanvasPictureBox.Width, drawingCanvasPictureBox.Height);
-            if (ogPictureBox.Image!=null)
+            if (ogPictureBox.Image != null)
             {
                 setApplicationInteractionEnabled(true);
                 zoomToolStripMenuItem_Click(null, null);
             }
 
 #if Lab3
-            if (selectedShapeType==SupportedShapes.Line)
+            if (selectedShapeType == SupportedShapes.Line)
                 lineRadioButton.Checked = true;
             labsTabControl.SelectedTab = lab3TabPage;
             imagesTabControl.SelectedTab = drawingViewTabPage;
@@ -106,9 +103,9 @@ namespace Computer_Graphics_1
         }
 
 
-        private Bitmap DrawFilledRectangle(int x, int y, Brush brush=null)
+        private Bitmap DrawFilledRectangle(int x, int y, Brush brush = null)
         {
-            if(brush==null)
+            if (brush == null)
             {
                 brush = Brushes.White;
             }
@@ -120,11 +117,11 @@ namespace Computer_Graphics_1
             }
             return bmp;
         }
-#region testing if sub regions work!
-#region do they?
+        #region testing if sub regions work!
+        #region do they?
         //Turns out they do!
-#endregion
-#endregion
+        #endregion
+        #endregion
         private void setApplicationInteractionEnabled(bool isEnabled)
         {
             imagesTabControl.Enabled = isEnabled;
@@ -181,7 +178,7 @@ namespace Computer_Graphics_1
         }
 
 
-#region LAB1-SPECIFIC-REGION
+        #region LAB1-SPECIFIC-REGION
         //private void invertFilter_Click(object sender, EventArgs e)
         //{
         //    ////WriteableBitmap writtenImg = new WriteableBitmap(wBmpToEdit);
@@ -215,7 +212,7 @@ namespace Computer_Graphics_1
 
         private void applyConvFiltButton_Click(object sender, EventArgs e)
         {
-            if(cnvFilt.convFilterParametersSet)
+            if (cnvFilt.convFilterParametersSet)
             {
                 int[,] blurConvMat3x3 = new int[3, 3];//[9, 9];
                 for (int i = 0; i < 3; i++)//i<9
@@ -262,7 +259,7 @@ namespace Computer_Graphics_1
             //WriteableBitmap writtenImg = ImageUtil.GetWritableBitmapFromBitmap(new Bitmap(newPictureBox.Image)); //If this is efficient enough, I could just use this and change wBmpToEdit to be "const".
             Lab1.FunctionalFilters.InvertWriteableBitmap(wBmpToEdit);//(writtenImg);
             newPictureBox.Image = ImgUtil.GetBitmapFromWriteableBitmap(wBmpToEdit);//(writtenImg
-            
+
             //TBH, this checkbox should have been a button rather than a checkbox.
         }
 
@@ -412,7 +409,7 @@ namespace Computer_Graphics_1
         {
 
         }
-#endregion
+        #endregion
 
 
         private void saveAsResultpngToolStripMenuItem_Click(object sender, EventArgs e)
@@ -455,7 +452,7 @@ namespace Computer_Graphics_1
             autoSizescrollbarToolStripMenuItem.Checked = false;
         }
 
-#region LAB2-SPECIFIC-REGION
+        #region LAB2-SPECIFIC-REGION
         private void averageDitheringButton_Click(object sender, EventArgs e)
         {
             AverageDithering.apply(wBmpToEdit, (int)colorperchannelNumericUpDown.Value);
@@ -473,7 +470,7 @@ namespace Computer_Graphics_1
 
         private void colorperchannelNumericUpDown_Validating(object sender, CancelEventArgs e)
         {
-            if(colorperchannelNumericUpDown.Value%2!=0)
+            if (colorperchannelNumericUpDown.Value % 2 != 0)
             {
                 colorperchannelNumericUpDown.Value += 1;
             }
@@ -578,7 +575,7 @@ namespace Computer_Graphics_1
                     {
 
                         Shape lastSelectedShape = null;
-                        if(indexLastSelectedShape!=-1)
+                        if (indexLastSelectedShape != -1)
                         {
                             lastSelectedShape = shapes[indexLastSelectedShape];
                         }
@@ -670,7 +667,7 @@ namespace Computer_Graphics_1
                 foreach (Shape shp in shapes)
                 {
                     shp.thickness = shp.thickness * 2;
-                    for (int i=0;i<shp.vertices.Count();i++)
+                    for (int i = 0; i < shp.vertices.Count(); i++)
                     {
                         shp.vertices[i] = new Point(2 * shp.vertices[i].X, 2 * shp.vertices[i].Y);
                     }
@@ -703,21 +700,21 @@ namespace Computer_Graphics_1
 
         private WriteableBitmap downSampling2x(WriteableBitmap upsampledWbmp)//,int scalingFactor=2
         {
-            Size resultSize = new Size(upsampledWbmp.PixelWidth/2, upsampledWbmp.PixelHeight/2);
+            Size resultSize = new Size(upsampledWbmp.PixelWidth / 2, upsampledWbmp.PixelHeight / 2);
             //Bitmap tempBMP = new Bitmap(drawingCanvasPictureBox.Image, resultSize);
-            Bitmap tempBMP = new Bitmap(drawingCanvasPictureBox.Image,resultSize);
+            Bitmap tempBMP = new Bitmap(drawingCanvasPictureBox.Image, resultSize);
 
             WriteableBitmap result = ImgUtil.GetWritableBitmapFromBitmap(tempBMP);
-            for (int r=0;r<upsampledWbmp.PixelHeight;r+=2)
+            for (int r = 0; r < upsampledWbmp.PixelHeight; r += 2)
             {
-                for(int c=0;c<upsampledWbmp.PixelWidth;c+=2)
+                for (int c = 0; c < upsampledWbmp.PixelWidth; c += 2)
                 {
                     unsafe
                     {
                         int redAvg = 0; int blueAvg = 0; int greenAvg = 0;
-                        for(int i=r;i<=r+1;i++)
+                        for (int i = r; i <= r + 1; i++)
                         {
-                            for(int j=c;j<=c+1;j++)
+                            for (int j = c; j <= c + 1; j++)
                             {
                                 _pixel_bgr24_bgra32* ptrPx = (_pixel_bgr24_bgra32*)upsampledWbmp.GetPixelIntPtrAt(i, j);
                                 blueAvg += ptrPx->blue;
@@ -729,7 +726,7 @@ namespace Computer_Graphics_1
                         greenAvg = greenAvg / 4;
                         redAvg = redAvg / 4;
 
-                        _pixel_bgr24_bgra32* ptrResPx = (_pixel_bgr24_bgra32*)result.GetPixelIntPtrAt(r/2,c/2);
+                        _pixel_bgr24_bgra32* ptrResPx = (_pixel_bgr24_bgra32*)result.GetPixelIntPtrAt(r / 2, c / 2);
                         ptrResPx->blue = (byte)blueAvg;
                         ptrResPx->green = (byte)greenAvg;
                         ptrResPx->red = (byte)redAvg;
@@ -766,11 +763,11 @@ namespace Computer_Graphics_1
             //{
             //    toggleDrawClippingPolygon(null, null);
             //}
-            if(drawingEnabled)
+            if (drawingEnabled)
             {
                 Shape shp = Shape.ConstructRequiredShape(selectedShapeType);
                 this.shapes.Add(shp);
-                shapes.Last().thickness = (int)thicknessNumericUpDown.Value ;
+                shapes.Last().thickness = (int)thicknessNumericUpDown.Value;
                 drawingCanvasPictureBox.Cursor = Cursors.Cross;
                 toggleDrawingButton.Text = "Stop Drawing";
             }
@@ -783,7 +780,7 @@ namespace Computer_Graphics_1
 
         private void colorPickerButton_Click(object sender, EventArgs e)
         {
-            if(shapes.Count==0)
+            if (shapes.Count == 0)
             {
                 MessageBox.Show("Start drawing a shape before choosing color.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -822,7 +819,7 @@ namespace Computer_Graphics_1
 
         private void deleteSelectedShapeButton_Click(object sender, EventArgs e)
         {
-            if (selectedPointsShapeAndPointIndices!=null)
+            if (selectedPointsShapeAndPointIndices != null)
             {
                 resetAllShapes();
                 drawingCanvasPictureBox.Cursor = Cursors.Default;
@@ -889,12 +886,17 @@ namespace Computer_Graphics_1
 
         private void labsTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (labsTabControl.SelectedTab == lab3TabPage || labsTabControl.SelectedTab==lab4TabPage) //can add ||s to let other pages behave the same way.
+            if (labsTabControl.SelectedTab == lab3TabPage || labsTabControl.SelectedTab == lab4TabPage) //can add ||s to let other pages behave the same way.
             {
                 if (imagesTabControl.SelectedTab != drawingViewTabPage)
                 {
                     imagesTabControl.SelectedTab = drawingViewTabPage;
                 }
+            }
+            else if(labsTabControl.SelectedTab==lab5TabPage)
+            {
+                if (imagesTabControl.SelectedTab != graphics3DTabPage)
+                    imagesTabControl.SelectedTab = graphics3DTabPage;
             }
             else
             {
@@ -904,18 +906,34 @@ namespace Computer_Graphics_1
                 }
             }
         }
+
+        Cube cub;
+        int angleX = -30;
+        int angleY=0;
         private void imagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(imagesTabControl.SelectedTab==drawingViewTabPage)
+            if (imagesTabControl.SelectedTab == drawingViewTabPage)
             {
-                if(labsTabControl.SelectedTab!=lab3TabPage || labsTabControl.SelectedTab!=lab4TabPage) //can add ||s to let accomadate any other labs that might use the same.
+                if (labsTabControl.SelectedTab != lab3TabPage || labsTabControl.SelectedTab != lab4TabPage) //can add ||s to let accomadate any other labs that might use the same.
                 {
                     labsTabControl.SelectedTab = lab3TabPage;
                 }
             }
+            else if(imagesTabControl.SelectedTab==graphics3DTabPage)
+            {
+                Timer MyTimer = new Timer();
+                MyTimer.Interval = (20); // 45 mins
+                MyTimer.Tick += new EventHandler(drawChanger);
+                MyTimer.Start();
+                cub= new Cube(graphics3DPictureBox);
+                //cub.DrawDiagonalTop2DownLeft2Right();
+                cub.DrawCube(angleX, angleY);
+                if (labsTabControl.SelectedTab != lab5TabPage)
+                    labsTabControl.SelectedTab = lab5TabPage;
+            }
             else
             {
-                if(labsTabControl.SelectedTab==lab3TabPage||labsTabControl.SelectedTab==lab4TabPage) //can add ||s to let accomadate any other labs that might not use the view like lab3TabPage here.
+                if (labsTabControl.SelectedTab == lab3TabPage || labsTabControl.SelectedTab == lab4TabPage) //can add ||s to let accomadate any other labs that might not use the view like lab3TabPage here.
                 {
                     labsTabControl.SelectedTab = lab1TabPage;
                 }
@@ -923,6 +941,11 @@ namespace Computer_Graphics_1
             }
         }
 
+        private void drawChanger(object sender, EventArgs e)
+        {
+            angleY += 2;
+            cub.DrawCube(angleX, angleY);
+        }
 
         //bool clippingEnabled = false;
         //Polygon shpToEdit = null;
@@ -1055,7 +1078,7 @@ namespace Computer_Graphics_1
 
         private void selectFillButton_Click(object sender, EventArgs e)
         {
-            if(fillColorRadioButton.Checked)
+            if (fillColorRadioButton.Checked)
             {
                 if (drawingColorPicker.ShowDialog() == DialogResult.OK)
                 {
@@ -1068,7 +1091,7 @@ namespace Computer_Graphics_1
                 }
 
             }
-            else if(fillPatternRadioButton.Checked) //could've just used 
+            else if (fillPatternRadioButton.Checked) //could've just used 
             {
                 using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {

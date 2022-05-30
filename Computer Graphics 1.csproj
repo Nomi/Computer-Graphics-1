@@ -141,6 +141,9 @@
     <Compile Include="Lab4\BoundaryFiller.cs" />
     <Compile Include="Lab4\ClippingPolygon.cs" />
     <Compile Include="Lab4\PolygonFiller.cs" />
+    <Compile Include="Lab5\PixelRep.cs" />
+    <Compile Include="Lab5\Point3D_AffC.cs" />
+    <Compile Include="Lab5\LabPart\Cube.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Lab1\ConvFiltCustomizer.resx">
@@ -182,6 +185,7 @@
   <ItemGroup>
     <None Include="Resources\chessPatternImperfectCrop.bmp" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Uno.SourceGenerationTasks.4.0.0\build\netstandard1.0\Uno.SourceGenerationTasks.targets" Condition="Exists('packages\Uno.SourceGenerationTasks.4.0.0\build\netstandard1.0\Uno.SourceGenerationTasks.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
