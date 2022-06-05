@@ -113,7 +113,16 @@ namespace Computer_Graphics_1
             this.clipButton = new System.Windows.Forms.Button();
             this.labelClipping = new System.Windows.Forms.Label();
             this.lab5TabPage = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cameraMoveOnZTrackBar = new System.Windows.Forms.TrackBar();
+            this.label10 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rotateAroundYTrackBar = new System.Windows.Forms.TrackBar();
+            this.label8 = new System.Windows.Forms.Label();
+            this.rotateAroundXTrackBar = new System.Windows.Forms.TrackBar();
+            this.label7 = new System.Windows.Forms.Label();
             this.lab5LabPartGroupBox = new System.Windows.Forms.GroupBox();
+            this.resetDrawAndTransformCubeButton = new System.Windows.Forms.Button();
             this.drawAndTransformCubeButton = new System.Windows.Forms.Button();
             this.imagesTabControl = new System.Windows.Forms.TabControl();
             this.comparisontViewTabPage = new System.Windows.Forms.TabPage();
@@ -135,7 +144,6 @@ namespace Computer_Graphics_1
             this.graphics3DTabPage = new System.Windows.Forms.TabPage();
             this.graphics3DPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
-            this.resetDrawAndTransformCubeButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -167,6 +175,11 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).BeginInit();
             this.clippingGroupBox.SuspendLayout();
             this.lab5TabPage.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cameraMoveOnZTrackBar)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rotateAroundYTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rotateAroundXTrackBar)).BeginInit();
             this.lab5LabPartGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
@@ -1313,12 +1326,120 @@ namespace Computer_Graphics_1
             // lab5TabPage
             // 
             this.lab5TabPage.BackColor = System.Drawing.Color.Cyan;
+            this.lab5TabPage.Controls.Add(this.groupBox3);
+            this.lab5TabPage.Controls.Add(this.groupBox2);
             this.lab5TabPage.Controls.Add(this.lab5LabPartGroupBox);
             this.lab5TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab5TabPage.Name = "lab5TabPage";
             this.lab5TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab5TabPage.TabIndex = 4;
             this.lab5TabPage.Text = "L5";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.AutoSize = true;
+            this.groupBox3.Controls.Add(this.cameraMoveOnZTrackBar);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(0, 267);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(362, 94);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Camera Distance (multiplier)";
+            // 
+            // cameraMoveOnZTrackBar
+            // 
+            this.cameraMoveOnZTrackBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cameraMoveOnZTrackBar.LargeChange = 3;
+            this.cameraMoveOnZTrackBar.Location = new System.Drawing.Point(3, 35);
+            this.cameraMoveOnZTrackBar.Maximum = 6;
+            this.cameraMoveOnZTrackBar.Minimum = 1;
+            this.cameraMoveOnZTrackBar.Name = "cameraMoveOnZTrackBar";
+            this.cameraMoveOnZTrackBar.Size = new System.Drawing.Size(356, 56);
+            this.cameraMoveOnZTrackBar.TabIndex = 1;
+            this.cameraMoveOnZTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+            this.cameraMoveOnZTrackBar.Value = 1;
+            this.cameraMoveOnZTrackBar.ValueChanged += new System.EventHandler(this.cameraMoveOnZTrackBar_ValueChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label10.Location = new System.Drawing.Point(3, 18);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(44, 17);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "On Z:";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.AutoSize = true;
+            this.groupBox2.Controls.Add(this.rotateAroundYTrackBar);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.rotateAroundXTrackBar);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(0, 100);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(362, 167);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Sphere Rotation";
+            // 
+            // rotateAroundYTrackBar
+            // 
+            this.rotateAroundYTrackBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rotateAroundYTrackBar.LargeChange = 10;
+            this.rotateAroundYTrackBar.Location = new System.Drawing.Point(3, 108);
+            this.rotateAroundYTrackBar.Maximum = 360;
+            this.rotateAroundYTrackBar.Name = "rotateAroundYTrackBar";
+            this.rotateAroundYTrackBar.Size = new System.Drawing.Size(356, 56);
+            this.rotateAroundYTrackBar.SmallChange = 5;
+            this.rotateAroundYTrackBar.TabIndex = 3;
+            this.rotateAroundYTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.rotateAroundYTrackBar.ValueChanged += new System.EventHandler(this.rotateAroundYTrackBar_ValueChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label8.Location = new System.Drawing.Point(3, 91);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(75, 17);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Around  Y:";
+            // 
+            // rotateAroundXTrackBar
+            // 
+            this.rotateAroundXTrackBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rotateAroundXTrackBar.LargeChange = 10;
+            this.rotateAroundXTrackBar.Location = new System.Drawing.Point(3, 35);
+            this.rotateAroundXTrackBar.Maximum = 360;
+            this.rotateAroundXTrackBar.Name = "rotateAroundXTrackBar";
+            this.rotateAroundXTrackBar.Size = new System.Drawing.Size(356, 56);
+            this.rotateAroundXTrackBar.SmallChange = 5;
+            this.rotateAroundXTrackBar.TabIndex = 1;
+            this.rotateAroundXTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.rotateAroundXTrackBar.ValueChanged += new System.EventHandler(this.rotateAroundXTrackBar_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label7.Location = new System.Drawing.Point(3, 18);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(75, 17);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Around  X:";
             // 
             // lab5LabPartGroupBox
             // 
@@ -1332,6 +1453,21 @@ namespace Computer_Graphics_1
             this.lab5LabPartGroupBox.TabIndex = 0;
             this.lab5LabPartGroupBox.TabStop = false;
             this.lab5LabPartGroupBox.Text = "Lab Part";
+            // 
+            // resetDrawAndTransformCubeButton
+            // 
+            this.resetDrawAndTransformCubeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.resetDrawAndTransformCubeButton.AutoSize = true;
+            this.resetDrawAndTransformCubeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.resetDrawAndTransformCubeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resetDrawAndTransformCubeButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.resetDrawAndTransformCubeButton.Location = new System.Drawing.Point(281, 65);
+            this.resetDrawAndTransformCubeButton.Name = "resetDrawAndTransformCubeButton";
+            this.resetDrawAndTransformCubeButton.Size = new System.Drawing.Size(75, 29);
+            this.resetDrawAndTransformCubeButton.TabIndex = 1;
+            this.resetDrawAndTransformCubeButton.Text = "Reset";
+            this.resetDrawAndTransformCubeButton.UseVisualStyleBackColor = true;
+            this.resetDrawAndTransformCubeButton.Click += new System.EventHandler(this.resetDrawAndTransformCubeButton_Click);
             // 
             // drawAndTransformCubeButton
             // 
@@ -1554,21 +1690,6 @@ namespace Computer_Graphics_1
             this.graphics3DPictureBox.TabIndex = 0;
             this.graphics3DPictureBox.TabStop = false;
             // 
-            // resetDrawAndTransformCubeButton
-            // 
-            this.resetDrawAndTransformCubeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetDrawAndTransformCubeButton.AutoSize = true;
-            this.resetDrawAndTransformCubeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.resetDrawAndTransformCubeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resetDrawAndTransformCubeButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.resetDrawAndTransformCubeButton.Location = new System.Drawing.Point(281, 65);
-            this.resetDrawAndTransformCubeButton.Name = "resetDrawAndTransformCubeButton";
-            this.resetDrawAndTransformCubeButton.Size = new System.Drawing.Size(75, 29);
-            this.resetDrawAndTransformCubeButton.TabIndex = 1;
-            this.resetDrawAndTransformCubeButton.Text = "Reset";
-            this.resetDrawAndTransformCubeButton.UseVisualStyleBackColor = true;
-            this.resetDrawAndTransformCubeButton.Click += new System.EventHandler(this.resetDrawAndTransformCubeButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1629,6 +1750,14 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).EndInit();
             this.clippingGroupBox.ResumeLayout(false);
             this.lab5TabPage.ResumeLayout(false);
+            this.lab5TabPage.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cameraMoveOnZTrackBar)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rotateAroundYTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rotateAroundXTrackBar)).EndInit();
             this.lab5LabPartGroupBox.ResumeLayout(false);
             this.lab5LabPartGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
@@ -1755,6 +1884,14 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.GroupBox lab5LabPartGroupBox;
         private System.Windows.Forms.Button drawAndTransformCubeButton;
         private System.Windows.Forms.Button resetDrawAndTransformCubeButton;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TrackBar rotateAroundXTrackBar;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TrackBar cameraMoveOnZTrackBar;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TrackBar rotateAroundYTrackBar;
+        private System.Windows.Forms.Label label8;
     }
 }
 

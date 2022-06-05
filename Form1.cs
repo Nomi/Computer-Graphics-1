@@ -11,6 +11,7 @@ using Computer_Graphics_1.Lab1.LabPart;
 using Computer_Graphics_1.Lab2;
 using Computer_Graphics_1.Lab3;
 using Computer_Graphics_1.Lab4;
+using Computer_Graphics_1.Lab5;
 using Computer_Graphics_1.Lab5.LabPart;
 using System;
 using System.Collections.Generic;
@@ -924,6 +925,8 @@ namespace Computer_Graphics_1
             {
                 if (labsTabControl.SelectedTab != lab5TabPage)
                     labsTabControl.SelectedTab = lab5TabPage;
+                sph = new Sphere(15, 15, 10,graphics3DPictureBox);
+                sph.Draw();
             }
             else
             {
@@ -1272,15 +1275,35 @@ namespace Computer_Graphics_1
             if(isCubeDrawnAndTransformed)
                 stopDrawTransformCubeAndResetImage();
         }
+
+
         #endregion
-
-
-
 
         #region lab5-HOME-PART
+        Sphere sph;
+        int angleAroundX = 0;
+        int angleAroundY = 0;
 
+        int translateDistanceOnZMultiplier = 0;
 
+        private void rotateAroundXTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            angleAroundX = rotateAroundXTrackBar.Value;
+            sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
+        }
+
+        private void rotateAroundYTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            angleAroundY = rotateAroundYTrackBar.Value;
+            sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
+        }
 
         #endregion
+
+        private void cameraMoveOnZTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            translateDistanceOnZMultiplier = cameraMoveOnZTrackBar.Value;
+            sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
+        }
     }
 }
