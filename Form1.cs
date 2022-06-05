@@ -100,6 +100,11 @@ namespace Computer_Graphics_1
                 if (drawingEnabled)
                     toggleDrawingButton_Click(null, null);
             }
+
+            if(isCubeDrawnAndTransformed)
+            {
+                stopDrawTransformCubeAndResetImage();
+            }
         }
 
 
@@ -906,10 +911,6 @@ namespace Computer_Graphics_1
                 }
             }
         }
-
-        Cube cub;
-        int angleX = -30;
-        int angleY=0;
         private void imagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (imagesTabControl.SelectedTab == drawingViewTabPage)
@@ -921,13 +922,6 @@ namespace Computer_Graphics_1
             }
             else if(imagesTabControl.SelectedTab==graphics3DTabPage)
             {
-                Timer MyTimer = new Timer();
-                MyTimer.Interval = (20); // 45 mins
-                MyTimer.Tick += new EventHandler(drawChanger);
-                MyTimer.Start();
-                cub= new Cube(graphics3DPictureBox);
-                //cub.DrawDiagonalTop2DownLeft2Right();
-                cub.DrawCube(angleX, angleY);
                 if (labsTabControl.SelectedTab != lab5TabPage)
                     labsTabControl.SelectedTab = lab5TabPage;
             }
@@ -939,12 +933,6 @@ namespace Computer_Graphics_1
                 }
 
             }
-        }
-
-        private void drawChanger(object sender, EventArgs e)
-        {
-            angleY += 2;
-            cub.DrawCube(angleX, angleY);
         }
 
         //bool clippingEnabled = false;
@@ -1245,6 +1233,54 @@ namespace Computer_Graphics_1
         //    if (imagesTabControl.SelectedTab == drawingViewTabPage && labsTabControl.SelectedTab == lab3TabPage )
         //        labsTabControl.SelectedTab = lab1TabPage;
         //}
+        #endregion
+
+        #region lab5-LAB-PART
+        Cube cub;
+        int angleX = -30;
+        int angleY = 0;
+        Timer cubeTransformTimer = new Timer();
+        bool isCubeDrawnAndTransformed = false;
+        private void drawAndTransformCubeButton_Click(object sender, EventArgs e)
+        {
+            if (isCubeDrawnAndTransformed)
+                stopDrawTransformCubeAndResetImage();
+            isCubeDrawnAndTransformed = true;
+            cubeTransformTimer.Interval = (20); //Every 20ms
+            cubeTransformTimer.Tick += new EventHandler(transformAndDrawCube);
+            cubeTransformTimer.Start();
+            cub = new Cube(graphics3DPictureBox);
+            //cub.DrawDiagonalTop2DownLeft2Right();
+            cub.DrawCube(angleX, angleY);
+        }
+        private void transformAndDrawCube(object sender, EventArgs e)
+        {
+            angleY += 2;
+            cub.DrawCube(angleX, angleY);
+        }
+
+        private void stopDrawTransformCubeAndResetImage()
+        {
+            cubeTransformTimer.Stop();
+            isCubeDrawnAndTransformed = false;
+            cubeTransformTimer = new Timer();
+            graphics3DPictureBox.Image = null;
+        }
+
+        private void resetDrawAndTransformCubeButton_Click(object sender, EventArgs e)
+        {
+            if(isCubeDrawnAndTransformed)
+                stopDrawTransformCubeAndResetImage();
+        }
+        #endregion
+
+
+
+
+        #region lab5-HOME-PART
+
+
+
         #endregion
     }
 }

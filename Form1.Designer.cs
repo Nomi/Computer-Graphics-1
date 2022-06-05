@@ -113,6 +113,8 @@ namespace Computer_Graphics_1
             this.clipButton = new System.Windows.Forms.Button();
             this.labelClipping = new System.Windows.Forms.Label();
             this.lab5TabPage = new System.Windows.Forms.TabPage();
+            this.lab5LabPartGroupBox = new System.Windows.Forms.GroupBox();
+            this.drawAndTransformCubeButton = new System.Windows.Forms.Button();
             this.imagesTabControl = new System.Windows.Forms.TabControl();
             this.comparisontViewTabPage = new System.Windows.Forms.TabPage();
             this.comparisonTableLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -130,9 +132,10 @@ namespace Computer_Graphics_1
             this.ogPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingViewTabPage = new System.Windows.Forms.TabPage();
             this.drawingCanvasPictureBox = new System.Windows.Forms.PictureBox();
-            this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
             this.graphics3DTabPage = new System.Windows.Forms.TabPage();
             this.graphics3DPictureBox = new System.Windows.Forms.PictureBox();
+            this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
+            this.resetDrawAndTransformCubeButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -163,6 +166,8 @@ namespace Computer_Graphics_1
             this.fillingGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).BeginInit();
             this.clippingGroupBox.SuspendLayout();
+            this.lab5TabPage.SuspendLayout();
+            this.lab5LabPartGroupBox.SuspendLayout();
             this.imagesTabControl.SuspendLayout();
             this.comparisontViewTabPage.SuspendLayout();
             this.comparisonTableLayout.SuspendLayout();
@@ -1308,11 +1313,39 @@ namespace Computer_Graphics_1
             // lab5TabPage
             // 
             this.lab5TabPage.BackColor = System.Drawing.Color.Cyan;
+            this.lab5TabPage.Controls.Add(this.lab5LabPartGroupBox);
             this.lab5TabPage.Location = new System.Drawing.Point(4, 25);
             this.lab5TabPage.Name = "lab5TabPage";
             this.lab5TabPage.Size = new System.Drawing.Size(362, 598);
             this.lab5TabPage.TabIndex = 4;
             this.lab5TabPage.Text = "L5";
+            // 
+            // lab5LabPartGroupBox
+            // 
+            this.lab5LabPartGroupBox.Controls.Add(this.resetDrawAndTransformCubeButton);
+            this.lab5LabPartGroupBox.Controls.Add(this.drawAndTransformCubeButton);
+            this.lab5LabPartGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lab5LabPartGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lab5LabPartGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.lab5LabPartGroupBox.Name = "lab5LabPartGroupBox";
+            this.lab5LabPartGroupBox.Size = new System.Drawing.Size(362, 100);
+            this.lab5LabPartGroupBox.TabIndex = 0;
+            this.lab5LabPartGroupBox.TabStop = false;
+            this.lab5LabPartGroupBox.Text = "Lab Part";
+            // 
+            // drawAndTransformCubeButton
+            // 
+            this.drawAndTransformCubeButton.AutoSize = true;
+            this.drawAndTransformCubeButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.drawAndTransformCubeButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.drawAndTransformCubeButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.drawAndTransformCubeButton.Location = new System.Drawing.Point(3, 18);
+            this.drawAndTransformCubeButton.Name = "drawAndTransformCubeButton";
+            this.drawAndTransformCubeButton.Size = new System.Drawing.Size(356, 27);
+            this.drawAndTransformCubeButton.TabIndex = 0;
+            this.drawAndTransformCubeButton.Text = "Draw and Transform Cube";
+            this.drawAndTransformCubeButton.UseVisualStyleBackColor = true;
+            this.drawAndTransformCubeButton.Click += new System.EventHandler(this.drawAndTransformCubeButton_Click);
             // 
             // imagesTabControl
             // 
@@ -1521,6 +1554,21 @@ namespace Computer_Graphics_1
             this.graphics3DPictureBox.TabIndex = 0;
             this.graphics3DPictureBox.TabStop = false;
             // 
+            // resetDrawAndTransformCubeButton
+            // 
+            this.resetDrawAndTransformCubeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.resetDrawAndTransformCubeButton.AutoSize = true;
+            this.resetDrawAndTransformCubeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.resetDrawAndTransformCubeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resetDrawAndTransformCubeButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.resetDrawAndTransformCubeButton.Location = new System.Drawing.Point(281, 65);
+            this.resetDrawAndTransformCubeButton.Name = "resetDrawAndTransformCubeButton";
+            this.resetDrawAndTransformCubeButton.Size = new System.Drawing.Size(75, 29);
+            this.resetDrawAndTransformCubeButton.TabIndex = 1;
+            this.resetDrawAndTransformCubeButton.Text = "Reset";
+            this.resetDrawAndTransformCubeButton.UseVisualStyleBackColor = true;
+            this.resetDrawAndTransformCubeButton.Click += new System.EventHandler(this.resetDrawAndTransformCubeButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1580,6 +1628,9 @@ namespace Computer_Graphics_1
             this.fillingGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedFillPictureBox)).EndInit();
             this.clippingGroupBox.ResumeLayout(false);
+            this.lab5TabPage.ResumeLayout(false);
+            this.lab5LabPartGroupBox.ResumeLayout(false);
+            this.lab5LabPartGroupBox.PerformLayout();
             this.imagesTabControl.ResumeLayout(false);
             this.comparisontViewTabPage.ResumeLayout(false);
             this.comparisonTableLayout.ResumeLayout(false);
@@ -1701,6 +1752,9 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TabPage graphics3DTabPage;
         private System.Windows.Forms.PictureBox graphics3DPictureBox;
+        private System.Windows.Forms.GroupBox lab5LabPartGroupBox;
+        private System.Windows.Forms.Button drawAndTransformCubeButton;
+        private System.Windows.Forms.Button resetDrawAndTransformCubeButton;
     }
 }
 
