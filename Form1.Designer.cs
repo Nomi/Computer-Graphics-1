@@ -1347,7 +1347,7 @@ namespace Computer_Graphics_1
             this.groupBox3.Size = new System.Drawing.Size(362, 94);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Camera Distance (multiplier)";
+            this.groupBox3.Text = "Sphere Camera Distance (multiplier)";
             // 
             // cameraMoveOnZTrackBar
             // 
