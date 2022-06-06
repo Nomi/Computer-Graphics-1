@@ -141,6 +141,7 @@
     <Compile Include="Lab4\BoundaryFiller.cs" />
     <Compile Include="Lab4\ClippingPolygon.cs" />
     <Compile Include="Lab4\PolygonFiller.cs" />
+    <Compile Include="Lab5\Helpers\Class1.cs" />
     <Compile Include="Lab5\Helpers\PixelRep.cs" />
     <Compile Include="Lab5\Helpers\Point3D_AffC.cs" />
     <Compile Include="Lab5\Helpers\TriangleCoordinates.cs" />

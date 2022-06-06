@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.Threading.Tasks;
 using System.Numerics;
+using Computer_Graphics_1.HelperClasses;
+using Computer_Graphics_1.HelperClasses.Extensions;
 
 namespace Computer_Graphics_1.Lab5
 {
@@ -28,7 +30,7 @@ namespace Computer_Graphics_1.Lab5
         /// <summary>
         /// Sets the vertices list to contain the required vertices for the sphere.
         /// </summary>
-        public void PopulateVertices()
+        public void PopulateVertices(bool enableFill)
         {
             int r = Radius;
             int n = N;
@@ -36,6 +38,8 @@ namespace Computer_Graphics_1.Lab5
             double PI = Math.PI;
 
             this.ClearVertices();
+            vertices = new List<Point3D_AffC>((n*m)+2);
+            //vertices[0] = new Point3D_AffC(0, r, 0);
             vertices.Add(new Point3D_AffC(0, r, 0));
             for (int i = 0; i < N; i++)
             {
@@ -50,6 +54,20 @@ namespace Computer_Graphics_1.Lab5
             }
             //vertices[m * n + 1] = new Point3D_AffC(0, -r, 0);
             vertices.Add(new Point3D_AffC(0, -r, 0));
+
+
+            if (enableFill)
+            {                
+                for(int i=0;i<n;i++)
+                {
+                    for(int j=0;j<m;j++)
+                    {
+                        vertices[i * m + j + 1].textureVector = new Vector2(j / (float)(m - 1), (i + 1) /(float)(n + 1));
+                    }
+                }
+                vertices[0].textureVector = new Vector2((float)0.5, 0); //bottom
+                vertices[m * n + 1].textureVector = new Vector2((float)0.5,1);//top
+            }
 
             //note to self, builder pattern for transformations?
         }
@@ -140,7 +158,9 @@ namespace Computer_Graphics_1.Lab5
                 z /= w;
                 w = 1;
 
-                vertices[i] = new Point3D_AffC(x,y,z,w);
+                Point3D_AffC temp = new Point3D_AffC(x,y,z,w);
+                temp.textureVector = vertices[i].textureVector;
+                vertices[i] = temp;
                 //vertices2D.Add(new Point((int)x, (int)y));
             }
 
@@ -151,17 +171,18 @@ namespace Computer_Graphics_1.Lab5
 
         public void Draw(int angleX = 45, int angleY = 30, int zTranslateMultiplier = 1)
         {
+            bool enableFill = true;
             StartDrawing();
 
 
 
-            PopulateVertices();
+            PopulateVertices(enableFill);
 
             Transform(angleX,angleY, zTranslateMultiplier);
 
             CreateTriangularMesh();
 
-            DrawMesh();
+            DrawMesh(enableFill);
 
 
 
@@ -169,8 +190,21 @@ namespace Computer_Graphics_1.Lab5
             UpdatePictureBox(canvas);
         }
 
-        public void DrawMesh()
+        public unsafe void DrawMesh(bool enableFill)
         {
+            WriteableBitmap texture = null;
+            if (enableFill)
+            {
+                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\Screenshot 2022-06-06 183336.jpg"));
+                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\chessPattern_ImperfectCropjpg.jpg"));
+                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\AiMr7BuljIvpPR04Vd9bB3DdspBhySnQ9hUkPE6q.bmp"));
+                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\redandwhite.png"));
+                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\sample_1280×853.bmp"));
+                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\10644.jpg"));
+                texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources._convFilterTest);
+                //texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources.chessPatternImperfectCrop);
+            }
+
             for (int i = 0; i < TriMesh.Length; i++)
             {
                 TriangleCoordinates t = TriMesh[i];
@@ -185,9 +219,37 @@ namespace Computer_Graphics_1.Lab5
                 Vector3 vec2 = new Vector3((float)(x3 - x1), (float)(y3 - y1), 0);
 
                 Vector3 check = Vector3.Cross(vec1, vec2);
-                if (check.Z > 0)
+                if (check.Z > 0) //Back-face culling
                 {
-                    DrawTriangle(t);
+
+                    if (!enableFill)
+                    {
+                        DrawTriangle(t);
+                    }
+                    else 
+                    {
+                        //DrawTriangle(t);//debug
+
+                        Lab3.Polygon polygon = new Lab3.Polygon();
+                        polygon.AddVertices((int)x1, (int)y1);
+                        polygon.AddVertices((int)x2, (int)y2);
+                        polygon.AddVertices((int)x3, (int)y3);
+                        polygon.fillColor = Color.Blue;
+                        Lab4.PolygonFiller.FillPolygon(ref polygon, Color.Blue);
+                        int xTex = (int)(t.v1.textureVector.X * (texture.PixelWidth-1));
+                        int yTex = (int)(t.v1.textureVector.Y * (texture.PixelHeight-1));
+                        //SolidBrush br = new SolidBrush(polygon.fillColor);
+                        _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)texture.GetPixelIntPtrAt(yTex, xTex);
+                        //if(px->red>px->green&& px->red>px->blue)
+                        //{
+                        //    string lol = "lol";
+                        //}
+                        SolidBrush br = new SolidBrush(Color.FromArgb(px->red, px->green, px->blue));
+                        foreach (Point pt in polygon.filledPixels)
+                        {
+                            graphics.FillRectangle(br, pt.X, pt.Y, 1, 1);
+                        }
+                    }
                 }
             }
         }

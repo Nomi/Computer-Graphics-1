@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,7 +21,11 @@ namespace Computer_Graphics_1.Lab5
         public double Y;
         public double Z;
         public double W = 1; //Anchor/Origin. 1 by default, i.e. we're dealing with normalized coordinates.
-        public Point textureCoordinates = Point.Empty;//Point.Empty==0,0
+
+        //private double r; //radius, get form constructor?
+        //public Tuple<double,double,double,double> n { get => new Tuple<double,double,double,double>(X,Y,Z/,0)}
+
+        public Vector2 textureVector = Vector2.Zero;//Vector2.Zero==0,0 //Basically multiplied with image width and height to get which part of image to use.
         public Point DisplayCoordinates { get => new Point((int)X, (int)Y); } //INTENTIONALLY WRONG RIGHT NOW!
 
         //================= CONSTRUCTORS =================\\

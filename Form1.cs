@@ -1305,7 +1305,7 @@ namespace Computer_Graphics_1
         private void sphereDraw()
         {
             if (sph == null)
-                sph = new Sphere(40, 40, 30, graphics3DPictureBox);
+                sph = new Sphere(200, 200, 30, graphics3DPictureBox);
             sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
         }
 
