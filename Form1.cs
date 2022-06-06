@@ -925,8 +925,7 @@ namespace Computer_Graphics_1
             {
                 if (labsTabControl.SelectedTab != lab5TabPage)
                     labsTabControl.SelectedTab = lab5TabPage;
-                sph = new Sphere(15, 15, 10,graphics3DPictureBox);
-                sph.Draw();
+                sphereDraw();
             }
             else
             {
@@ -1280,30 +1279,118 @@ namespace Computer_Graphics_1
         #endregion
 
         #region lab5-HOME-PART
-        Sphere sph;
+        Sphere sph = null;
         int angleAroundX = 0;
         int angleAroundY = 0;
 
-        int translateDistanceOnZMultiplier = 0;
+        int translateDistanceOnZMultiplier = 1;
 
         private void rotateAroundXTrackBar_ValueChanged(object sender, EventArgs e)
         {
             angleAroundX = rotateAroundXTrackBar.Value;
-            sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
+            sphereDraw();
         }
 
         private void rotateAroundYTrackBar_ValueChanged(object sender, EventArgs e)
         {
             angleAroundY = rotateAroundYTrackBar.Value;
+            sphereDraw();
+        }
+        private void cameraMoveOnZTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            translateDistanceOnZMultiplier = cameraMoveOnZTrackBar.Value;
+            sphereDraw();
+        }
+
+        private void sphereDraw()
+        {
+            if (sph == null)
+                sph = new Sphere(40, 40, 30, graphics3DPictureBox);
             sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
         }
 
         #endregion
-
-        private void cameraMoveOnZTrackBar_ValueChanged(object sender, EventArgs e)
+        private void increaseX(int incrementX = 5)
         {
-            translateDistanceOnZMultiplier = cameraMoveOnZTrackBar.Value;
-            sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
+            //int newValX = 1 + ((rotateAroundXTrackBar.Value + incrementX) % rotateAroundXTrackBar.Maximum); // gives 1 to rotatearoundx max.
+            //rotateAroundXTrackBar.Value = newValX; //might need to edit the above part to use min instead of 1 (even though right now min=1).
+            incrementX = Math.Abs(incrementX);
+            int temp = (rotateAroundXTrackBar.Value + incrementX);
+            if (temp > rotateAroundXTrackBar.Maximum)
+            {
+                temp = rotateAroundXTrackBar.Minimum;
+            }
+            rotateAroundXTrackBar.Value = temp;
+        }
+
+        private void decreaseX(int decrementX = 5)
+        {
+            decrementX = Math.Abs(decrementX);
+            int temp = (rotateAroundXTrackBar.Value - decrementX);
+            if (temp < rotateAroundXTrackBar.Minimum)
+            {
+                temp = rotateAroundXTrackBar.Maximum;
+            }
+            rotateAroundXTrackBar.Value = temp;
+        }
+
+        private void increaseY(int incrementY = 5)
+        {
+            incrementY = Math.Abs(incrementY);
+            int temp = (rotateAroundYTrackBar.Value + incrementY);
+            if (temp > rotateAroundYTrackBar.Maximum)
+            {
+                temp = rotateAroundYTrackBar.Minimum;
+            }
+            rotateAroundYTrackBar.Value = temp;
+        }
+
+        private void decreaseY(int decrementY = 5)
+        {
+            decrementY = Math.Abs(decrementY);
+            int temp = (rotateAroundYTrackBar.Value - decrementY);
+            if (temp < rotateAroundYTrackBar.Minimum)
+            {
+                temp = rotateAroundYTrackBar.Maximum;
+            }
+            rotateAroundYTrackBar.Value = temp;
+        }
+        private void graphics3DPictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                case Keys.Up:
+                    increaseX();
+                    break;
+                case Keys.Down:
+                    decreaseX();
+                    break;
+                case Keys.Left:
+                    decreaseY();
+                    break;
+                case Keys.Right:
+                    increaseY();
+                    break;
+                case Keys.Subtract:
+                    int incrZ = 1;
+                    int moveCamAway = cameraMoveOnZTrackBar.Value + incrZ;
+                    cameraMoveOnZTrackBar.Value = MathUtil.Clamp(moveCamAway, cameraMoveOnZTrackBar.Minimum, cameraMoveOnZTrackBar.Maximum);
+                    break;
+                case Keys.Add:
+                    int decrZ = 1;
+                    int moveCamCloser = cameraMoveOnZTrackBar.Value - decrZ;
+                    cameraMoveOnZTrackBar.Value = MathUtil.Clamp(moveCamCloser, cameraMoveOnZTrackBar.Minimum, cameraMoveOnZTrackBar.Maximum);
+                    break;
+            }
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void graphics3DPictureBox_Click(object sender, EventArgs e)
+        {
+            graphics3DPictureBox.Focus();
         }
     }
 }

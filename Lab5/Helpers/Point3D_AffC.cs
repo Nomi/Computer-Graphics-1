@@ -20,6 +20,7 @@ namespace Computer_Graphics_1.Lab5
         public double Y;
         public double Z;
         public double W = 1; //Anchor/Origin. 1 by default, i.e. we're dealing with normalized coordinates.
+        public Point textureCoordinates = Point.Empty;//Point.Empty==0,0
         public Point DisplayCoordinates { get => new Point((int)X, (int)Y); } //INTENTIONALLY WRONG RIGHT NOW!
 
         //================= CONSTRUCTORS =================\\

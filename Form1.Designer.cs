@@ -1347,7 +1347,7 @@ namespace Computer_Graphics_1
             this.groupBox3.Size = new System.Drawing.Size(362, 94);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Sphere Camera Distance (multiplier)";
+            this.groupBox3.Text = "Move Camera (POV)";
             // 
             // cameraMoveOnZTrackBar
             // 
@@ -1689,6 +1689,8 @@ namespace Computer_Graphics_1
             this.graphics3DPictureBox.Size = new System.Drawing.Size(857, 592);
             this.graphics3DPictureBox.TabIndex = 0;
             this.graphics3DPictureBox.TabStop = false;
+            this.graphics3DPictureBox.Click += new System.EventHandler(this.graphics3DPictureBox_Click);
+            this.graphics3DPictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.graphics3DPictureBox_PreviewKeyDown);
             // 
             // MainForm
             // 
@@ -1702,6 +1704,7 @@ namespace Computer_Graphics_1
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "A Dobby PhotoJob";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.mainTableLayoutPanel.ResumeLayout(false);

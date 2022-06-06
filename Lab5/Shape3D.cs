@@ -19,7 +19,7 @@ namespace Computer_Graphics_1.Lab5
         //Useful only for some of the methods.
         protected Bitmap canvas;
         protected Graphics graphics;
-        protected Pen pen = new Pen(Color.Red, 4);
+        protected Pen pen = new Pen(Color.Red, 1);
 
 
         public Shape3D(PictureBox targetPictureBox)

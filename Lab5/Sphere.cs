@@ -41,9 +41,9 @@ namespace Computer_Graphics_1.Lab5
             {
                 for (int j = 0; j < M; j++)
                 {
-                    int a = (int)(r * Math.Cos(2 * PI * j / m) * Math.Sin(PI * (i + 1) / (n + 1)));
-                    int b = (int)(r * Math.Cos(PI * (i + 1) / (n + 1)));
-                    int c = (int)(r * Math.Sin(2 * PI * j / m) * Math.Sin(PI * (i + 1) / (n + 1)));
+                    double a = (r * Math.Cos(2 * PI * j / m) * Math.Sin(PI * (i + 1) / (n + 1)));
+                    double b = (r * Math.Cos(PI * (i + 1) / (n + 1)));
+                    double c = (r * Math.Sin(2 * PI * j / m) * Math.Sin(PI * (i + 1) / (n + 1)));
                     //vertices[i * m + j + 1] = new Point3D_AffC(a, b, c);
                     vertices.Add(new Point3D_AffC(a, b, c));
                 }
@@ -140,7 +140,7 @@ namespace Computer_Graphics_1.Lab5
                 z /= w;
                 w = 1;
 
-                vertices[i] = new Point3D_AffC((int)x, (int)y,(int)z,(int)w);
+                vertices[i] = new Point3D_AffC(x,y,z,w);
                 //vertices2D.Add(new Point((int)x, (int)y));
             }
 
