@@ -214,6 +214,102 @@ namespace Computer_Graphics_1.Lab4
 
 
 
+        public static unsafe void FillTriangleWithImgSection(ref Polygon poly, ref WriteableBitmap wbmp, Bitmap pattern)
+        {
+            poly.fillPattern = pattern;
+            List<Point> vertices = poly.vertices;
+            int N = vertices.Count();
+            List<(int, double, double)> AET = new List<(int, double, double)>();
+            var P = vertices;
+            var P1 = P.OrderBy(p => p.Y).ToList();
+            int[] indices = new int[N];
+            for (int j = 0; j < N; j++)
+                indices[j] = j;
+            //indices[j] = P.IndexOf(P.Find(x => x == P1[j]));
+            indices = indices.OrderBy(indx => P[indx].Y).ToArray();
+            int k = 0;
+            int i = indices[k];
+            int y, ymin, ymax, xmin;
+            y = ymin = P[indices[0]].Y;
+            ymax = P[indices[N - 1]].Y;
+            xmin = P.OrderBy(p => p.X).First().X;
+
+            BitmapData bData = pattern.LockBits(new System.Drawing.Rectangle(0, 0, (int)pattern.Width, (int)pattern.Height), ImageLockMode.ReadOnly, pattern.PixelFormat);
+            byte* scan0 = (byte*)bData.Scan0.ToPointer();
+            byte bitsPerPixel = (byte)(Image.GetPixelFormatSize(bData.PixelFormat));
+
+            while (y < ymax)
+            {
+                while (P[i].Y == y)
+                {
+                    if (i > 0)
+                    {
+                        if (P[i - 1].Y > P[i].Y)
+                        {
+                            var l = LowerY(P[i - 1], P[i]);
+                            var u = UpperY(P[i - 1], P[i]);
+                            AET.Add((u.Y, l.X, (double)(P[i - 1].X - P[i].X) / (P[i - 1].Y - P[i].Y)));
+                        }
+                    }
+                    else
+                    {
+                        if (P[N - 1].Y > P[i].Y)
+                        {
+                            var l = LowerY(P[N - 1], P[i]);
+                            var u = UpperY(P[N - 1], P[i]);
+                            AET.Add((u.Y, l.X, (double)(P[N - 1].X - P[i].X) / (P[N - 1].Y - P[i].Y)));
+                        }
+                    }
+                    if (i < N - 1)
+                    {
+                        if (P[i + 1].Y > P[i].Y)
+                        {
+                            var l = LowerY(P[i + 1], P[i]);
+                            var u = UpperY(P[i + 1], P[i]);
+                            AET.Add((u.Y, l.X, (double)(P[i + 1].X - P[i].X) / (P[i + 1].Y - P[i].Y)));
+                        }
+                    }
+                    else
+                    {
+                        if (P[0].Y > P[i].Y)
+                        {
+                            var l = LowerY(P[0], P[i]);
+                            var u = UpperY(P[0], P[i]);
+                            AET.Add((u.Y, l.X, (double)(P[0].X - P[i].X) / (P[0].Y - P[i].Y)));
+                        }
+                    }
+                    ++k;
+                    i = indices[k];
+                }
+                //sort AET by x value
+                AET = AET.OrderBy(item => item.Item2).ToList();
+                //fill pixels between pairs of intersections
+                unsafe
+                {
+                    for (int j = 0; j < AET.Count; j += 2)
+                    {
+                        if (j + 1 < AET.Count)
+                        {
+                            for (int x = (int)AET[j].Item2; x <= (int)AET[j + 1].Item2; x++)
+                            {
+                                Color colCurrentPixel;
+                                byte* tmp = scan0 + ((y - ymin) % bData.Height) * bData.Stride + ((x - xmin) % bData.Width) * bitsPerPixel / 8;
+                                colCurrentPixel = Color.FromArgb(tmp[2], tmp[1], tmp[0]);
+                                wbmp.PutPixel(x, y, colCurrentPixel);
+                            }
+                        }
+                    }
+                }
+                ++y;
+                //remove from AET edges for which ymax = y
+                AET.RemoveAll(x => x.Item1 == y);
+
+                for (int j = 0; j < AET.Count; j++)
+                    AET[j] = (AET[j].Item1, AET[j].Item2 + AET[j].Item3, AET[j].Item3);
+            }
+            pattern.UnlockBits(bData);
+        }
+
 
     }
 }

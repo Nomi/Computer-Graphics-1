@@ -246,8 +246,8 @@ namespace Computer_Graphics_1.Lab5
                         polygon.AddVertices((int)x2, (int)y2);
                         polygon.AddVertices((int)x3, (int)y3);
                         polygon.fillColor = currFillColor;
-                        Lab4.PolygonFiller.FillPolygon(ref polygon, currFillColor);
 
+                        Lab4.PolygonFiller.FillPolygon(ref polygon, currFillColor);
                         //SolidBrush br = new SolidBrush(polygon.fillColor);
                         foreach (Point pt in polygon.filledPixels)
                         {
