@@ -1304,12 +1304,14 @@ namespace Computer_Graphics_1
 
         private void sphereDraw()
         {
+            int n = 30; //200;
+            int m = 30; //200;
+            int radius = 50;//20;//30;
             if (sph == null)
-                sph = new Sphere(200, 200, 30, graphics3DPictureBox);
+                sph = new Sphere(n, m, radius, graphics3DPictureBox);
             sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
         }
 
-        #endregion
         private void increaseX(int incrementX = 5)
         {
             //int newValX = 1 + ((rotateAroundXTrackBar.Value + incrementX) % rotateAroundXTrackBar.Maximum); // gives 1 to rotatearoundx max.
@@ -1357,7 +1359,7 @@ namespace Computer_Graphics_1
         }
         private void graphics3DPictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            switch(e.KeyCode)
+            switch (e.KeyCode)
             {
                 case Keys.Up:
                     increaseX();
@@ -1384,13 +1386,53 @@ namespace Computer_Graphics_1
             }
         }
 
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
         private void graphics3DPictureBox_Click(object sender, EventArgs e)
         {
             graphics3DPictureBox.Focus();
+        }
+
+        private void selectTextureImageButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                openFileDialog.Filter = "Image files (*.bmp,*.jpg,*.png)|*.bmp;*.jpg;*.png|Bitmap image file (*.bmp)|*.bmp;|All files|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Bitmap bmp = new Bitmap(openFileDialog.FileName);
+                    sph.texture = ImgUtil.GetWritableBitmapFromBitmap(bmp);
+                    selectedTexturePictureBox.Image = bmp;
+                    sphereDraw();
+                }
+                else
+                {
+                    MessageBox.Show("No image selected. No changes made.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void loadTestTextureButton_Click(object sender, EventArgs e)
+        {
+            Bitmap bmp = Properties.Resources._convFilterTest;
+            sph.texture = ImgUtil.GetWritableBitmapFromBitmap(bmp);
+            selectedTexturePictureBox.Image = bmp;
+            sphereDraw();
+        }
+
+        private void removeTextureButton_Click(object sender, EventArgs e)
+        {
+            sph.texture = null;
+            selectedTexturePictureBox.Image = null;
+            sphereDraw();
+        }
+        #endregion
+
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
         }
     }
 }

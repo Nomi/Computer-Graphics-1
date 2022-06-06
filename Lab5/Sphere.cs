@@ -18,6 +18,8 @@ namespace Computer_Graphics_1.Lab5
 
         public TriangleCoordinates[] TriMesh = null;
 
+        public WriteableBitmap texture = null;
+
         public Sphere(int n, int m, int r, PictureBox targetPictureBox): base(targetPictureBox)
         {
             N = n;
@@ -30,7 +32,7 @@ namespace Computer_Graphics_1.Lab5
         /// <summary>
         /// Sets the vertices list to contain the required vertices for the sphere.
         /// </summary>
-        public void PopulateVertices(bool enableFill)
+        public void PopulateVertices()
         {
             int r = Radius;
             int n = N;
@@ -56,7 +58,7 @@ namespace Computer_Graphics_1.Lab5
             vertices.Add(new Point3D_AffC(0, -r, 0));
 
 
-            if (enableFill)
+            if (texture!=null)
             {                
                 for(int i=0;i<n;i++)
                 {
@@ -176,13 +178,13 @@ namespace Computer_Graphics_1.Lab5
 
 
 
-            PopulateVertices(enableFill);
+            PopulateVertices();
 
             Transform(angleX,angleY, zTranslateMultiplier);
 
             CreateTriangularMesh();
 
-            DrawMesh(enableFill);
+            DrawMesh();
 
 
 
@@ -190,20 +192,19 @@ namespace Computer_Graphics_1.Lab5
             UpdatePictureBox(canvas);
         }
 
-        public unsafe void DrawMesh(bool enableFill)
+        public unsafe void DrawMesh()
         {
-            WriteableBitmap texture = null;
-            if (enableFill)
-            {
-                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\Screenshot 2022-06-06 183336.jpg"));
-                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\chessPattern_ImperfectCropjpg.jpg"));
-                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\AiMr7BuljIvpPR04Vd9bB3DdspBhySnQ9hUkPE6q.bmp"));
-                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\redandwhite.png"));
-                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\sample_1280×853.bmp"));
-                ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\10644.jpg"));
-                texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources._convFilterTest);
-                //texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources.chessPatternImperfectCrop);
-            }
+            //if (enableFill)
+            //{
+            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\Screenshot 2022-06-06 183336.jpg"));
+            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\chessPattern_ImperfectCropjpg.jpg"));
+            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\AiMr7BuljIvpPR04Vd9bB3DdspBhySnQ9hUkPE6q.bmp"));
+            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\redandwhite.png"));
+            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\sample_1280×853.bmp"));
+            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\10644.jpg"));
+            //    //texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources._convFilterTest);
+            //    //texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources.chessPatternImperfectCrop);
+            //}
 
             for (int i = 0; i < TriMesh.Length; i++)
             {
@@ -222,33 +223,38 @@ namespace Computer_Graphics_1.Lab5
                 if (check.Z > 0) //Back-face culling
                 {
 
-                    if (!enableFill)
+                    if (texture == null)
                     {
                         DrawTriangle(t);
                     }
                     else 
                     {
-                        //DrawTriangle(t);//debug
+                        ////DrawTriangle(t);//debug
+
+                        int xTex = (int)(t.v1.textureVector.X * (texture.PixelWidth - 1));
+                        int yTex = (int)(t.v1.textureVector.Y * (texture.PixelHeight - 1));
+                        _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)texture.GetPixelIntPtrAt(yTex, xTex);
+
+
+                        Color currFillColor = Color.FromArgb(px->red, px->green, px->blue);
+                        //currFillColor=Color.Blue;
+
+                        SolidBrush br = new SolidBrush(currFillColor);
 
                         Lab3.Polygon polygon = new Lab3.Polygon();
                         polygon.AddVertices((int)x1, (int)y1);
                         polygon.AddVertices((int)x2, (int)y2);
                         polygon.AddVertices((int)x3, (int)y3);
-                        polygon.fillColor = Color.Blue;
-                        Lab4.PolygonFiller.FillPolygon(ref polygon, Color.Blue);
-                        int xTex = (int)(t.v1.textureVector.X * (texture.PixelWidth-1));
-                        int yTex = (int)(t.v1.textureVector.Y * (texture.PixelHeight-1));
+                        polygon.fillColor = currFillColor;
+                        Lab4.PolygonFiller.FillPolygon(ref polygon, currFillColor);
+
                         //SolidBrush br = new SolidBrush(polygon.fillColor);
-                        _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)texture.GetPixelIntPtrAt(yTex, xTex);
-                        //if(px->red>px->green&& px->red>px->blue)
-                        //{
-                        //    string lol = "lol";
-                        //}
-                        SolidBrush br = new SolidBrush(Color.FromArgb(px->red, px->green, px->blue));
                         foreach (Point pt in polygon.filledPixels)
                         {
                             graphics.FillRectangle(br, pt.X, pt.Y, 1, 1);
                         }
+
+                        //DrawTriangle(t);//debug
                     }
                 }
             }

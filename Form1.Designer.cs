@@ -144,6 +144,12 @@ namespace Computer_Graphics_1
             this.graphics3DTabPage = new System.Windows.Forms.TabPage();
             this.graphics3DPictureBox = new System.Windows.Forms.PictureBox();
             this.drawingColorPicker = new System.Windows.Forms.ColorDialog();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.selectTextureImageButton = new System.Windows.Forms.Button();
+            this.selectedTexturePictureBox = new System.Windows.Forms.PictureBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.loadTestTextureButton = new System.Windows.Forms.Button();
+            this.removeTextureButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.labsTabControl.SuspendLayout();
@@ -192,6 +198,8 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).BeginInit();
             this.graphics3DTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graphics3DPictureBox)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedTexturePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -1326,6 +1334,9 @@ namespace Computer_Graphics_1
             // lab5TabPage
             // 
             this.lab5TabPage.BackColor = System.Drawing.Color.Cyan;
+            this.lab5TabPage.Controls.Add(this.removeTextureButton);
+            this.lab5TabPage.Controls.Add(this.loadTestTextureButton);
+            this.lab5TabPage.Controls.Add(this.groupBox4);
             this.lab5TabPage.Controls.Add(this.groupBox3);
             this.lab5TabPage.Controls.Add(this.groupBox2);
             this.lab5TabPage.Controls.Add(this.lab5LabPartGroupBox);
@@ -1418,6 +1429,7 @@ namespace Computer_Graphics_1
             // 
             // rotateAroundXTrackBar
             // 
+            this.rotateAroundXTrackBar.BackColor = System.Drawing.Color.Cyan;
             this.rotateAroundXTrackBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.rotateAroundXTrackBar.LargeChange = 10;
             this.rotateAroundXTrackBar.Location = new System.Drawing.Point(3, 35);
@@ -1692,6 +1704,84 @@ namespace Computer_Graphics_1
             this.graphics3DPictureBox.Click += new System.EventHandler(this.graphics3DPictureBox_Click);
             this.graphics3DPictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.graphics3DPictureBox_PreviewKeyDown);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.AutoSize = true;
+            this.groupBox4.Controls.Add(this.selectTextureImageButton);
+            this.groupBox4.Controls.Add(this.selectedTexturePictureBox);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox4.Location = new System.Drawing.Point(0, 361);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(362, 103);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Sphere Texture";
+            // 
+            // selectTextureImageButton
+            // 
+            this.selectTextureImageButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectTextureImageButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.selectTextureImageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectTextureImageButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.selectTextureImageButton.Location = new System.Drawing.Point(3, 75);
+            this.selectTextureImageButton.Name = "selectTextureImageButton";
+            this.selectTextureImageButton.Size = new System.Drawing.Size(356, 25);
+            this.selectTextureImageButton.TabIndex = 8;
+            this.selectTextureImageButton.Text = "Select Texture Image";
+            this.selectTextureImageButton.UseVisualStyleBackColor = true;
+            this.selectTextureImageButton.Click += new System.EventHandler(this.selectTextureImageButton_Click);
+            // 
+            // selectedTexturePictureBox
+            // 
+            this.selectedTexturePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.selectedTexturePictureBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.selectedTexturePictureBox.InitialImage = null;
+            this.selectedTexturePictureBox.Location = new System.Drawing.Point(3, 35);
+            this.selectedTexturePictureBox.MaximumSize = new System.Drawing.Size(40, 40);
+            this.selectedTexturePictureBox.MinimumSize = new System.Drawing.Size(40, 40);
+            this.selectedTexturePictureBox.Name = "selectedTexturePictureBox";
+            this.selectedTexturePictureBox.Size = new System.Drawing.Size(40, 40);
+            this.selectedTexturePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.selectedTexturePictureBox.TabIndex = 7;
+            this.selectedTexturePictureBox.TabStop = false;
+            // 
+            // label9
+            // 
+            this.label9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label9.Location = new System.Drawing.Point(3, 18);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(356, 17);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "Selected Texture:";
+            // 
+            // loadTestTextureButton
+            // 
+            this.loadTestTextureButton.AutoSize = true;
+            this.loadTestTextureButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.loadTestTextureButton.Location = new System.Drawing.Point(142, 513);
+            this.loadTestTextureButton.Name = "loadTestTextureButton";
+            this.loadTestTextureButton.Size = new System.Drawing.Size(134, 27);
+            this.loadTestTextureButton.TabIndex = 4;
+            this.loadTestTextureButton.Text = "Load Test Texture";
+            this.loadTestTextureButton.UseVisualStyleBackColor = true;
+            this.loadTestTextureButton.Click += new System.EventHandler(this.loadTestTextureButton_Click);
+            // 
+            // removeTextureButton
+            // 
+            this.removeTextureButton.AutoSize = true;
+            this.removeTextureButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.removeTextureButton.Location = new System.Drawing.Point(142, 557);
+            this.removeTextureButton.Name = "removeTextureButton";
+            this.removeTextureButton.Size = new System.Drawing.Size(134, 27);
+            this.removeTextureButton.TabIndex = 5;
+            this.removeTextureButton.Text = "Remove Texture";
+            this.removeTextureButton.UseVisualStyleBackColor = true;
+            this.removeTextureButton.Click += new System.EventHandler(this.removeTextureButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1775,6 +1865,8 @@ namespace Computer_Graphics_1
             ((System.ComponentModel.ISupportInitialize)(this.drawingCanvasPictureBox)).EndInit();
             this.graphics3DTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.graphics3DPictureBox)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.selectedTexturePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1895,6 +1987,12 @@ namespace Computer_Graphics_1
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TrackBar rotateAroundYTrackBar;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button selectTextureImageButton;
+        private System.Windows.Forms.PictureBox selectedTexturePictureBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button loadTestTextureButton;
+        private System.Windows.Forms.Button removeTextureButton;
     }
 }
 
