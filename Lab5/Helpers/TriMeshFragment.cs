@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Computer_Graphics_1.Lab5.Helpers.Filling;
+
 namespace Computer_Graphics_1.Lab5.Helpers
 {
     public class TriMeshFragment
@@ -23,11 +25,6 @@ namespace Computer_Graphics_1.Lab5.Helpers
             v3 = _c;
         }
 
-        public void DrawFill()
-        {
-
-        }
-
         public Vertex3D this[int index]
         {
             get
@@ -41,6 +38,14 @@ namespace Computer_Graphics_1.Lab5.Helpers
                 else
                     throw new IndexOutOfRangeException();
             }
+        }
+
+        public void DrawFill()//draw fill here! :D
+        {
+            if (texture == null)
+                throw new NullReferenceException();
+
+
         }
     }
 }
