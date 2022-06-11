@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Numerics;
 using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
+using Computer_Graphics_1.Lab5.Helpers;
 
 namespace Computer_Graphics_1.Lab5
 {
@@ -106,43 +107,30 @@ namespace Computer_Graphics_1.Lab5
         }
 
 
+        /// <summary>
+        /// Performs transformation on the AffineCoordinates
+        /// </summary>
+        /// <param name="angleX">Angle (in degrees) by which to rotate around X axis.</param>
+        /// <param name="angleY">Angle (in degrees) by which to rotate around Y axis.</param>
+        /// <param name="zTranslateMultiplier"> Multiplier for distance from subject (on Z axis).</param>
         public void Transform(double angleX = 0, double angleY = 0, int zTranslateMultiplier=1)
         {
             int translateZ = 3*Radius *(zTranslateMultiplier);
 
-            double angleRotX = Math.PI * angleX / 180.0;
-            double angleRotY = Math.PI * angleY / 180.0;
+
             int FOVdegrees = 60;
 
-            double fovRadians = Math.PI * FOVdegrees / 180.0;
+            Matrix4x4 matP = AffineTransformHelper.getProjectionMatrix(FOVdegrees, canvas.Width, canvas.Height);
 
 
-            float d = (canvas.Width / 2) / (float)Math.Tan(fovRadians / 2);
-            float Cx = (canvas.Width / 2);
-            float Cy = (canvas.Height / 2);
+            Matrix4x4 matRx = AffineTransformHelper.getRotationXMatrix(angleX);
 
-            Matrix4x4 P = new Matrix4x4(-d, 0, Cx, 0,
-                                        0, d, Cy, 0,
-                                        0, 0, 0, 1,
-                                        0, 0, 1, 0);
+            Matrix4x4 matRy = AffineTransformHelper.getRotationYMatrix(angleY);
+
+            Matrix4x4 matT = AffineTransformHelper.getTranslationMatrix(0, 0, translateZ);
 
 
-            Matrix4x4 Rx = new Matrix4x4(1, 0, 0, 0,
-                                         0, (float)Math.Cos(angleRotX), -(float)Math.Sin(angleRotX), 0,
-                                         0, (float)Math.Sin(angleRotX), (float)Math.Cos(angleRotX), 0,
-                                         0, 0, 0, 1);
-
-            Matrix4x4 Ry = new Matrix4x4((float)Math.Cos(angleRotY), 0, (float)Math.Sin(angleRotY), 0,
-                                         0, 1, 0, 0,
-                                         -(float)Math.Sin(angleRotY), 0, (float)Math.Cos(angleRotY), 0,
-                                         0, 0, 0, 1);
-
-            Matrix4x4 Tz = new Matrix4x4(1, 0, 0, 0,
-                                         0, 1, 0, 0,
-                                         0, 0, 1, translateZ,
-                                         0, 0, 0, 1);
-
-            Matrix4x4 matrix = Matrix4x4.Multiply(P, Matrix4x4.Multiply(Tz, Matrix4x4.Multiply(Rx, Ry)));
+            Matrix4x4 matrix = Matrix4x4.Multiply(matP, Matrix4x4.Multiply(matT, Matrix4x4.Multiply(matRx, matRy)));
 
             //List<Point3D_AffC> result = new List<Point3D_AffC>();
             vertices2D = new List<Point>();
