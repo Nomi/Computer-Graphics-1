@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Computer_Graphics_1.Lab5
+namespace Computer_Graphics_1.Lab5.Helpers
 {
     public class TriangleCoordinates
     {

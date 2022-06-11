@@ -1,121 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Windows.Media.Imaging;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
+using System.Drawing;
+
+using Computer_Graphics_1.Lab3;
 using Computer_Graphics_1.HelperClasses;
-using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab5.Helpers;
+using System.Windows.Forms;
 
 namespace Computer_Graphics_1.Lab5
 {
-    class Sphere : Shape3D
+    public class Sphere : Shape3D
     {
-        public int Radius { get; set; }
-        public int N { get; set; }
-        public int M { get; set; }
+        private readonly int n;
+        private readonly int m;
+        private readonly int radius;
 
-        public TriangleCoordinates[] TriMesh = null;
+        private TriMeshFragment[] mesh;
+        public Bitmap texture;
+        private Vertex3D[] vertices;
 
-        public WriteableBitmap texture = null;
-
-        public Sphere(int n, int m, int r, PictureBox targetPictureBox): base(targetPictureBox)
+        public Sphere(int m, int n, int r, PictureBox targetPictureBox) : base(targetPictureBox)
         {
-            N = n;
-            M = m;
-            Radius = r;
-            vertices = new List<Point3D_AffC>();
+            this.n = n;
+            this.m = m;
+            this.radius = r;
+            generateVertices();
+            generateMesh();
         }
 
-
-        /// <summary>
-        /// Sets the vertices list to contain the required vertices for the sphere.
-        /// </summary>
-        public void PopulateVertices()
+        public void Draw(int angleX = 45, int angleY = 30, int zTranslateMultiplier = 1)
         {
-            int r = Radius;
-            int n = N;
-            int m = M;
-            double PI = Math.PI;
+            StartDrawing();
+            ////This is for drawing the current position with background color if it was visible previously.
+            //foreach(TriMeshFragment triangle in mesh)
+            //{
+            //    if (isFacingBack(triangle)) 
+            //        continue;
+            //    triangle.remove();
+            //}
 
-            this.ClearVertices();
-            vertices = new List<Point3D_AffC>((n*m)+2);
-            //vertices[0] = new Point3D_AffC(0, r, 0);
-            vertices.Add(new Point3D_AffC(0, r, 0));
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < M; j++)
-                {
-                    double a = (r * Math.Cos(2 * PI * j / m) * Math.Sin(PI * (i + 1) / (n + 1)));
-                    double b = (r * Math.Cos(PI * (i + 1) / (n + 1)));
-                    double c = (r * Math.Sin(2 * PI * j / m) * Math.Sin(PI * (i + 1) / (n + 1)));
-                    //vertices[i * m + j + 1] = new Point3D_AffC(a, b, c);
-                    vertices.Add(new Point3D_AffC(a, b, c));
-                }
-            }
-            //vertices[m * n + 1] = new Point3D_AffC(0, -r, 0);
-            vertices.Add(new Point3D_AffC(0, -r, 0));
-
-
-            if (texture!=null)
-            {                
-                for(int i=0;i<n;i++)
-                {
-                    for(int j=0;j<m;j++)
-                    {
-                        vertices[i * m + j + 1].textureVector = new Vector2(j / (float)(m - 1), (i + 1) /(float)(n + 1));
-                    }
-                }
-                vertices[0].textureVector = new Vector2((float)0.5, 0); //bottom
-                vertices[m * n + 1].textureVector = new Vector2((float)0.5,1);//top
-            }
-
-            //note to self, builder pattern for transformations?
-        }
-
-        public void CreateTriangularMesh()
-        {
-            int r = Radius;
-            int n = N;
-            int m = M;
-            double PI = Math.PI;
-
-            int arraySize = 2 * n * m;//4*n; //From notes about trimesh given by teacher
-            int vertexCount = 4 * n + 2; //From notes about trimesh given by teacher
-
-
-            TriMesh = new TriangleCoordinates[arraySize];
-            for (int i = 0; i <= m - 2; i++)
-            {
-                TriMesh[i] = new TriangleCoordinates(vertices[0], vertices[i + 2], vertices[i + 1]);
-                TriMesh[2 * (n - 1) * m + i + m] = new TriangleCoordinates(vertices[m * n + 1], vertices[(n - 1) * m + i + 1], vertices[(n - 1) * m + i + 2]);
-            }
-            TriMesh[m - 1] = new TriangleCoordinates(vertices[0], vertices[1], vertices[m]);
-            TriMesh[2 * (n - 1) * m + m - 1 + m] = new TriangleCoordinates(vertices[m * n + 1], vertices[m * n], vertices[(n - 1) * m + 1]);
-            for (int i = 0; i <= n - 2; i++)
-            {
-                for (int j = 1; j <= m - 1; j++)
-                {
-                    TriMesh[(2 * i + 1) * m + j - 1] = new TriangleCoordinates(vertices[i * m + j], vertices[i * m + j + 1], vertices[(i + 1) * m + j + 1]);
-                    TriMesh[(2 * i + 2) * m + j - 1] = new TriangleCoordinates(vertices[i * m + j], vertices[(i + 1) * m + j + 1], vertices[(i + 1) * m + j]);
-                }
-                TriMesh[(2 * i + 1) * m + m - 1] = new TriangleCoordinates(vertices[(i + 1) * m], vertices[i * m + 1], vertices[(i + 1) * m + 1]);
-                TriMesh[(2 * i + 2) * m + m - 1] = new TriangleCoordinates(vertices[(i + 1) * m], vertices[(i + 1) * m + 1], vertices[(i + 2) * m]);
-            }
-        }
-
-
-        /// <summary>
-        /// Performs transformation on the AffineCoordinates
-        /// </summary>
-        /// <param name="angleX">Angle (in degrees) by which to rotate around X axis.</param>
-        /// <param name="angleY">Angle (in degrees) by which to rotate around Y axis.</param>
-        /// <param name="zTranslateMultiplier"> Multiplier for distance from subject (on Z axis).</param>
-        public void Transform(double angleX = 0, double angleY = 0, int zTranslateMultiplier=1)
-        {
-            int translateZ = 3*Radius *(zTranslateMultiplier);
+            //Replaced the above by just removing the old imgage.
+            int translateZ = 3 * radius * (zTranslateMultiplier);
 
 
             int FOVdegrees = 60;
@@ -131,128 +60,139 @@ namespace Computer_Graphics_1.Lab5
 
 
             Matrix4x4 matrix = Matrix4x4.Multiply(matP, Matrix4x4.Multiply(matT, Matrix4x4.Multiply(matRx, matRy)));
-
-            //List<Point3D_AffC> result = new List<Point3D_AffC>();
-            vertices2D = new List<Point>();
-            for(int i=0;i<vertices.Count;i++)
+            foreach (Vertex3D v in vertices)
             {
-                var v = vertices[i];
-
-                double x = matrix.M11 * v.X + matrix.M12 * v.Y + matrix.M13 * v.Z + matrix.M14 * v.W;
-                double y = matrix.M21 * v.X + matrix.M22 * v.Y + matrix.M23 * v.Z + matrix.M24 * v.W;
-                double z = matrix.M31 * v.X + matrix.M32 * v.Y + matrix.M33 * v.Z + matrix.M34 * v.W;
-                double w = matrix.M41 * v.X + matrix.M42 * v.Y + matrix.M43 * v.Z + matrix.M44 * v.W;
-
+                float x = matrix.M11 * v.position.X + matrix.M12 * v.position.Y + matrix.M13 * v.position.Z + matrix.M14 * v.position.W;
+                float y = matrix.M21 * v.position.X + matrix.M22 * v.position.Y + matrix.M23 * v.position.Z + matrix.M24 * v.position.W;
+                float z = matrix.M31 * v.position.X + matrix.M32 * v.position.Y + matrix.M33 * v.position.Z + matrix.M34 * v.position.W;
+                float w = matrix.M41 * v.position.X + matrix.M42 * v.position.Y + matrix.M43 * v.position.Z + matrix.M44 * v.position.W;
                 x /= w;
                 y /= w;
                 z /= w;
                 w = 1;
+                v.projectedPosition = new Vector4(x, y, z, w);
 
-                Point3D_AffC temp = new Point3D_AffC(x,y,z,w);
-                temp.textureVector = vertices[i].textureVector;
-                vertices[i] = temp;
-                //vertices2D.Add(new Point((int)x, (int)y));
+                //v.projectedPosition=(AffineTransformHelper.getProjectionMatrix(1280, 800)
+                //        .multiply(translate)
+                //        .multiply(AlgebraUtils.getRotationXMatrix(angleX))
+                //        .multiply(AlgebraUtils.getRotationYMatrix(angleY))
+                //        .multiply(v.getPosition())
+                //        .scalarProduct(1.0 / (v.getPositionValues()[2] + translate.getColumns()[3].getValues()[2])));
+
+                //v.setPosition(AlgebraUtils.getRotationXMatrix(angleX)
+                //        .multiply(AlgebraUtils.getRotationYMatrix(angleY))
+                //        .multiply(v.getPosition()));
             }
 
-            //vertices.Clear();
-            //vertices.AddRange(result);
-        }
-
-
-        public void Draw(int angleX = 45, int angleY = 30, int zTranslateMultiplier = 1)
-        {
-            bool enableFill = true;
-            StartDrawing();
-
-
-
-            PopulateVertices();
-
-            Transform(angleX,angleY, zTranslateMultiplier);
-
-            CreateTriangularMesh();
-
-            DrawMesh();
-
-
-
+            foreach(TriMeshFragment triangle in mesh)
+            {
+                if (isFacingBack(triangle)) 
+                    continue;
+                DrawTriangle(triangle);
+                //add fill drawing here if texture not null?
+            }
             StopDrawing();
             UpdatePictureBox(canvas);
         }
 
-        public unsafe void DrawMesh()
+
+        private void generateVertices()
         {
-            //if (enableFill)
-            //{
-            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\Screenshot 2022-06-06 183336.jpg"));
-            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\chessPattern_ImperfectCropjpg.jpg"));
-            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\AiMr7BuljIvpPR04Vd9bB3DdspBhySnQ9hUkPE6q.bmp"));
-            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\redandwhite.png"));
-            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\sample_1280×853.bmp"));
-            //    ////texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(new Bitmap("E:\\[Library]\\Gallery\\Pictures\\10644.jpg"));
-            //    //texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources._convFilterTest);
-            //    //texture = HelperClasses.ImgUtil.GetWritableBitmapFromBitmap(Properties.Resources.chessPatternImperfectCrop);
-            //}
+            bool fillProjectedPositionFieldWithActualPositionPreliminarily = true; //=false;
+            vertices = new Vertex3D[m * n + 2];
 
-            for (int i = 0; i < TriMesh.Length; i++)
+            vertices[0] = new Vertex3D(new Vector4(0, radius, 0, 1));
+            vertices[m * n + 1] = new Vertex3D(new Vector4(0, -radius, 0, 1));
+
+            for (int i = 0; i < n; i++)
             {
-                TriangleCoordinates t = TriMesh[i];
-                double x2 = t.v2.X;
-                double x1 = t.v1.X;
-                double y2 = t.v2.Y;
-                double y1 = t.v1.Y;
-                double x3 = t.v3.X;
-                double y3 = t.v3.Y;
-
-                Vector3 vec1 = new Vector3((float)(x2 - x1),(float) (y2 - y1), 0);
-                Vector3 vec2 = new Vector3((float)(x3 - x1), (float)(y3 - y1), 0);
-
-                Vector3 check = Vector3.Cross(vec1, vec2);
-                if (check.Z > 0) //Back-face culling
+                for (int j = 0; j < m; j++)
                 {
-
-                    if (texture == null)
+                    vertices[i * m + j + 1] =
+                        new Vertex3D(
+                            new Vector4(
+                                        (float)(radius * Math.Cos(2 * Math.PI * j / m) * Math.Sin(Math.PI / (n + 1) * (i + 1))),
+                                        (float)(radius * Math.Cos(Math.PI / (n + 1) * (i + 1))),
+                                        (float)(radius * Math.Sin(2 * Math.PI * j / m) * Math.Sin(Math.PI / (n + 1) * (i + 1))),
+                                        1
+                                        )
+                        );
+                    if (fillProjectedPositionFieldWithActualPositionPreliminarily)
                     {
-                        DrawTriangle(t);
-                    }
-                    else 
-                    {
-                        ////DrawTriangle(t);//debug
-
-                        int xTex = (int)(t.v1.textureVector.X * (texture.PixelWidth - 1));
-                        int yTex = (int)(t.v1.textureVector.Y * (texture.PixelHeight - 1));
-                        _pixel_bgr24_bgra32* px = (_pixel_bgr24_bgra32*)texture.GetPixelIntPtrAt(yTex, xTex);
-
-
-                        Color currFillColor = Color.FromArgb(px->red, px->green, px->blue);
-                        //currFillColor=Color.Blue;
-
-                        SolidBrush br = new SolidBrush(currFillColor);
-
-                        Lab3.Polygon polygon = new Lab3.Polygon();
-                        polygon.AddVertices((int)x1, (int)y1);
-                        polygon.AddVertices((int)x2, (int)y2);
-                        polygon.AddVertices((int)x3, (int)y3);
-                        polygon.fillColor = currFillColor;
-
-                        Lab4.PolygonFiller.FillPolygon(ref polygon, currFillColor);
-                        //SolidBrush br = new SolidBrush(polygon.fillColor);
-                        foreach (Point pt in polygon.filledPixels)
-                        {
-                            graphics.FillRectangle(br, pt.X, pt.Y, 1, 1);
-                        }
-
-                        //DrawTriangle(t);//debug
+                        float[] pos = new float[4];
+                        vertices[i * m + j + 1].position.CopyTo(pos);
+                        vertices[i * m + j + 1].projectedPosition = new Vector4(pos[0], pos[1], pos[2], pos[3]);
                     }
                 }
             }
         }
 
-        private void DrawTriangle(TriangleCoordinates t)
+        public void generateMesh()
         {
-            DrawLine((int)t.v1.X, (int)t.v1.Y, (int)t.v2.X, (int)t.v2.Y);
-            DrawLine((int)t.v2.X, (int)t.v2.Y, (int)t.v3.X, (int)t.v3.Y);
-            DrawLine((int)t.v3.X, (int)t.v3.Y, (int)t.v1.X, (int)t.v1.Y);
+            mesh = new TriMeshFragment[2 * m * n];
+
+            for (int i = 0; i < m - 1; i++)
+            {
+                mesh[i] = new TriMeshFragment(vertices[0], vertices[i + 2], vertices[i + 1]);
+                mesh[(2 * n - 1) * m + i] = new TriMeshFragment(vertices[m * n + 1], vertices[(n - 1) * m + i + 1], vertices[(n - 1) * m + i + 2]);
+            }
+            mesh[m - 1] = new TriMeshFragment(vertices[0], vertices[1], vertices[m]);
+            mesh[(2 * n - 1) * m + m - 1] = new TriMeshFragment(vertices[m * n + 1], vertices[m * n], vertices[(n - 1) * m + 1]);
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 1; j < m; j++)
+                {
+                    mesh[(2 * i + 1) * m + j - 1] = new TriMeshFragment(vertices[i * m + j], vertices[i * m + j + 1], vertices[(i + 1) * m + j + 1]);
+                    mesh[(2 * i + 2) * m + j - 1] = new TriMeshFragment(vertices[i * m + j], vertices[(i + 1) * m + j + 1], vertices[(i + 1) * m + j]);
+                }
+                mesh[(2 * i + 1) * m + m - 1] = new TriMeshFragment(vertices[(i + 1) * m], vertices[i * m + 1], vertices[(i + 1) * m + 1]);
+                mesh[(2 * i + 2) * m + m - 1] = new TriMeshFragment(vertices[(i + 1) * m], vertices[(i + 1) * m + 1], vertices[(i + 2) * m]);
+            }
+        }
+
+        private void generateTextureCoords()
+        { 
+            int textureWidth = (int)texture.Width;
+            int textureHeight = (int)texture.Height;
+
+            vertices[0].textureCoords=(new Point(textureWidth - 1, (int)(0.5 * (textureHeight - 1))));
+            vertices[m * n + 1].textureCoords=(new Point(0, (int)(0.5 * textureHeight - 1)));
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    vertices[i * m + j + 1].textureCoords=(
+                        new Point(
+                            (int)(((double)j /(m - 1)) * (textureWidth - 1)),
+                            (int)(((double)(i + 1) / (n + 1)) * (textureHeight - 1))
+                            )
+                        );
+                }
+            }
+
+            foreach(TriMeshFragment t in mesh)
+            {
+                t.texture=texture;
+            }
+        }
+
+        private bool isFacingBack(TriMeshFragment trms) //for back-face culling.
+        {
+            double x2 = trms.v2.projectedPosition.X;
+            double x1 = trms.v1.projectedPosition.X;
+            double y2 = trms.v2.projectedPosition.Y;
+            double y1 = trms.v1.projectedPosition.Y;
+            double x3 = trms.v3.projectedPosition.X;
+            double y3 = trms.v3.projectedPosition.Y;
+
+            Vector3 vec1 = new Vector3((float)(x2 - x1), (float)(y2 - y1), 0);
+            Vector3 vec2 = new Vector3((float)(x3 - x1), (float)(y3 - y1), 0);
+
+            Vector3 check = Vector3.Cross(vec1, vec2);
+
+            return check.Z <= 0;
         }
     }
 }

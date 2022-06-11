@@ -1279,6 +1279,7 @@ namespace Computer_Graphics_1
         #endregion
 
         #region lab5-HOME-PART
+        //oldSphere sph = null;
         Sphere sph = null;
         int angleAroundX = 0;
         int angleAroundY = 0;
@@ -1308,7 +1309,7 @@ namespace Computer_Graphics_1
             int m = 30; //200;
             int radius = 50;//20;//30;
             if (sph == null)
-                sph = new Sphere(n, m, radius, graphics3DPictureBox);
+                sph = new Sphere(n, m, radius, graphics3DPictureBox);//new oldSphere(n, m, radius, graphics3DPictureBox);
             sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
         }
 
@@ -1403,7 +1404,7 @@ namespace Computer_Graphics_1
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     Bitmap bmp = new Bitmap(openFileDialog.FileName);
-                    sph.texture = ImgUtil.GetWritableBitmapFromBitmap(bmp);
+                    sph.texture = bmp;//ImgUtil.GetWritableBitmapFromBitmap(bmp);
                     selectedTexturePictureBox.Image = bmp;
                     sphereDraw();
                 }
@@ -1417,7 +1418,7 @@ namespace Computer_Graphics_1
         private void loadTestTextureButton_Click(object sender, EventArgs e)
         {
             Bitmap bmp = Properties.Resources._convFilterTest;
-            sph.texture = ImgUtil.GetWritableBitmapFromBitmap(bmp);
+            sph.texture = bmp;//ImgUtil.GetWritableBitmapFromBitmap(bmp);
             selectedTexturePictureBox.Image = bmp;
             sphereDraw();
         }

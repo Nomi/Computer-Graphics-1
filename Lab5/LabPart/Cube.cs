@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using System.Numerics;
 
+using Computer_Graphics_1.Lab5.Helpers;
+
 namespace Computer_Graphics_1.Lab5.LabPart
 {
     public class Cube

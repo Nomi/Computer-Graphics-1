@@ -145,7 +145,11 @@
     <Compile Include="Lab5\Helpers\PixelRep.cs" />
     <Compile Include="Lab5\Helpers\Point3D_AffC.cs" />
     <Compile Include="Lab5\Helpers\TriangleCoordinates.cs" />
+    <Compile Include="Lab5\Helpers\TriMeshFragment.cs" />
+    <Compile Include="Lab5\Helpers\Vertex3D.cs" />
     <Compile Include="Lab5\LabPart\Cube.cs" />
+    <Compile Include="Lab5\oldShape3D.cs" />
+    <Compile Include="Lab5\oldSphere.cs" />
     <Compile Include="Lab5\Shape3D.cs" />
     <Compile Include="Lab5\Sphere.cs" />
     <Compile Include="Program.cs" />

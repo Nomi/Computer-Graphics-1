@@ -6,9 +6,12 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Computer_Graphics_1.Lab5
+
+namespace Computer_Graphics_1.Lab5.Helpers
 {
     /// <summary>
+    /// !!!!!!! DEPRECATED IN FAVOR OF "Vetex3D" !!!!!!!
+    /// 
     /// Representation of a 3D point in the Affine Space.
     /// Where x, y, z, and w are the homogeneous coordinates of a point in 3D space, with the 
     /// corresponding affine coordinates (x/w, y/w, z/w). w is usually just 1 because we are using
