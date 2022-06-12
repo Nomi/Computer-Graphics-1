@@ -1305,9 +1305,9 @@ namespace Computer_Graphics_1
 
         private void sphereDraw()
         {
-            int n = 30; //200;
-            int m = 30; //200;
-            int radius = 50;//20;//30;
+            int n = 30;//30; //200;
+            int m = 30;//30; //200;
+            int radius = 10;//50;//20;//30;
             if (sph == null)
                 sph = new Sphere(n, m, radius, graphics3DPictureBox);//new oldSphere(n, m, radius, graphics3DPictureBox);
             sph.Draw(angleAroundX, angleAroundY, translateDistanceOnZMultiplier);
@@ -1404,7 +1404,8 @@ namespace Computer_Graphics_1
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     Bitmap bmp = new Bitmap(openFileDialog.FileName);
-                    sph.texture = bmp;//ImgUtil.GetWritableBitmapFromBitmap(bmp);
+                    //sph.texture = bmp;//ImgUtil.GetWritableBitmapFromBitmap(bmp);
+                    sph.setTexture(bmp);
                     selectedTexturePictureBox.Image = bmp;
                     sphereDraw();
                 }
@@ -1418,14 +1419,16 @@ namespace Computer_Graphics_1
         private void loadTestTextureButton_Click(object sender, EventArgs e)
         {
             Bitmap bmp = Properties.Resources._convFilterTest;
-            sph.texture = bmp;//ImgUtil.GetWritableBitmapFromBitmap(bmp);
+            //sph.texture = bmp;//ImgUtil.GetWritableBitmapFromBitmap(bmp);
+            sph.setTexture(bmp);
             selectedTexturePictureBox.Image = bmp;
             sphereDraw();
         }
 
         private void removeTextureButton_Click(object sender, EventArgs e)
         {
-            sph.texture = null;
+            //sph.texture = null;
+            sph.setTexture(null);
             selectedTexturePictureBox.Image = null;
             sphereDraw();
         }

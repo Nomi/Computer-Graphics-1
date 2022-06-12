@@ -20,7 +20,7 @@ namespace Computer_Graphics_1.Lab5
         private readonly int radius;
 
         private TriMeshFragment[] mesh;
-        public Bitmap texture;
+        private Bitmap texture;
         private Vertex3D[] vertices;
 
         public Sphere(int m, int n, int r, PictureBox targetPictureBox) : base(targetPictureBox)
@@ -89,7 +89,10 @@ namespace Computer_Graphics_1.Lab5
                 if (isFacingBack(triangle)) 
                     continue;
                 DrawTriangle(triangle);
-                //add fill drawing here if texture not null?
+                if(triangle.texture!=null)
+                {
+                    triangle.DrawFill(ref graphics);
+                }
             }
             StopDrawing();
             UpdatePictureBox(canvas);
@@ -193,6 +196,12 @@ namespace Computer_Graphics_1.Lab5
             Vector3 check = Vector3.Cross(vec1, vec2);
 
             return check.Z <= 0;
+        }
+
+        public void setTexture(Bitmap texture) // ==null to remove.
+        {
+            this.texture = texture;
+            generateTextureCoords();
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Computer_Graphics_1.Lab5.Helpers.Filling
             }
         }
 
-        public List<EdgeEntry> remove(int key)
+        public List<EdgeEntry> pop(int key) //remove elment and get removed element.
         {
             List<EdgeEntry> toReturn = new List<EdgeEntry>(table[key]);
             table.Remove(key);
