@@ -125,7 +125,7 @@ namespace Computer_Graphics_1.Lab5.Helpers
                     minY = yMin;
             }
 
-            return table;
+            return table; //not sorted maybe?
         }
 
 
@@ -145,22 +145,23 @@ namespace Computer_Graphics_1.Lab5.Helpers
                     activeEdgeTable.AddRange(entry);
                 }
 
-                activeEdgeTable=activeEdgeTable.OrderBy(e => e.xMin).ToList(); //might or might not be wrong order.
+                activeEdgeTable = activeEdgeTable.OrderBy(e => e.xMin).ToList();//might or might not be wrong order.
+                //activeEdgeTable =activeEdgeTable.OrderByDescending(e => e.xMin).ToList(); //might or might not be wrong order.
 
 
-            for (int i = 0; i < activeEdgeTable.Count - 1; i++)
-            {
-                if (parity++ % 2 == 0)
+                for (int i = 0; i < activeEdgeTable.Count - 1; i++)
                 {
-                    fillTheLine(
-                            activeEdgeTable[i],
-                            activeEdgeTable[i + 1],
-                            y);
+                    if (parity++ % 2 == 0)
+                    {
+                        fillTheLine(
+                                activeEdgeTable[i],
+                                activeEdgeTable[i + 1],
+                                y);
+                    }
                 }
-            }
-            ++y;
+                ++y;
 
-            int finalY = y;
+                int finalY = y;
                 activeEdgeTable.RemoveAll(e => e.yMax == finalY);
                 foreach(EdgeEntry edge in activeEdgeTable)
                 {
@@ -216,9 +217,5 @@ namespace Computer_Graphics_1.Lab5.Helpers
                 PixelsToDraw.Add(new PixelRep(i, height, texture.GetPixel(point.X % w, point.Y % h)));
             }
         }
-
-
-
-
     }
 }
