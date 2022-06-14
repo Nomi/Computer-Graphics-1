@@ -120,12 +120,15 @@ namespace Computer_Graphics_1.Lab5
                                         1
                                         )
                         );
-                    if (fillProjectedPositionFieldWithActualPositionPreliminarily)
-                    {
-                        float[] pos = new float[4];
-                        vertices[i * m + j + 1].position.CopyTo(pos);
-                        vertices[i * m + j + 1].projectedPosition = new Vector4(pos[0], pos[1], pos[2], pos[3]);
-                    }
+                }
+            }
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if (fillProjectedPositionFieldWithActualPositionPreliminarily)
+                {
+                    float[] pos = new float[4];
+                    vertices[i].position.CopyTo(pos);
+                    vertices[i].projectedPosition = new Vector4(pos[0], pos[1], pos[2], pos[3]);
                 }
             }
         }

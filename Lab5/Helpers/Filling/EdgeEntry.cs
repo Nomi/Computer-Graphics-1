@@ -15,6 +15,7 @@ namespace Computer_Graphics_1.Lab5.Helpers.Filling
         public float textureX, textureY;
         public float length;
 
+        public float z_t;
         public EdgeEntry() { }
 
         public EdgeEntry(int y, float x, float inverseSlope)

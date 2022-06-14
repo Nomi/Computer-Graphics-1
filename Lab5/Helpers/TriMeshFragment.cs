@@ -90,6 +90,7 @@ namespace Computer_Graphics_1.Lab5.Helpers
                 float X1 = line.Item1.projectedPosition.X;
                 float X2 = line.Item2.projectedPosition.X;
 
+                float z_t = line.Item1.projectedPosition.Z;
 
 
                 int yMax = ((int)Math.Max(Y1, Y2));
@@ -112,6 +113,8 @@ namespace Computer_Graphics_1.Lab5.Helpers
                     edge.textureY = line.Item2.textureCoords.Y;
                     edge.v1 = line.Item2;
                     edge.v2 = line.Item1;
+                    slope = (float)((X1 - X2) / (float)(Y1 - Y2)); ///
+                    z_t = line.Item2.projectedPosition.Z;
                 }
                 edge.xMin = xMin;
                 edge.yMax = yMax;
@@ -119,6 +122,7 @@ namespace Computer_Graphics_1.Lab5.Helpers
                 edge.inverseSlope = slope;
                 edge.length= (float)Math.Sqrt(Math.Pow(X2 - X1, 2)
                                 + Math.Pow(Y2 - Y1, 2));
+                edge.z_t = z_t;
                 table.add(yMin, edge);
 
                 if (yMin < minY) 
@@ -175,6 +179,7 @@ namespace Computer_Graphics_1.Lab5.Helpers
                     float z_1 = (float)edge.v1.projectedPosition.Z;
                     float z_2 = (float)edge.v2.projectedPosition.Z;
                     float z_t = (z_2 - z_1) * t + z_1;
+                    edge.z_t = z_t;
                     float u;
                     if (z_1 == z_2)
                         u = t;
@@ -197,13 +202,13 @@ namespace Computer_Graphics_1.Lab5.Helpers
             float t, z_t, u;
             var v1 = e1.v1;
             var v2 = e1.v2;
-            float z_1 = (float)v1.projectedPosition.Z;
-            float z_2 = (float)v2.projectedPosition.Z;
+            float z_1 = e1.z_t;
+            float z_2 = e2.z_t;
 
-            Point p1_g = new Point((int)e1.textureX, (int)e1.textureY);
-            Point p2_g = new Point((int)e2.textureX, (int)e2.textureY);
+            PointF p1_g = new PointF(e1.textureX, e1.textureY);
+            PointF p2_g = new PointF(e2.textureX, e2.textureY);
 
-            for (int i = start; i <= end; i++)
+            for (int i = start; i < end; i++)
             {
                 t = (float)(i - start) / (end - start);
                 z_t = (z_2 - z_1) * t + z_1;
