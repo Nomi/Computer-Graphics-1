@@ -88,8 +88,11 @@ namespace Computer_Graphics_1.Lab5
             {
                 if (isFacingBack(triangle)) 
                     continue;
-                DrawTriangle(triangle);
-                if(triangle.texture!=null)
+                if(triangle.texture==null)
+                {
+                    DrawTriangle(triangle);
+                }
+                else
                 {
                     triangle.DrawFill(ref graphics);
                 }
@@ -162,8 +165,8 @@ namespace Computer_Graphics_1.Lab5
             int textureWidth = (int)texture.Width;
             int textureHeight = (int)texture.Height;
 
-            vertices[0].textureCoords=(new Point(textureWidth - 1, (int)(0.5 * (textureHeight - 1))));
-            vertices[m * n + 1].textureCoords=(new Point(0, (int)(0.5 * textureHeight - 1)));
+            vertices[0].textureCoords=(new Point(textureWidth - 1, (int)(0.5 * (textureHeight - 1)))); //make sure if these are correct.
+            vertices[m * n + 1].textureCoords=(new Point(0, (int)(0.5 * textureHeight - 1))); //make sure if these are correct.
 
             for (int i = 0; i < n; i++)
             {
@@ -172,7 +175,7 @@ namespace Computer_Graphics_1.Lab5
                     vertices[i * m + j + 1].textureCoords=(
                         new Point(
                             (int)(((double)j /(m - 1)) * (textureWidth - 1)),
-                            (int)(((double)(i + 1) / (n + 1)) * (textureHeight - 1))
+                            (int)((textureHeight-1) - (((double)(i + 1) / (n + 1)) * (textureHeight - 1))) //should it be just textureHeight - xxxxx instead of (textureHeight-1) - xxxxx
                             )
                         );
                 }
@@ -204,7 +207,15 @@ namespace Computer_Graphics_1.Lab5
         public void setTexture(Bitmap texture) // ==null to remove.
         {
             this.texture = texture;
-            generateTextureCoords();
+            if(texture!=null)
+                generateTextureCoords();
+            else
+            {
+                foreach(TriMeshFragment t in mesh)
+                {
+                    t.texture = null;
+                }
+            }
         }
     }
 }

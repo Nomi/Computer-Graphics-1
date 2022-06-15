@@ -83,12 +83,12 @@ namespace Computer_Graphics_1.Lab5.Helpers
             
             foreach(Tuple<Vertex3D,Vertex3D> line in lines)
             {
-                float Y1 = line.Item1.projectedPosition.Y;
-                float Y2 = line.Item2.projectedPosition.Y;
+                int Y1 = (int)Math.Round(line.Item1.projectedPosition.Y);
+                int Y2 = (int)Math.Round(line.Item2.projectedPosition.Y);
                 if (Y1 == Y2) 
                     continue;
-                float X1 = line.Item1.projectedPosition.X;
-                float X2 = line.Item2.projectedPosition.X;
+                int X1 = (int)Math.Round(line.Item1.projectedPosition.X);
+                int X2 = (int)Math.Round(line.Item2.projectedPosition.X);
 
                 float z_t = line.Item1.projectedPosition.Z;
 
