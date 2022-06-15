@@ -44,7 +44,7 @@ namespace Computer_Graphics_1.Lab2
                 wbmp.Lock();
 
                 int sumBlue = 0, sumGreen = 0, sumRed = 0;
-                int numChannels = wbmp.GetPixelSizeBytes();
+                int numChannels = wbmp.GetPixelNumChannels8bit();
                 int totalPixels = wbmp.PixelWidth * wbmp.PixelHeight;
                 decimal decIntervalSize = (255 /(decimal)(K-1)); //K-1 because for K values there are k-1 intervals.
                 int intervalSize =(int) Decimal.Ceiling(decIntervalSize);
@@ -224,7 +224,7 @@ namespace Computer_Graphics_1.Lab2
                 wbmp.Lock();
 
                 int sumY = 0, sumCb = 0, sumCr = 0;
-                int numChannels = wbmp.GetPixelSizeBytes();
+                int numChannels = wbmp.GetPixelNumChannels8bit();
                 int totalPixels = wbmp.PixelWidth * wbmp.PixelHeight;
                 decimal decIntervalSize = (255 / (decimal)(K - 1)); //K-1 because for K values there are k-1 intervals.
                 int intervalSize = (int)Decimal.Ceiling(decIntervalSize);
@@ -415,7 +415,7 @@ namespace Computer_Graphics_1.Lab2
                 wbmp.Lock();
 
                 int sumBlue = 0, sumGreen = 0, sumRed = 0;
-                int numChannels = wbmp.GetPixelSizeBytes();
+                int numChannels = wbmp.GetPixelNumChannels8bit();
                 int totalPixels = wbmp.PixelWidth * wbmp.PixelHeight;
                 for (int i = 0; i < wbmp.PixelHeight; i++)
                 {

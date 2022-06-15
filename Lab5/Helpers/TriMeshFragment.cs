@@ -5,8 +5,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 using Computer_Graphics_1.Lab5.Helpers.Filling;
+using Computer_Graphics_1.HelperClasses.Extensions;
 
 namespace Computer_Graphics_1.Lab5.Helpers
 {
@@ -16,7 +18,7 @@ namespace Computer_Graphics_1.Lab5.Helpers
         public Vertex3D v2 { get; }
         public Vertex3D v3 { get; }
 
-        public Bitmap texture=null; //if null, don't fill.
+        public WriteableBitmap texture=null; //if null, don't fill.
 
         public TriMeshFragment(Vertex3D _a, Vertex3D _b, Vertex3D _c)
         {
@@ -196,8 +198,8 @@ namespace Computer_Graphics_1.Lab5.Helpers
             int start = (int)Math.Floor(e1.xMin);
             int end = (int)Math.Ceiling(e2.xMin);
 
-            int w = texture.Width;
-            int h = texture.Height;
+            int w = texture.PixelWidth;
+            int h = texture.PixelHeight;
 
             float t, z_t, u;
             var v1 = e1.v1;
@@ -219,7 +221,7 @@ namespace Computer_Graphics_1.Lab5.Helpers
                         (int)(u * (p2_g.X - p1_g.X) + p1_g.X),
                         (int)((u * (p2_g.Y - p1_g.Y)) + p1_g.Y)
                         );
-                PixelsToDraw.Add(new PixelRep(i, height, texture.GetPixel(point.X % w, point.Y % h)));
+                PixelsToDraw.Add(new PixelRep(i, height, texture.GetPixelColor(point.X % w, point.Y % h)));
             }
         }
     }

@@ -12,14 +12,23 @@ namespace Computer_Graphics_1.HelperClasses.Extensions
 {
     public static class WriteableBitmapExJOJO
     {
-        public static IntPtr GetPixelIntPtrAt(this WriteableBitmap wbmp, int row, int col) //can make it faster if I do the pixelNumChannel calculation only once and outside of this.
+        public static unsafe IntPtr GetPixelIntPtrAt(this WriteableBitmap wbmp, int rowX, int colY) //can make it faster if I do the pixelNumChannel calculation only once and outside of this.
         {
-            int pixelNumChannels = wbmp.GetPixelSizeBytes(); //Because of this, program supports only images with 8-bit color and BGR/BGRA channel layout Pixel formats for now. This command exists in order to maintain compatibility wiht both BGR and BGRA config layout.
-            return (IntPtr)((long)wbmp.BackBuffer + row * wbmp.BackBufferStride + col * pixelNumChannels);
+            int pixelNumChannels = wbmp.GetPixelNumChannels8bit(); //Because of this, program supports only images with 8-bit color and BGR/BGRA channel layout Pixel formats for now. This command exists in order to maintain compatibility wiht both BGR and BGRA config layout.
+            return (IntPtr)((long)wbmp.BackBuffer + rowX * wbmp.BackBufferStride + colY * pixelNumChannels);
+        }
+
+        public static unsafe Color GetPixelColor(this WriteableBitmap wbmp, int x, int y)
+        {
+            unsafe
+            {
+                _pixel_bgr24_bgra32* pxPtr = (_pixel_bgr24_bgra32*)wbmp.GetPixelIntPtrAt(y, x);
+                return Color.FromArgb(255,pxPtr->red, pxPtr->green, pxPtr->blue);
+            }
         }
 
         //public static _pixel_bgr24_bgra32 operator [
-        public static int GetPixelSizeBytes(this WriteableBitmap writtenImg)
+        public static int GetPixelNumChannels8bit(this WriteableBitmap writtenImg)
         {
             return writtenImg.Format.BitsPerPixel/8;
         }
@@ -38,9 +47,9 @@ namespace Computer_Graphics_1.HelperClasses.Extensions
             }
         }
 
-        public static void ConvertRGB2GrayscaleRGB(this WriteableBitmap wbmp)
+        public static unsafe void ConvertRGB2GrayscaleRGB(this WriteableBitmap wbmp)
         {
-            int numChannels = wbmp.GetPixelSizeBytes();
+            int numChannels = wbmp.GetPixelNumChannels8bit();
             unsafe
             {
                 wbmp.Lock();
@@ -58,7 +67,7 @@ namespace Computer_Graphics_1.HelperClasses.Extensions
             }
         }
 
-        public static void PutPixel(this WriteableBitmap wbmp, int x, int y, Color color)
+        public static unsafe void PutPixel(this WriteableBitmap wbmp, int x, int y, Color color)
         {
             unsafe
             {

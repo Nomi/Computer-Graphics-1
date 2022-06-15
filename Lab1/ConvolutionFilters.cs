@@ -49,7 +49,7 @@ namespace Computer_Graphics_1.Lab1
             anchorOffsetCenter.r = anchorKernel.r - midR;
             anchorOffsetCenter.c = anchorKernel.c - midC;
 
-            int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+            int numChannelsPerPix = (wbmp.GetPixelNumChannels8bit());
             int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
 
             unsafe // do: upper row, left col, right col, lower row, all the corner squares, and the middle part that isn't missing pixels
@@ -549,7 +549,7 @@ namespace Computer_Graphics_1.Lab1
                 {
                     for(int col=0; col<(_mSz-1)/2;col++)
                     {
-                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+                        int numChannelsPerPix = (wbmp.GetPixelNumChannels8bit());
                         int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8; //same as the line above tbh.
 
                         int missingRows = (_mSz - 1) / 2 +1 - (row+1);//(_mSz-(row+1)-1);  //_mSz-(row+1) includes the middle element, so to remove that we subtract 1
@@ -646,7 +646,7 @@ namespace Computer_Graphics_1.Lab1
                 {
                     for (int col = (_mSz-1)/2; col < columnCount-(_mSz - 1) / 2; col++)
                     {
-                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+                        int numChannelsPerPix = (wbmp.GetPixelNumChannels8bit());
                         int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8;
                         byte[] pixDat = new byte[_mSz * _mSz * numBytesPerPix];
                         //int stride = wbmp.PixelWidth*(wbmp.Format.BitsPerPixel + 7) / 8;
@@ -709,7 +709,7 @@ namespace Computer_Graphics_1.Lab1
                     //lower-right corner square here to replace upper-left in previous code and so on.
                     for (int col = columnCount - (_mSz - 1) / 2; col < columnCount; col++)
                     {
-                        int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+                        int numChannelsPerPix = (wbmp.GetPixelNumChannels8bit());
                         int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8; //same as the line above tbh.
 
                         int missingRows = (_mSz - 1) / 2 + 1 - (row + 1);//(_mSz-(row+1)-1);  //_mSz-(row+1) includes the middle element, so to remove that we subtract 1
@@ -845,7 +845,7 @@ namespace Computer_Graphics_1.Lab1
             anchorOffsetCenter.r = anchorKernel.r - midR;
             anchorOffsetCenter.c = anchorKernel.c - midC;
 
-            int numChannelsPerPix = (wbmp.GetPixelSizeBytes());
+            int numChannelsPerPix = (wbmp.GetPixelNumChannels8bit());
             int numBytesPerPix = (wbmp.Format.BitsPerPixel + 7) / 8; //same as the line above tbh
             unsafe
             {

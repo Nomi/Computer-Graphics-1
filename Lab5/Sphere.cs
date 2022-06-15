@@ -10,6 +10,7 @@ using Computer_Graphics_1.Lab3;
 using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.Lab5.Helpers;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 namespace Computer_Graphics_1.Lab5
 {
@@ -20,7 +21,7 @@ namespace Computer_Graphics_1.Lab5
         private readonly int radius;
 
         private TriMeshFragment[] mesh;
-        private Bitmap texture;
+        private WriteableBitmap texture;
         private Vertex3D[] vertices;
 
         public Sphere(int m, int n, int r, PictureBox targetPictureBox) : base(targetPictureBox)
@@ -162,8 +163,8 @@ namespace Computer_Graphics_1.Lab5
 
         private void generateTextureCoords()
         { 
-            int textureWidth = (int)texture.Width;
-            int textureHeight = (int)texture.Height;
+            int textureWidth = (int)texture.PixelWidth;
+            int textureHeight = (int)texture.PixelHeight;
 
             vertices[0].textureCoords=(new Point(textureWidth - 1, (int)(0.5 * (textureHeight - 1)))); //make sure if these are correct.
             vertices[m * n + 1].textureCoords=(new Point(0, (int)(0.5 * textureHeight - 1))); //make sure if these are correct.
@@ -175,7 +176,7 @@ namespace Computer_Graphics_1.Lab5
                     vertices[i * m + j + 1].textureCoords=(
                         new Point(
                             (int)(((double)j /(m - 1)) * (textureWidth - 1)),
-                            (int)((textureHeight-1) - (((double)(i + 1) / (n + 1)) * (textureHeight - 1))) //should it be just textureHeight - xxxxx instead of (textureHeight-1) - xxxxx
+                            (int)((textureHeight-1) - (int)(((double)(i + 1) / (n + 1)) * (textureHeight - 1))) //should it be just textureHeight - xxxxx instead of (textureHeight-1) - xxxxx
                             )
                         );
                 }
@@ -206,11 +207,15 @@ namespace Computer_Graphics_1.Lab5
 
         public void setTexture(Bitmap texture) // ==null to remove.
         {
-            this.texture = texture;
+
             if(texture!=null)
+            {
+                this.texture = ImgUtil.GetWritableBitmapFromBitmap(texture);
                 generateTextureCoords();
+            }
             else
             {
+                this.texture = null;
                 foreach(TriMeshFragment t in mesh)
                 {
                     t.texture = null;
