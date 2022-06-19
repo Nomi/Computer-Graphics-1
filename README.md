@@ -47,24 +47,28 @@ My program containing solutions to all the projects/labs from the course Compute
 
 ### Lab 3 : 2D Graphics - Drawing
 #### Home part:
-*tbd*
++ Line drawing: Symmetric Midpoint Line algorithm
++ Circle drawing: Midpoint Circle (v.2, additions only) algorithm
++ Drawing Thickness: Pixel Copy algorithm
++ Anti-Aliasing: Goupta-Sproull algorithm
 
 #### Lab part:
-*tbd*
++ Anti-Alisaing: 2x Super Sampling (then drawing and then downsampling for Anti-Aliasing).
 
 #### Scores:
 + Overall: 18/20
-  + Home: 13/15 (due to missing some non-algorithmic functionalities for the application)
+  + Home: 13/15 (Lost points because of missing some non-algorithmic functionality i.e. only being able to move vertices one-by-one, not whole shapes.)
   + Lab: 5/5
-
+ 
 
 
 ### Lab 4 : 2D Graphics - Clipping and Filling
 #### Home part:
-*tbd*
++ Clipping Polygons: Sutherland-Hodgman
++ Filling Polygons:  Vertex Sorting
 
 #### Lab part:
-*tbd*
++ Flood filling: Boundry Fill
 
 #### Scores:
 + Overall: 20/20
@@ -74,13 +78,14 @@ My program containing solutions to all the projects/labs from the course Compute
 
 
 ### Lab 5 : 3D Graphics
+(CPU Intensive and uses Affine transformations for the transformations).
 #### Lab part:
-+ Implement a rotating 3D cube made of only edges.
++ Implement a rotating 3D cube made of only edges from a distance (POV on Z-axis).
 
 #### Home part:
-*tbd*
++ Textured Sphere: Textured 3D Sphere which can be moved around (and also POV can be moved around). We create a Triangular Mesh on/for the sphere and then fill with the texture.
 
 #### Scores:
 + Overall: ?/20
-  + Home: ?/15
+  + Home: 15/15
   + Lab: 5/5
