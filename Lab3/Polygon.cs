@@ -30,8 +30,8 @@ namespace Computer_Graphics_1.Lab3
         public Polygon(Polygon toCopy)
         {
             this.colorAsRGB = toCopy.colorAsRGB;
-            this.fillColorAsRGB = toCopy.fillColorAsRGB;
-
+            if(toCopy.fillColor!=Color.Empty)//if not true, we don't need to assign empty color because that's the default value (and also that's impossible via this get/set using ARGB)
+                this.fillColorAsRGB = toCopy.fillColorAsRGB;
             this.thickness = toCopy.thickness;
 
             if (toCopy.fillPattern!=null)

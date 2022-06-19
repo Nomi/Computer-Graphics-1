@@ -3,7 +3,7 @@
 * To avoid defining this symbol in every file, refer to: https://stackoverflow.com/questions/436369/how-to-define-a-constant-globally-in-c-sharp-like-debug
 * Also, learn about Conditional Attribute and the like here: https://stackoverflow.com/a/975370
 */
-#define Lab3
+//#define Lab3
 using Computer_Graphics_1.HelperClasses;
 using Computer_Graphics_1.HelperClasses.Extensions;
 using Computer_Graphics_1.Lab1;
@@ -63,12 +63,14 @@ namespace Computer_Graphics_1
                 zoomToolStripMenuItem_Click(null, null);
             }
 
-#if Lab3
+            #region LAB3
             if (selectedShapeType == SupportedShapes.Line)
                 lineRadioButton.Checked = true;
+#if Lab3
             labsTabControl.SelectedTab = lab3TabPage;
             imagesTabControl.SelectedTab = drawingViewTabPage;
 #endif
+            #endregion
 
             //selectedFillPictureBox.Image = selectedFillPattern;
             selectedFillPictureBox.BackColor = selectedFillColor;
@@ -899,24 +901,29 @@ namespace Computer_Graphics_1
                     imagesTabControl.SelectedTab = drawingViewTabPage;
                 }
             }
+            else if(labsTabControl.SelectedTab == lab1TabPage || labsTabControl.SelectedTab == lab2TabPage)
+            {
+                if (imagesTabControl.SelectedTab != comparisontViewTabPage)
+                    imagesTabControl.SelectedTab = comparisontViewTabPage;
+            }
             else if(labsTabControl.SelectedTab==lab5TabPage)
             {
                 if (imagesTabControl.SelectedTab != graphics3DTabPage)
                     imagesTabControl.SelectedTab = graphics3DTabPage;
             }
-            else
-            {
-                if (imagesTabControl.SelectedTab == drawingViewTabPage)
-                {
-                    imagesTabControl.SelectedTab = comparisontViewTabPage;
-                }
-            }
+            //else
+            //{
+            //    if (imagesTabControl.SelectedTab == drawingViewTabPage)
+            //    {
+            //        imagesTabControl.SelectedTab = comparisontViewTabPage;
+            //    }
+            //}
         }
         private void imagesTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (imagesTabControl.SelectedTab == drawingViewTabPage)
             {
-                if (labsTabControl.SelectedTab != lab3TabPage || labsTabControl.SelectedTab != lab4TabPage) //can add ||s to let accomadate any other labs that might use the same.
+                if (labsTabControl.SelectedTab != lab3TabPage && labsTabControl.SelectedTab != lab4TabPage) //can add ||s to let accomadate any other labs that might use the same.
                 {
                     labsTabControl.SelectedTab = lab3TabPage;
                 }
@@ -929,7 +936,7 @@ namespace Computer_Graphics_1
             }
             else
             {
-                if (labsTabControl.SelectedTab == lab3TabPage || labsTabControl.SelectedTab == lab4TabPage) //can add ||s to let accomadate any other labs that might not use the view like lab3TabPage here.
+                if (labsTabControl.SelectedTab != lab2TabPage && labsTabControl.SelectedTab != lab2TabPage) //can add ||s to let accomadate any other labs that might not use the view like lab3TabPage here.
                 {
                     labsTabControl.SelectedTab = lab1TabPage;
                 }
@@ -1437,6 +1444,19 @@ namespace Computer_Graphics_1
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            //if(DialogResult.Yes == MessageBox.Show("NOTICE!", "Looks like the window size changed. Want to UNDO EVERYTHING to make the canvas bigger?", MessageBoxButtons.YesNo,MessageBoxIcon.Warning))
+            //{
+            //    undoAllProcessingMenuItem_Click(null, null);
+            //}
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
