@@ -86,6 +86,6 @@ My program containing solutions to all the projects/labs from the course Compute
 + Textured Sphere: Textured 3D Sphere which can be moved around (and also POV can be moved around). We create a Triangular Mesh on/for the sphere and then fill with the texture.
 
 #### Scores:
-+ Overall: ?/20
++ Overall: 20/20
   + Home: 15/15
   + Lab: 5/5
