@@ -87,5 +87,5 @@ My program containing solutions to all the projects/labs from the course Compute
 
 #### Scores:
 + Overall: 20/20
-  + Home: 15/15
+  + Home: 14.5/15 (some weird/random bug caused negative 0.5 points)
   + Lab: 5/5
